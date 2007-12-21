@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>search_url (GScraper::Search::Query)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gscraper/search/query.rb, line 222</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search_url</span>
+        <span class="ruby-identifier">url</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-constant">SEARCH_URL</span>)
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@results_per_page</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'num'</span>] = <span class="ruby-ivar">@results_per_page</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_q'</span>] = <span class="ruby-ivar">@query</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@query</span>
+        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_epq'</span>] = <span class="ruby-ivar">@exact_phrase</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@exact_phrase</span>
+        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_oq'</span>] = <span class="ruby-ivar">@with_words</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@with_words</span>
+        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_eq'</span>] = <span class="ruby-ivar">@without_words</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@without_words</span>
+
+        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'lr'</span>] = <span class="ruby-ivar">@language</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@language</span>
+        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'cr'</span>] = <span class="ruby-ivar">@region</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@region</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@in_format</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_ft'</span>] = <span class="ruby-value str">'i'</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_filtetype'</span>] = <span class="ruby-ivar">@in_format</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@not_in_format</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_ft'</span>] = <span class="ruby-value str">'e'</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_filtetype'</span>] = <span class="ruby-ivar">@not_in_format</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@within_past_day</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_qdr'</span>] = <span class="ruby-value str">'d'</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@within_past_week</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_qdr'</span>] = <span class="ruby-value str">'w'</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@within_past_months</span>
+          <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@within_past_months</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
+            <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_qdr'</span>] = <span class="ruby-value str">'m'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>
+            <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_qdr'</span>] = <span class="ruby-value str">'m2'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">3</span>
+            <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_qdr'</span>] = <span class="ruby-value str">'m3'</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">6</span>
+            <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_qdr'</span>] = <span class="ruby-value str">'m6'</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@within_past_year</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_qdr'</span>] = <span class="ruby-value str">'y'</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@numeric_range</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_nlo'</span>] = <span class="ruby-ivar">@numeric_range</span>.<span class="ruby-identifier">begin</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_nhi'</span>] = <span class="ruby-ivar">@numeric_range</span>.<span class="ruby-identifier">end</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@occurrs_within</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:title</span>, <span class="ruby-value str">'title'</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_occt'</span>] = <span class="ruby-value str">'title'</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:body</span>, <span class="ruby-value str">'body'</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_occt'</span>] = <span class="ruby-value str">'body'</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:url</span>, <span class="ruby-value str">'url'</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_occt'</span>] = <span class="ruby-value str">'url'</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:links</span>, <span class="ruby-value str">'links'</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_occt'</span>] = <span class="ruby-value str">'links'</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@inside_domain</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_dt'</span>] = <span class="ruby-value str">'i'</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_sitesearch'</span>] = <span class="ruby-ivar">@inside_domain</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@outside_domain</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_dt'</span>] = <span class="ruby-value str">'e'</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_sitesearch'</span>] = <span class="ruby-ivar">@outside_domain</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-comment cmt"># TODO: implement URL mappings for content-rights</span>
+        <span class="ruby-comment cmt">#case @rights</span>
+        <span class="ruby-comment cmt">#end</span>
+
+        <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'safe'</span>] = <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@filtered</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@similar_to</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_rq'</span>] = <span class="ruby-ivar">@similar_to</span>
+        <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@links_to</span>
+          <span class="ruby-identifier">url</span>.<span class="ruby-identifier">query_params</span>[<span class="ruby-value str">'as_lq'</span>] = <span class="ruby-ivar">@links_to</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">url</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

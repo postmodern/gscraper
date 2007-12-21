@@ -1,0 +1,1 @@
+require 'gscraper/search/search'

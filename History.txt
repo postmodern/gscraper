@@ -1,0 +1,5 @@
+== 0.1.0 / 2007-12-20
+
+ * Initial release.
+ * Supports the Google Search service.
+
