@@ -1,5 +1,6 @@
 require 'gscraper/search/result'
 require 'gscraper/extensions/uri'
+require 'gscraper/licenses'
 require 'gscraper/gscraper'
 
 require 'hpricot'
