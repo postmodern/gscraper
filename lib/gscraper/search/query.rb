@@ -327,9 +327,10 @@ module GScraper
       #
       # Returns a Page object containing Result objects at the specified
       # _page_index_. If _opts_ are given, they will be used in accessing
-      # the SEARCH_URL.
+      # the SEARCH_URL. If a _block_ is given, it will be passed the newly
+      # created Page.
       #
-      def page(page_index,opts={})
+      def page(page_index,opts={},&block)
         doc = Hpricot(GScraper.open(page_url(page_index),opts))
         new_page = Page.new
 
@@ -345,15 +346,17 @@ module GScraper
           new_page << Result.new(rank,title,url,summary)
         end
 
+        block.call(new_page) if block
         return new_page
       end
 
       #
       # Returns the results on the first page. If _opts_ are given, they
-      # will be used in accessing the SEARCH_URL.
+      # will be used in accessing the SEARCH_URL. If a _block_ is given
+      # it will be passed the newly created Page.
       #
-      def first_page(opts={})
-        page(1,opts)
+      def first_page(opts={},&block)
+        page(1,opts,&block)
       end
 
       #
