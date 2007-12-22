@@ -1,5 +1,7 @@
 require 'gscraper/search/result'
+require 'gscraper/search/page'
 require 'gscraper/extensions/uri'
+require 'gscraper/licenses'
 require 'gscraper/gscraper'
 
 require 'hpricot'
@@ -79,7 +81,7 @@ module GScraper
       # Creates a new Query object from the given search options. If a
       # block is given, it will be passed the newly created query object.
       #
-      #   Query.new(:query => 'ruby', :with_words => 'rspec rails')
+      #   Query.new(:query => 'ruby', :with_words => 'sow rspec')
       #
       #   Query.new(:exact_phrase => 'fluent interfaces') do |q|
       #     q.within_past_week = true
@@ -200,7 +202,7 @@ module GScraper
         when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_nonderived).-(cc_noncommercial)'
           opts[:rights] = Licenses::CC_BY_SA
         when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial).-(cc_nonderived)'
-          opts[:rights] = Licenses::CC_BY_ND
+          opts[:rights] = Licenses::CC_BY_NC
         when '(cc_publicdomain|cc_attribute|cc_sharealike).-(cc_noncommercial|cc_nonderived)'
           opts[:rights] = Licenses::CC_BY
         end
@@ -323,12 +325,13 @@ module GScraper
       end
 
       #
-      # Returns an array of Result objects at the specified _page_index_.
-      # If _opts_ are given, they will be used in accessing the SEARCH_URL.
+      # Returns a Page object containing Result objects at the specified
+      # _page_index_. If _opts_ are given, they will be used in accessing
+      # the SEARCH_URL.
       #
       def page(page_index,opts={})
-        results = []
         doc = Hpricot(GScraper.open(page_url(page_index),opts))
+        new_page = Page.new
 
         doc.search('//div.g').each_with_index do |result,index|
           rank = page_index_offset(page_index) + (index + 1)
@@ -339,10 +342,10 @@ module GScraper
 
           # TODO: scrape Cached and Similar links
 
-          results << Result.new(rank,title,url,summary)
+          new_page << Result.new(rank,title,url,summary)
         end
 
-        return results
+        return new_page
       end
 
       #

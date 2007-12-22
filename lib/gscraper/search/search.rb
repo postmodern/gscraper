@@ -5,7 +5,7 @@ module GScraper
     #
     # Returns a new Query object with the given _opts_. See Query.new.
     #
-    #   Search.query(:query => 'ruby', :with_words => 'rspec rails')
+    #   Search.query(:query => 'ruby', :with_words => 'sow rspec')
     #
     #   Search.query(:exact_phrase => 'fluent interfaces') do |q|
     #     q.within_past_week = true

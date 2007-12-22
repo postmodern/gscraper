@@ -1,6 +1,9 @@
 require 'test/unit'
+require 'gscraper/search/query'
 
 class QueryFromURL < Test::Unit::TestCase
+
+  include GScraper
 
   QUERY_URL = 'http://www.google.com/search?as_q=test&hl=en&num=20&btnG=Google+Search&as_epq=what+if&as_oq=dog&as_eq=haha&lr=&cr=&as_ft=i&as_filetype=&as_qdr=w&as_nlo=&as_nhi=&as_occt=body&as_dt=i&as_sitesearch=&as_rights=&safe=images'
 
