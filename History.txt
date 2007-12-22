@@ -1,3 +1,13 @@
+== 0.1.2 / 2007-12-22
+
+ * Fixed a bug related to extracting the correct content-rights from search
+   query URLs.
+ * Added GScraper.user_agent_aliases.
+
+== 0.1.1 / 2007-12-21
+
+ * Forgot to include lib/gscraper/version.rb.
+
 == 0.1.0 / 2007-12-20
 
  * Initial release.

@@ -4,10 +4,12 @@ Manifest.txt
 README.txt
 Rakefile
 lib/gscraper.rb
+lib/gscraper/version.rb
 lib/gscraper/gscraper.rb
 lib/gscraper/extensions/uri/http.rb
 lib/gscraper/extensions/uri.rb
 lib/gscraper/extensions.rb
+lib/gscraper/licenses.rb
 lib/gscraper/search/result.rb
 lib/gscraper/search/query.rb
 lib/gscraper/search/search.rb

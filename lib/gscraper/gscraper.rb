@@ -3,14 +3,21 @@ require 'open-uri'
 
 module GScraper
   #
-  # Returns the GScraper user-agent
+  # Returns the supported GScraper User-Agent Aliases.
+  #
+  def GScraper.user_agent_aliases
+    WWW::Mechanize::AGENT_ALIASES
+  end
+
+  #
+  # Returns the GScraper User-Agent
   #
   def GScraper.user_agent
     @user_agent
   end
 
   #
-  # Sets the GScraper user-agent to the specified _agent_.
+  # Sets the GScraper User-Agent to the specified _agent_.
   #
   def GScraper.user_agent=(agent)
     @user_agent = agent
