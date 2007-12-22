@@ -48,7 +48,7 @@ module URI
 
     private
 
-    # :nodoc:
+    # :nodoc
     def path_query
       str = @path
 
