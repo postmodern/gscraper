@@ -201,7 +201,7 @@ module GScraper
         when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_nonderived).-(cc_noncommercial)'
           opts[:rights] = Licenses::CC_BY_SA
         when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial).-(cc_nonderived)'
-          opts[:rights] = Licenses::CC_BY_ND
+          opts[:rights] = Licenses::CC_BY_NC
         when '(cc_publicdomain|cc_attribute|cc_sharealike).-(cc_noncommercial|cc_nonderived)'
           opts[:rights] = Licenses::CC_BY
         end
