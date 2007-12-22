@@ -11,6 +11,7 @@ lib/gscraper/extensions/uri.rb
 lib/gscraper/extensions.rb
 lib/gscraper/licenses.rb
 lib/gscraper/search/result.rb
+lib/gscraper/search/page.rb
 lib/gscraper/search/query.rb
 lib/gscraper/search/search.rb
 lib/gscraper/search.rb
