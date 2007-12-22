@@ -4,6 +4,7 @@ Manifest.txt
 README.txt
 Rakefile
 lib/gscraper.rb
+lib/gscraper/version.rb
 lib/gscraper/gscraper.rb
 lib/gscraper/extensions/uri/http.rb
 lib/gscraper/extensions/uri.rb
