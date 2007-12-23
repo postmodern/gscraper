@@ -4,12 +4,14 @@ module URI
     # Query parameters
     attr_reader :query_params
 
+    alias_method :old_initialize, :initialize
+
     #
     # Creates a new URI::HTTP object and initializes query_params as a
     # new Hash.
     #
     def initialize(*args)
-      super(*args)
+      old_initialize(*args)
 
       @query_params = {}
       parse_query_params
