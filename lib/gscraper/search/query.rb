@@ -10,7 +10,8 @@ module GScraper
   module Search
     class Query
 
-      SEARCH_URL = 'http://www.google.com/search'
+      SEARCH_HOST = 'www.google.com'
+      SEARCH_URL = "http://#{SEARCH_HOST}/search"
 
       RESULTS_PER_PAGE = 10
 
@@ -90,7 +91,7 @@ module GScraper
       def initialize(opts={},&block)
         super()
 
-        @results_per_page = opts[:results_per_page] || RESULTS_PER_PAGE
+        @results_per_page = (opts[:results_per_page] || RESULTS_PER_PAGE)
 
         @query = opts[:query]
         @exact_phrase = opts[:exact_phrase]
@@ -104,12 +105,29 @@ module GScraper
 
         if opts[:within_past_day]
           @within_past_day = opts[:within_past_day]
+          @within_past_week = false
+          @within_past_months = false
+          @within_past_year = false
         elsif opts[:within_past_week]
+          @within_past_day = false
           @within_past_week = opts[:within_past_week]
+          @within_past_months = false
+          @within_past_year = false
         elsif opts[:within_past_months]
+          @within_past_day = false
+          @within_past_week = false
           @within_past_months = opts[:within_past_months]
+          @within_past_year = false
         elsif opts[:within_past_year]
+          @within_past_day = false
+          @within_past_week = false
+          @within_past_months = false
           @within_past_year = opts[:within_past_year]
+        else
+          @within_past_day = false
+          @within_past_week = false
+          @within_past_months = false
+          @within_past_year = false
         end
 
         @numeric_range = opts[:numeric_range]
@@ -318,7 +336,7 @@ module GScraper
       def page_url(page_index)
         url = search_url
 
-        url.query_params['start'] = page_index_offset(page_index)
+        url.query_params['start'] = page_result_offset(page_index)
         url.query_params['sa'] = 'N'
 
         return url
@@ -332,18 +350,31 @@ module GScraper
       #
       def page(page_index,opts={},&block)
         doc = Hpricot(GScraper.open(page_url(page_index),opts))
+
         new_page = Page.new
+        results = doc.search('//div.g')[0...@results_per_page.to_i]
 
-        doc.search('//div.g').each_with_index do |result,index|
-          rank = page_index_offset(page_index) + (index + 1)
-          title = result.search('//h2.r').first.inner_text
-          url = result.search('//h2.r/a').first.get_attribute('href')
-          # TODO: exclude URL and Links from summary text
-          summary = result.search('//td.j').first.inner_text
+        results.each_with_index do |result,index|
+          rank = page_result_offset(page_index) + (index + 1)
+          title = result.at('//h2.r').inner_text
+          url = result.at('//h2.r/a').get_attribute('href')
 
-          # TODO: scrape Cached and Similar links
+          summary = result.at('//td.j//font').children[0...-3].inject('') do |accum,elem|
+            accum + elem.inner_text
+          end
 
-          new_page << Result.new(rank,title,url,summary)
+          cached_url = nil
+          similar_url = nil
+
+          if (cached_link = result.at('//td.j//font/nobr/a:first'))
+            cached_url = cached_link.get_attribute('href')
+          end
+
+          if (similar_link = result.at('//td.j//font/nobr/a:last'))
+            similar_url = "http://#{SEARCH_HOST}" + similar_link.get_attribute('href')
+          end
+
+          new_page << Result.new(rank,title,url,summary,cached_url,similar_url)
         end
 
         block.call(new_page) if block
@@ -351,12 +382,30 @@ module GScraper
       end
 
       #
-      # Returns the results on the first page. If _opts_ are given, they
+      # Returns the Results on the first page. If _opts_ are given, they
       # will be used in accessing the SEARCH_URL. If a _block_ is given
       # it will be passed the newly created Page.
       #
       def first_page(opts={},&block)
         page(1,opts,&block)
+      end
+
+      #
+      # Returns the Result at the specified _index_. If _opts_ are given,
+      # they will be used in accessing the Page containing the requested
+      # Result.
+      #
+      def result_at(index,opts={})
+        page(result_page_index(index),opts)[page_result_index(index)]
+      end
+
+      #
+      # Returns the first Result at the specified _index_. If _opts_ are
+      # given, they will be used in accessing the Page containing the
+      # requested Result.
+      #
+      def first_result(opts={})
+        result_at(1,opts)
       end
 
       #
@@ -390,8 +439,22 @@ module GScraper
       #
       # Returns the rank offset for the specified _page_index_.
       #
-      def page_index_offset(page_index)
-        (page_index.to_i - 1) * @result_per_page.to_i
+      def page_result_offset(page_index)
+        (page_index.to_i - 1) * @results_per_page.to_i
+      end
+
+      #
+      # Returns the in-Page index of the _result_index_.
+      #
+      def page_result_index(result_index)
+        (result_index.to_i - 1) % @results_per_page.to_i
+      end
+
+      #
+      # Returns the page index for the specified _result_index_
+      #
+      def result_page_index(result_index)
+        ((result_index.to_i - 1) / @results_per_page.to_i) + 1
       end
 
     end
