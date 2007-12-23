@@ -11,10 +11,6 @@ class QueryFromURL < Test::Unit::TestCase
     @query = Search::Query.from_url(QUERY_URL)
   end
 
-  def teardown
-    @query = nil
-  end
-
   def test_query
     assert_equal @query.query, 'test'
   end
@@ -45,6 +41,10 @@ class QueryFromURL < Test::Unit::TestCase
 
   def test_links_to
     assert_nil @query.links_to
+  end
+
+  def teardown
+    @query = nil
   end
 
 end
