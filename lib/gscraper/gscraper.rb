@@ -13,7 +13,7 @@ module GScraper
   # Returns the GScraper User-Agent
   #
   def GScraper.user_agent
-    @user_agent
+    @user_agent ||= nil
   end
 
   #
@@ -24,10 +24,11 @@ module GScraper
   end
 
   #
-  # Opens the _uri_ with the given _opts_. The contents of the _uri_ will
-  # be returned.
+  # Opens the _uri_ with the given _opts_. The contents of the _uri_ will be
+  # returned.
   #
   #   GScraper.open('http://www.hackety.org/')
+  #
   #   GScraper.open('http://tenderlovemaking.com/',
   #     :user_agent_alias => 'Linux Mozilla')
   #   GScraper.open('http://www.wired.com/', :user_agent => 'the future')
