@@ -115,7 +115,7 @@ module GScraper
 
       #
       # Returns an Array containing the ranks of the results within the
-      # Page. If _block_ is given, each rank will be passed to the _block_.
+      # Page.
       #
       #   page.ranks # => [...]
       #
@@ -123,16 +123,13 @@ module GScraper
       #     puts ranks
       #   end
       #
-      def ranks(&block)
-        mapped = map { |result| result.rank }
-
-        mapped.each(&block) if block
-        return mapped
+      def ranks
+        map { |result| result.rank }
       end
 
       #
       # Returns an Array containing the titles of the results within the
-      # Page. If _block_ is given, each title will be passed to the _block_.
+      # Page.
       #
       #   page.titles # => [...]
       #
@@ -140,16 +137,13 @@ module GScraper
       #     puts title
       #   end
       #
-      def titles(&block)
-        mapped = map { |result| result.title }
-
-        mapped.each(&block) if block
-        return mapped
+      def titles
+        map { |result| result.title }
       end
 
       #
       # Returns an Array containing the URLs of the results within the
-      # Page. If _block_ is given, each URL will be passed to the _block_.
+      # Page.
       #
       #   page.urls # => [...]
       #
@@ -157,17 +151,13 @@ module GScraper
       #     puts url
       #   end
       #
-      def urls(&block)
-        mapped = map { |result| result.url }
-
-        mapped.each(&block) if block
-        return mapped
+      def urls
+        map { |result| result.url }
       end
 
       #
       # Returns an Array containing the summaries of the results within the
-      # Page. If _block_ is given, each summary will be passed to the
-      # _block_.
+      # Page.
       #
       #   page.summaries # => [...]
       #
@@ -175,11 +165,48 @@ module GScraper
       #     puts summary
       #   end
       #
-      def summaries(&block)
-        mapped = map { |result| result.summaries }
+      def summaries
+        map { |result| result.summary }
+      end
 
-        mapped.each(&block) if block
-        return mapped
+      #
+      # Iterates over each result's rank within the Page, passing each to
+      # the given _block_.
+      #
+      #   each_rank { |rank| puts rank }
+      #
+      def each_rank(&block)
+        ranks.each(&block)
+      end
+
+      #
+      # Iterates over each result's title within the Page, passing each to
+      # the given _block_.
+      #
+      #   each_title { |title| puts title }
+      #
+      def each_title(&block)
+        titles.each(&block)
+      end
+
+      #
+      # Iterates over each result's url within the Page, passing each to
+      # the given _block_.
+      #
+      #   each_url { |url| puts url }
+      #
+      def each_url(&block)
+        urls.each(&block)
+      end
+
+      #
+      # Iterates over each result's summary within the Page, passing each
+      # to the given _block_.
+      #
+      #   each_summary { |summary| puts summary }
+      #
+      def each_summary(&block)
+        summaries.each(&block)
       end
 
       #
