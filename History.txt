@@ -1,7 +1,22 @@
+== 0.1.4 / 2007-12-23
+
+ * Added Search::Query#result_at for easier access of a single result at
+   a given index.
+ * Adding scraping of the "Cached" and "Similar Pages" URLs of Search
+   Results.
+ * Added methods to Search::Page for accessing cached URLs, cached pages,
+   similar query URLs and similar Queries in mass.
+ * Search::Query#page and Search::Query#first_page now can receive blocks.
+ * Improved the formating of URL query parameters.
+ * Added more unit-tests.
+ * Fixed scraping of Search Result summaries.
+ * Fixed various bugs in Search::Query uncovered during unit-testing.
+ * Fixed typos in Search::Page's documentation.
+
 == 0.1.3 / 2007-12-22
 
- * Added the Page class, which contains many of convenance methods for
-   searching through the results within a Page.
+ * Added the Search::Page class, which contains many of convenance methods
+   for searching through the results within a Page.
 
 == 0.1.2 / 2007-12-22
 
