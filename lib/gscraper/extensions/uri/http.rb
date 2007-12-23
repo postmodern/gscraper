@@ -58,7 +58,7 @@ module URI
             "#{name}=active"
           elsif value
             if value.kind_of?(Array)
-              "#{name}=#{URI.encode(value.join(' ')}"
+              "#{name}=#{URI.encode(value.join(' '))}"
             else
               "#{name}=#{URI.encode(value.to_s)}"
             end
