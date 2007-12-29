@@ -1,5 +1,7 @@
+require 'uri/http'
+
 module URI
-  class HTTP
+  class HTTP < Generic
 
     # Query parameters
     attr_reader :query_params
