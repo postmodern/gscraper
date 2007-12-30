@@ -1,5 +1,7 @@
 require 'gscraper/search/result'
 require 'gscraper/search/page'
+require 'gscraper/sponsored_ad'
+require 'gscraper/sponsored_links'
 require 'gscraper/extensions/uri'
 require 'gscraper/licenses'
 require 'gscraper/gscraper'
@@ -379,6 +381,28 @@ module GScraper
 
         block.call(new_page) if block
         return new_page
+      end
+
+      #
+      # Returns a SponsoredLinks object containing Ad objects at the specified
+      # _page_index_. If _opts_ are given, they will be used in accessing
+      # the SEARCH_URL. If a _block_ is given, it will be passed the newly
+      # created Page.
+      #
+      def sponsored_links(page_index,opts={},&block)
+        doc = Hpricot(GScraper.open(page_url(page_index),opts))
+        new_links = SponsoredLinks.new
+
+        # top and side ads
+        doc.search('//div.ta/a|//#mbEnd/tr[3]/td//a').each do |link|
+          title = link.inner_text
+          url = "http://#{SEARCH_HOST}" + link.get_attribute('href')
+
+          new_links << SponsoredAd.new(title,url)
+        end
+
+        block.call(new_links) if block
+        return new_links
       end
 
       #
