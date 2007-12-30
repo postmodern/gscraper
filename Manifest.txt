@@ -10,6 +10,8 @@ lib/gscraper/extensions/uri/http.rb
 lib/gscraper/extensions/uri.rb
 lib/gscraper/extensions.rb
 lib/gscraper/licenses.rb
+lib/gscraper/sponsored_ad.rb
+lib/gscraper/sponsored_links.rb
 lib/gscraper/search/result.rb
 lib/gscraper/search/page.rb
 lib/gscraper/search/query.rb
@@ -17,3 +19,6 @@ lib/gscraper/search/search.rb
 lib/gscraper/search.rb
 test/test_gscraper.rb
 test/search/query_from_url.rb
+test/search/query_result.rb
+test/search/query_pages.rb
+test/search/page_results.rb
