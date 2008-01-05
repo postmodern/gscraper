@@ -1,6 +1,12 @@
+== 0.1.6 / 2007-12-29
+
+ * Added support for Sponsored Ad scraping.
+ * Integrated Sponsored Ad scraping into Search::Query.
+
 == 0.1.5 / 2007-12-29
 
- * Fixed class inheritance in gscraper/extensions/uri/http.rb.
+ * Fixed class inheritance in gscraper/extensions/uri/http.rb, found by
+   sanitybit.
 
 == 0.1.4 / 2007-12-23
 
