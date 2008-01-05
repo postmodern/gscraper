@@ -12,9 +12,13 @@ module GScraper
   module Search
     class Query
 
+      # Search host
       SEARCH_HOST = 'www.google.com'
+
+      # Search URL
       SEARCH_URL = "http://#{SEARCH_HOST}/search"
 
+      # Default results per-page
       RESULTS_PER_PAGE = 10
 
       # Results per-page
