@@ -8,8 +8,8 @@ GScraper is a web-scraping interface to various Google Services.
 
 == FEATURES/PROBLEMS:
   
- * Supports the Google Search service.
- * Provides HTTP access with custom User-Agent strings.
+* Supports the Google Search service.
+* Provides HTTP access with custom User-Agent strings.
 
 == REQUIREMENTS:
 
@@ -18,7 +18,7 @@ GScraper is a web-scraping interface to various Google Services.
 
 == INSTALL:
 
-sudo gem install gscraper
+  $ sudo gem install gscraper
 
 == LICENSE:
 
