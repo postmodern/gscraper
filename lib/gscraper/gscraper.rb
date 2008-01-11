@@ -50,11 +50,11 @@ module GScraper
   #
   # Creates a new Mechanize agent with the given _opts_.
   #
-  #   GScraper.http_agent
-  #   GScraper.http_agent(:user_agent_alias => 'Linux Mozilla')
-  #   GScraper.http_agent(:user_agent => 'wooden pants')
+  #   GScraper.web_agent
+  #   GScraper.web_agent(:user_agent_alias => 'Linux Mozilla')
+  #   GScraper.web_agent(:user_agent => 'wooden pants')
   #
-  def GScraper.http_agent(opts={})
+  def GScraper.web_agent(opts={})
     agent = WWW::Mechanize.new
 
     if opts[:user_agent_alias]
