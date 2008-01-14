@@ -1,6 +1,6 @@
 == 0.1.6 / 2007-12-29
 
-* Renamed GScraper#http_agent to GSraper#web_agent.
+* Renamed GScraper.http_agent to GSraper.web_agent.
 * Added support for Sponsored Ad scraping.
 * Integrated Sponsored Ad scraping into Search::Query.
 
