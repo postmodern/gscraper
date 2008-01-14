@@ -13,14 +13,14 @@ module GScraper
   # Returns the GScraper User-Agent
   #
   def GScraper.user_agent
-    @user_agent ||= nil
+    @@user_agent ||= nil
   end
 
   #
   # Sets the GScraper User-Agent to the specified _agent_.
   #
   def GScraper.user_agent=(agent)
-    @user_agent = agent
+    @@user_agent = agent
   end
 
   #
