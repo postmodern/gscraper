@@ -1,3 +1,5 @@
+require 'gscraper/search/query'
+
 module GScraper
   module Search
     class Result
@@ -31,18 +33,6 @@ module GScraper
         @summary = summary
         @cached_url = cached_url
         @similar_url = similar_url
-      end
-
-      #
-      # Opens the URL of the cached page for the Result. If _opts_ are
-      # given, they will be used in accessing the cached page URL.
-      #
-      #   result.cached_page # => File
-      #
-      def cached_page(opts={})
-        if @cached_url
-          return GScraper.open(@cached_url,opts)
-        end
       end
 
       #
