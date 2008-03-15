@@ -1,8 +1,13 @@
-== 0.1.6 / 2007-12-29
+== 0.1.6 / 2008-03-15
 
-* Renamed GScraper.http_agent to GSraper.web_agent.
+* Renamed GScraper.http_agent to GScraper.web_agent.
+* Added GScraper.proxy for global proxy configuration.
+* Added the WebAgent module.
+* Renamed Search::Query#first_result to Search::Query#top_result.
+* Updated Search::Query#page logic for the new DOM layout being used.
 * Added support for Sponsored Ad scraping.
-* Integrated Sponsored Ad scraping into Search::Query.
+  * Added the methods Query#sponsored_links and Query#top_sponsored_link.
+* Added examples to README.txt.
 
 == 0.1.5 / 2007-12-29
 
