@@ -165,13 +165,12 @@ module GScraper
 
       #
       # Returns an Array containing the cached pages of the results within
-      # the Page. If _opts_ are given, they will be used in accessing the
-      # cached page.
+      # the Page.
       #
       #   page.cached_pages # => [...]
       #
-      def cached_pages(opts={})
-        map { |result| result.cached_page(opts) }
+      def cached_pages
+        map { |result| result.cached_page }
       end
 
       #
@@ -246,13 +245,12 @@ module GScraper
 
       #
       # Iterates over each result's cached pages within the Page, passing
-      # each to the given _block_. If _opts_ are given, they will be used
-      # in accessing the cached pages.
+      # each to the given _block_.
       #
       #   each_cached_page { |page| puts page.readlines }
       #
-      def each_cached_page(opts={},&block)
-        cached_pages(opts).each(&block)
+      def each_cached_page(&block)
+        cached_pages.each(&block)
       end
 
       #
@@ -328,13 +326,13 @@ module GScraper
 
       #
       # Returns the cached pages of the results that match the specified
-      # _block_. If _opts_ are given, they will be used in accessing
+      # _block_. If _options_ are given, they will be used in accessing
       # the cached pages.
       #
       #   page.cached_pages_of { |result| result.title =~ /dude/ }
       #
-      def cached_pages_of(opts={},&block)
-        results_with(&block).cached_pages(opts)
+      def cached_pages_of(options={},&block)
+        results_with(&block).cached_pages(options)
       end
 
       #

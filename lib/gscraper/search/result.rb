@@ -1,8 +1,11 @@
 require 'gscraper/search/query'
+require 'gscraper/web_agent'
 
 module GScraper
   module Search
     class Result
+
+      include WebAgent
 
       # Rank of the result page
       attr_reader :rank
@@ -52,6 +55,14 @@ module GScraper
         if @similar_url
           return Query.from_url(@similar_url,&block)
         end
+      end
+
+      #
+      # Fetches the cached page of the result. If a _block_ is given it will
+      # be passed the cached page.
+      #
+      def cached_page(&block)
+        get_page(@cached_url,&block)
       end
 
       #

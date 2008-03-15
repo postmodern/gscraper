@@ -4,13 +4,15 @@ require 'gscraper/sponsored_ad'
 require 'gscraper/sponsored_links'
 require 'gscraper/extensions/uri'
 require 'gscraper/licenses'
-require 'gscraper/gscraper'
+require 'gscraper/web_agent'
 
 require 'hpricot'
 
 module GScraper
   module Search
     class Query
+
+      include WebAgent
 
       # Search host
       SEARCH_HOST = 'www.google.com'
@@ -94,41 +96,39 @@ module GScraper
       #     q.within_past_week = true
       #   end
       #
-      def initialize(opts={},&block)
-        super()
+      def initialize(options={},&block)
+        @results_per_page = (options[:results_per_page] || RESULTS_PER_PAGE)
 
-        @results_per_page = (opts[:results_per_page] || RESULTS_PER_PAGE)
+        @query = options[:query]
+        @exact_phrase = options[:exact_phrase]
+        @with_words = options[:with_words]
+        @without_words = options[:without_words]
 
-        @query = opts[:query]
-        @exact_phrase = opts[:exact_phrase]
-        @with_words = opts[:with_words]
-        @without_words = opts[:without_words]
+        @language = options[:language]
+        @region = options[:region]
+        @in_format = options[:in_format]
+        @not_in_format = options[:not_in_format]
 
-        @language = opts[:language]
-        @region = opts[:region]
-        @in_format = opts[:in_format]
-        @not_in_format = opts[:not_in_format]
-
-        if opts[:within_past_day]
-          @within_past_day = opts[:within_past_day]
+        if options[:within_past_day]
+          @within_past_day = options[:within_past_day]
           @within_past_week = false
           @within_past_months = false
           @within_past_year = false
-        elsif opts[:within_past_week]
+        elsif options[:within_past_week]
           @within_past_day = false
-          @within_past_week = opts[:within_past_week]
+          @within_past_week = options[:within_past_week]
           @within_past_months = false
           @within_past_year = false
-        elsif opts[:within_past_months]
+        elsif options[:within_past_months]
           @within_past_day = false
           @within_past_week = false
-          @within_past_months = opts[:within_past_months]
+          @within_past_months = options[:within_past_months]
           @within_past_year = false
-        elsif opts[:within_past_year]
+        elsif options[:within_past_year]
           @within_past_day = false
           @within_past_week = false
           @within_past_months = false
-          @within_past_year = opts[:within_past_year]
+          @within_past_year = options[:within_past_year]
         else
           @within_past_day = false
           @within_past_week = false
@@ -136,15 +136,15 @@ module GScraper
           @within_past_year = false
         end
 
-        @numeric_range = opts[:numeric_range]
-        @occurrs_within = opts[:occurrs_within]
-        @inside_domain = opts[:inside_domain]
-        @outside_domain = opts[:outside_domain]
-        @rights = opts[:rights]
-        @filtered = opts[:filtered]
+        @numeric_range = options[:numeric_range]
+        @occurrs_within = options[:occurrs_within]
+        @inside_domain = options[:inside_domain]
+        @outside_domain = options[:outside_domain]
+        @rights = options[:rights]
+        @filtered = options[:filtered]
 
-        @similar_to = opts[:similar_to]
-        @links_to = opts[:links_to]
+        @similar_to = options[:similar_to]
+        @links_to = options[:links_to]
 
         block.call(self) if block
       end
@@ -160,95 +160,94 @@ module GScraper
       #     q.occurrs_within = :title
       #   end
       #
-      def self.from_url(url,&block)
+      def self.from_url(url,options={},&block)
         url = URI.parse(url)
-        opts = {}
 
-        opts[:results_per_page] = url.query_params['num']
+        options[:results_per_page] = url.query_params['num']
 
-        opts[:query] = url.query_params['as_q']
-        opts[:exact_phrase] = url.query_params['as_epq']
-        opts[:with_words] = url.query_params['as_oq']
-        opts[:without_words] = url.query_params['as_eq']
+        options[:query] = url.query_params['as_q']
+        options[:exact_phrase] = url.query_params['as_epq']
+        options[:with_words] = url.query_params['as_oq']
+        options[:without_words] = url.query_params['as_eq']
 
-        opts[:language] = url.query_params['lr']
-        opts[:region] = url.query_params['cr']
+        options[:language] = url.query_params['lr']
+        options[:region] = url.query_params['cr']
 
         case url.query_params['as_ft']
         when 'i'
-          opts[:in_format] = url.query_params['as_filetype']
+          options[:in_format] = url.query_params['as_filetype']
         when 'e'
-          opts[:not_in_format] = url.query_params['as_filetype']
+          options[:not_in_format] = url.query_params['as_filetype']
         end
 
         case url.query_params['as_qdr']
         when 'd'
-          opts[:within_past_day] = true
+          options[:within_past_day] = true
         when 'w'
-          opts[:within_past_week] = true
+          options[:within_past_week] = true
         when 'm'
-          opts[:within_past_months] = 1
+          options[:within_past_months] = 1
         when 'm2'
-          opts[:within_past_months] = 2
+          options[:within_past_months] = 2
         when 'm3'
-          opts[:within_past_months] = 3
+          options[:within_past_months] = 3
         when 'm6'
-          opts[:within_past_months] = 6
+          options[:within_past_months] = 6
         when 'y'
-          opts[:within_past_year] = true
+          options[:within_past_year] = true
         end
 
         if (url.query_params['as_nlo'] || url.query_params['as_nhi'])
-          opts[:numeric_range] = Range.new(url.query_params['as_nlo'].to_i,url.query_params['as_nhi'].to_i)
+          options[:numeric_range] = Range.new(url.query_params['as_nlo'].to_i,url.query_params['as_nhi'].to_i)
         end
 
         case url.query_params['as_occt']
         when 'title'
-          opts[:occurrs_within] = :title
+          options[:occurrs_within] = :title
         when 'body'
-          opts[:occurrs_within] = :body
+          options[:occurrs_within] = :body
         when 'url'
-          opts[:occurrs_within] = :url
+          options[:occurrs_within] = :url
         when 'links'
-          opts[:occurrs_within] = :links
+          options[:occurrs_within] = :links
         end
 
         case url.query_params['as_dt']
         when 'i'
-          opts[:inside_domain] = url.query_params['as_sitesearch']
+          options[:inside_domain] = url.query_params['as_sitesearch']
         when 'e'
-          opts[:outside_domain] = url.query_params['as_sitesearch']
+          options[:outside_domain] = url.query_params['as_sitesearch']
         end
 
         case url.query_params['as_rights']
         when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived)'
-          opts[:rights] = Licenses::CC_BY_NC_ND
+          options[:rights] = Licenses::CC_BY_NC_ND
         when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_nonderived).-(cc_noncommercial)'
-          opts[:rights] = Licenses::CC_BY_SA
+          options[:rights] = Licenses::CC_BY_SA
         when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial).-(cc_nonderived)'
-          opts[:rights] = Licenses::CC_BY_NC
+          options[:rights] = Licenses::CC_BY_NC
         when '(cc_publicdomain|cc_attribute|cc_sharealike).-(cc_noncommercial|cc_nonderived)'
-          opts[:rights] = Licenses::CC_BY
+          options[:rights] = Licenses::CC_BY
         end
 
         if url.query_params[:safe]=='active'
-          opts[:filtered] = true
+          options[:filtered] = true
         end
 
         if url.query_params['as_rq']
-          opts[:similar_to] = url.query_params['as_rq']
+          options[:similar_to] = url.query_params['as_rq']
         elsif url.query_params['as_lq']
-          opts[:links_to] = url.query_params['as_lq']
+          options[:links_to] = url.query_params['as_lq']
         end
 
-        return self.new(opts,&block)
+        return self.new(options,&block)
       end
 
       #
       # Returns the URL that represents the query.
       #
       def search_url
-        url = URI.parse(SEARCH_URL)
+        url = URI(SEARCH_URL)
 
         if @results_per_page
           url.query_params['num'] = @results_per_page
@@ -350,37 +349,41 @@ module GScraper
 
       #
       # Returns a Page object containing Result objects at the specified
-      # _page_index_. If _opts_ are given, they will be used in accessing
-      # the SEARCH_URL. If a _block_ is given, it will be passed the newly
+      # _page_index_. If a _block_ is given, it will be passed the newly
       # created Page.
       #
-      def page(page_index,opts={},&block)
-        doc = Hpricot(GScraper.open(page_url(page_index),opts))
+      def page(page_index,&block)
+        doc = get_page(page_url(page_index))
 
         new_page = Page.new
         results = doc.search('//div.g')[0...@results_per_page.to_i]
 
         results.each_with_index do |result,index|
           rank = page_result_offset(page_index) + (index + 1)
-          title = result.at('//h2.r').inner_text
-          url = result.at('//h2.r/a').get_attribute('href')
-
-          summary = result.at('//td.j//font').children[0...-3].inject('') do |accum,elem|
-            accum + elem.inner_text
-          end
-
+          link = result.at('//a.l')
+          title = link.inner_text
+          url = link.get_attribute('href')
+          summary_text = ''
           cached_url = nil
           similar_url = nil
 
-          if (cached_link = result.at('//td.j//font/nobr/a:first'))
-            cached_url = cached_link.get_attribute('href')
+          if (content = (result.at('//td.j//font|//td.j/div.sml')))
+            content.children.each do |elem|
+              break if (!(elem.text?) && elem.name=='br')
+
+              summary_text << elem.inner_text
+            end
+            
+            if (cached_link = result.at('nobr/a:first'))
+              cached_url = cached_link.get_attribute('href')
+            end
+
+            if (similar_link = result.at('nobr/a:last'))
+              similar_url = "http://#{SEARCH_HOST}" + similar_link.get_attribute('href')
+            end
           end
 
-          if (similar_link = result.at('//td.j//font/nobr/a:last'))
-            similar_url = "http://#{SEARCH_HOST}" + similar_link.get_attribute('href')
-          end
-
-          new_page << Result.new(rank,title,url,summary,cached_url,similar_url)
+          new_page << Result.new(rank,title,url,summary_text,cached_url,similar_url)
         end
 
         block.call(new_page) if block
@@ -388,17 +391,61 @@ module GScraper
       end
 
       #
-      # Returns a SponsoredLinks object containing Ad objects at the specified
-      # _page_index_. If _opts_ are given, they will be used in accessing
-      # the SEARCH_URL. If a _block_ is given, it will be passed the newly
-      # created Page.
+      # Returns the Results on the first page. If a _block_ is given it
+      # will be passed the newly created Page.
       #
-      def sponsored_links(page_index,opts={},&block)
-        doc = Hpricot(GScraper.open(page_url(page_index),opts))
+      def first_page(&block)
+        page(1,&block)
+      end
+
+      #
+      # Returns the Result at the specified _index_.
+      #
+      def result_at(index)
+        page(result_page_index(index))[page_result_index(index)]
+      end
+
+      #
+      # Returns the first Result on the first_page.
+      #
+      def top_result
+        result_at(1)
+      end
+
+      #
+      # Iterates over the results at the specified _page_index_, passing
+      # each to the given _block_.
+      #
+      #   query.each_on_page(2) do |result|
+      #     puts result.title
+      #   end
+      #
+      def each_on_page(page_index,&block)
+        page(page_index).each(&block)
+      end
+
+      #
+      # Iterates over the results on the first page, passing each to the
+      # given _block_.
+      #
+      #   query.each_on_first_page do |result|
+      #     puts result.url
+      #   end
+      #
+      def each_on_first_page(&block)
+        each_on_page(1,&block)
+      end
+
+      #
+      # Returns a SponsoredLinks object containing Ad objects of the query.
+      # If a _block_ is given, it will be passed the newly created Page.
+      #
+      def sponsored_links(&block)
+        doc = get_page(search_url)
         new_links = SponsoredLinks.new
 
         # top and side ads
-        doc.search('//div.ta/a|//#mbEnd/tr[3]/td//a').each do |link|
+        doc.search('//a[@id="pa1"]|//a[@id*="an"]').each do |link|
           title = link.inner_text
           url = "http://#{SEARCH_HOST}" + link.get_attribute('href')
 
@@ -409,57 +456,8 @@ module GScraper
         return new_links
       end
 
-      #
-      # Returns the Results on the first page. If _opts_ are given, they
-      # will be used in accessing the SEARCH_URL. If a _block_ is given
-      # it will be passed the newly created Page.
-      #
-      def first_page(opts={},&block)
-        page(1,opts,&block)
-      end
-
-      #
-      # Returns the Result at the specified _index_. If _opts_ are given,
-      # they will be used in accessing the Page containing the requested
-      # Result.
-      #
-      def result_at(index,opts={})
-        page(result_page_index(index),opts)[page_result_index(index)]
-      end
-
-      #
-      # Returns the first Result at the specified _index_. If _opts_ are
-      # given, they will be used in accessing the Page containing the
-      # requested Result.
-      #
-      def first_result(opts={})
-        result_at(1,opts)
-      end
-
-      #
-      # Iterates over the results at the specified _page_index_, passing
-      # each to the given _block_. If _opts_ are given they will be used
-      # in accessing the SEARCH_URL.
-      #
-      #   query.each_on_page(2) do |result|
-      #     puts result.title
-      #   end
-      #
-      def each_on_page(page_index,opts={},&block)
-        page(page_index,opts).each(&block)
-      end
-
-      #
-      # Iterates over the results on the first page, passing
-      # each to the given _block_. If _opts_ are given, they will be used
-      # in accessing the SEARCH_URL.
-      #
-      #   query.each_on_first_page do |result|
-      #     puts result.url
-      #   end
-      #
-      def each_on_first_page(opts={},&block)
-        each_on_page(1,opts,&block)
+      def top_sponsored_link(&block)
+        top_sponsored_links.first
       end
 
       protected
