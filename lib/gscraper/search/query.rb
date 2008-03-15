@@ -437,8 +437,9 @@ module GScraper
       end
 
       #
-      # Returns a SponsoredLinks object containing Ad objects of the query.
-      # If a _block_ is given, it will be passed the newly created Page.
+      # Returns a SponsoredLinks object containing SponsoredAd objects of
+      # the query. If a _block_ is given, it will be passed the newly
+      # created Page.
       #
       def sponsored_links(&block)
         doc = get_page(search_url)
@@ -456,8 +457,19 @@ module GScraper
         return new_links
       end
 
-      def top_sponsored_link(&block)
+      #
+      # Returns the first sponsored link on the first page of results.
+      #
+      def top_sponsored_link
         top_sponsored_links.first
+      end
+
+      #
+      # Iterates over the sponsored links on the first page of
+      # results passing each to the specified _block_.
+      #
+      def each_sponsored_link(&block)
+        sponsored_links.each(&block)
       end
 
       protected
