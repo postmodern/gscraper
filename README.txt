@@ -66,7 +66,7 @@ GScraper is a web-scraping interface to various Google Services.
     page = q.page(2)
 
     page.urls # => [...]
-    pagesummaries # => [...]
+    page.summaries # => [...]
     page.ranks_of { |result| result.url =~ /^https/ } # => [...]
     page.titles_of { |result| result.summary =~ /password/ } # => [...]
     page.cached_pages # => [...]
@@ -127,7 +127,7 @@ GScraper is a web-scraping interface to various Google Services.
 
 The MIT License
 
-Copyright (c) 2007 Hal Brodigan
+Copyright (c) 2007-2008 Hal Brodigan
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
