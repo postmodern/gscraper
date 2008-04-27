@@ -1,3 +1,9 @@
+== 0.1.7 / 2008-04-27
+
+* Added support for specifing Search modifiers.
+
+  Search.query(:modifiers => {:filetype => :xls})
+
 == 0.1.6 / 2008-03-15
 
 * Renamed GScraper.http_agent to GScraper.web_agent.
