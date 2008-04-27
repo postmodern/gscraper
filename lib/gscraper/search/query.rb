@@ -100,6 +100,12 @@ module GScraper
         @results_per_page = (options[:results_per_page] || RESULTS_PER_PAGE)
 
         @query = options[:query]
+        @modifiers = {}
+
+        if options[:modifiers].kind_of?(Hash)
+          @modifiers.merge!(options[:modifiers])
+        end
+
         @exact_phrase = options[:exact_phrase]
         @with_words = options[:with_words]
         @without_words = options[:without_words]
@@ -253,7 +259,40 @@ module GScraper
           url.query_params['num'] = @results_per_page
         end
 
-        url.query_params['as_q'] = @query if @query
+        query_expr = [@query]
+
+        if @modifiers
+          append_modifier = lambda { |name|
+            op = @modifiers[name.to_sym]
+
+            query_expr << "#{name}:#{op}" if op
+          }
+
+          join_ops = lambda { |name|
+            ops = @modifiers[name.to_sym]
+
+            if ops.kind_of?(Array)
+              query_expr << "#{name}:#{ops.join(' ')}"
+            elsif ops
+              query_expr << "#{name}:#{ops}"
+            end
+          }
+
+          append_modifier.call(:link)
+          append_modifier.call(:related)
+          append_modifier.call(:info)
+          append_modifier.call(:site)
+
+          join_ops.call(:allintitle)
+          join_ops.call(:intitle)
+          join_ops.call(:allinurl)
+          join_ops.call(:inurl)
+          join_ops.call(:allintext)
+          join_ops.call(:intext)
+        end
+
+        url.query_params['as_q'] = query_expr.join(' ')
+
         url.query_params['as_epq'] = @exact_phrase if @exact_phrase
         url.query_params['as_oq'] = @with_words if @with_words
         url.query_params['as_eq'] = @without_words if @without_words
