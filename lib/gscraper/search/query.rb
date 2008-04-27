@@ -29,6 +29,9 @@ module GScraper
       # Search query
       attr_accessor :query
 
+      # Search modifiers
+      attr_reader :modifiers
+
       # Search for results containing the exact phrase
       attr_accessor :exact_phrase
 
