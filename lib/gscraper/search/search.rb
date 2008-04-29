@@ -3,7 +3,7 @@ require 'gscraper/search/query'
 module GScraper
   module Search
     #
-    # Returns a new Query object with the given _opts_. See Query.new.
+    # Returns a new Query object with the given _options_. See Query.new.
     #
     #   Search.query(:query => 'ruby', :with_words => 'sow rspec')
     #
@@ -11,8 +11,8 @@ module GScraper
     #     q.within_past_week = true
     #   end
     #
-    def Search.query(opts={},&block)
-      Query.new(opts,&block)
+    def Search.query(options={},&block)
+      Query.new(options,&block)
     end
 
     #

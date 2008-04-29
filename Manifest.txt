@@ -6,6 +6,7 @@ Rakefile
 lib/gscraper.rb
 lib/gscraper/version.rb
 lib/gscraper/gscraper.rb
+lib/gscraper/web_agent.rb
 lib/gscraper/extensions/uri/http.rb
 lib/gscraper/extensions/uri.rb
 lib/gscraper/extensions.rb

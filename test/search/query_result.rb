@@ -10,7 +10,7 @@ class QueryResult < Test::Unit::TestCase
   end
 
   def test_first_result
-    result = @query.first_result
+    result = @query.top_result
 
     assert_not_nil result, "The Query for 'ruby' has no first-result"
     assert_equal result.rank, 1, "The first result for the Query 'ruby' does not have the rank of 1"
