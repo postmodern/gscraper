@@ -103,11 +103,19 @@ module GScraper
         @results_per_page = (options[:results_per_page] || RESULTS_PER_PAGE)
 
         @query = options[:query]
-        @modifiers = {}
 
-        if options[:modifiers].kind_of?(Hash)
-          @modifiers.merge!(options[:modifiers])
-        end
+        @link = options[:link]
+        @related = options[:related]
+        @info = options[:info]
+        @site = options[:site]
+        @filetype = options[:filetype]
+
+        @allintitle = options[:allintitle]
+        @intitle = options[:intitle]
+        @allinurl = options[:allinurl]
+        @inurl = options[:inurl]
+        @allintext = options[:allintext]
+        @intext = options[:intext]
 
         @exact_phrase = options[:exact_phrase]
         @with_words = options[:with_words]
@@ -257,51 +265,55 @@ module GScraper
       #
       def search_url
         url = URI(SEARCH_URL)
+        query_expr = []
 
-        if @results_per_page
-          url.query_params['num'] = @results_per_page
+        set_param = lambda { |param,value|
+          url.query_params[param.to_s] = value if value
+        }
+
+        append_modifier = lambda { |name|
+          modifier = instance_variable_get("@#{name}")
+
+          query_expr << "#{name}:#{modifier}" if modifier
+        }
+
+        join_ops = lambda { |name|
+          ops = instance_variable_get("@#{name}")
+
+          if ops.kind_of?(Array)
+            query_expr << "#{name}:#{ops.join(' ')}"
+          elsif ops
+            query_expr << "#{name}:#{ops}"
+          end
+        }
+
+        set_param.call('num',@results_per_page)
+
+        query_expr << @query if @query
+
+        append_modifier.call(:link)
+        append_modifier.call(:related)
+        append_modifier.call(:info)
+        append_modifier.call(:site)
+        append_modifier.call(:filetype)
+
+        join_ops.call(:allintitle)
+        append_modifier.call(:intitle)
+        join_ops.call(:allinurl)
+        append_modifier.call(:inurl)
+        join_ops.call(:allintext)
+        append_modifier.call(:intext)
+
+        unless query_expr.empty?
+          url.query_params['as_q'] = query_expr.join(' ')
         end
 
-        query_expr = [@query]
+        set_param.call('as_epq',@exact_phrase)
+        set_param.call('as_oq',@with_words)
+        set_param.call('as_eq',@without_words)
 
-        if @modifiers
-          append_modifier = lambda { |name|
-            op = @modifiers[name.to_sym]
-
-            query_expr << "#{name}:#{op}" if op
-          }
-
-          join_ops = lambda { |name|
-            ops = @modifiers[name.to_sym]
-
-            if ops.kind_of?(Array)
-              query_expr << "#{name}:#{ops.join(' ')}"
-            elsif ops
-              query_expr << "#{name}:#{ops}"
-            end
-          }
-
-          append_modifier.call(:link)
-          append_modifier.call(:related)
-          append_modifier.call(:info)
-          append_modifier.call(:site)
-
-          join_ops.call(:allintitle)
-          join_ops.call(:intitle)
-          join_ops.call(:allinurl)
-          join_ops.call(:inurl)
-          join_ops.call(:allintext)
-          join_ops.call(:intext)
-        end
-
-        url.query_params['as_q'] = query_expr.join(' ')
-
-        url.query_params['as_epq'] = @exact_phrase if @exact_phrase
-        url.query_params['as_oq'] = @with_words if @with_words
-        url.query_params['as_eq'] = @without_words if @without_words
-
-        url.query_params['lr'] = @language if @language
-        url.query_params['cr'] = @region if @region
+        set_param.call('lr',@language)
+        set_param.call('cr',@region)
 
         if @in_format
           url.query_params['as_ft'] = 'i'
