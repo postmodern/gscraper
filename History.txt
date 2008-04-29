@@ -1,8 +1,10 @@
-== 0.1.7 / 2008-04-27
+== 0.1.7 / 2008-04-28
 
 * Added support for specifing Search modifiers.
 
-  Search.query(:modifiers => {:filetype => :xls})
+  Search.query(:filetype => :xls)
+
+* Added the Search::Result#page method.
 
 == 0.1.6 / 2008-03-15
 
