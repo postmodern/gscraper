@@ -39,6 +39,14 @@ module GScraper
       end
 
       #
+      # Fetches the page of the result. If a _block_ is given it will be
+      # passed the page.
+      #
+      def page(&block)
+        get_page(@url,&block)
+      end
+
+      #
       # Create a new Query for results that are similar to the Result. If
       # a _block_ is given, it will be passed the newly created Query
       # object.
