@@ -29,8 +29,38 @@ module GScraper
       # Search query
       attr_accessor :query
 
-      # Search modifiers
-      attr_reader :modifiers
+      # Search 'link' modifier
+      attr_accessor :link
+
+      # Search 'related' modifier
+      attr_accessor :related
+
+      # Search 'info' modifier
+      attr_accessor :info
+
+      # Search 'site' modifier
+      attr_accessor :site
+
+      # Search 'filetype' modifier
+      attr_accessor :filetype
+
+      # Search 'allintitle' modifier
+      attr_accessor :allintitle
+
+      # Search 'intitle' modifier
+      attr_accessor :intitle
+
+      # Search 'allinurl' modifier
+      attr_accessor :allinurl
+
+      # Search 'inurl' modifier
+      attr_accessor :inurl
+
+      # Search 'allintext' modifier
+      attr_accessor :allintext
+
+      # Search 'intext' modifier
+      attr_accessor :intext
 
       # Search for results containing the exact phrase
       attr_accessor :exact_phrase
