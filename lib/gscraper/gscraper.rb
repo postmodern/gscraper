@@ -55,6 +55,14 @@ module GScraper
   end
 
   #
+  # Sets the GScraper User-Agent using the specified user-agent alias
+  # _name_.
+  # 
+  def GScraper.user_agent_alias=(name)
+    @@gscraper_user_agent = GScraper.user_agent_aliases[name.to_s]
+  end
+
+  #
   # Opens the _uri_ with the given _options_. The contents of the _uri_
   # will be returned.
   #
