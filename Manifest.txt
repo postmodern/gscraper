@@ -1,5 +1,5 @@
 History.txt
-LICENSE.txt
+COPYING.txt
 Manifest.txt
 README.txt
 Rakefile
@@ -7,6 +7,7 @@ lib/gscraper.rb
 lib/gscraper/version.rb
 lib/gscraper/gscraper.rb
 lib/gscraper/web_agent.rb
+lib/gscraper/extensions/uri/query_params.rb
 lib/gscraper/extensions/uri/http.rb
 lib/gscraper/extensions/uri.rb
 lib/gscraper/extensions.rb
