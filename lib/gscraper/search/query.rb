@@ -473,7 +473,7 @@ module GScraper
           cached_url = nil
           similar_url = nil
 
-          if (content = (result.at('//td.j//font|//td.j/div.sml')))
+          if (content = (result.at('//td.j//font|//td.j/div')))
             content.children.each do |elem|
               break if (!(elem.text?) && elem.name=='br')
 
