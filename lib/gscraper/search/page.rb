@@ -21,44 +21,11 @@
 #
 
 require 'gscraper/search/result'
+require 'gscraper/page'
 
 module GScraper
   module Search
-    class Page < Array
-
-      #
-      # Creates a new Page object with the given _results_.
-      #
-      def initialize(results=[])
-        super(results)
-      end
-
-      #
-      # Returns a mapped Array of the results within the Page using the
-      # given _block_. If the _block_ is not given, the page will be
-      # returned.
-      #
-      #   page.map # => Page
-      #
-      #   page.map { |result| result.url } # => [...]
-      #
-      def map(&block)
-        return self unless block
-
-        mapped = []
-
-        each { |result| mapped << block.call(result) }
-        return mapped
-      end
-
-      #
-      # Selects the results within the Page which match the given _block_.
-      #
-      #   page.select { |result| result.title =~ /ruby/i }
-      #
-      def select(&block)
-        Page.new(super(&block))
-      end
+    class Page < GScraper::Page
 
       #
       # Selects the results using the specified _block_.
