@@ -25,10 +25,14 @@ require 'gscraper/sponsored_ad'
 module GScraper
   class SponsoredLinks < Array
     #
-    # Creates a new SponsoredLinks object with the given _ads_.
+    # Creates a new SponsoredLinks object with the given _ads_. If a
+    # _block_ is given, it will be passed the newly created SponsoredLinks
+    # object.
     #
-    def initialize(ads=[])
+    def initialize(ads=[],&block)
       super(ads)
+
+      block.call(self) if block
     end
 
     #
