@@ -54,6 +54,18 @@ module GScraper
       # The API version
       attr_accessor :version
 
+      #
+      # Creates a new AJAXQuery with the given _options_. If a _block_ is
+      # given it will be passed the newly created AJAXQuery object.
+      #
+      # _options_ may contain the following keys:
+      # <tt>:language</tt>:: The search language. Defaults to <tt>:en</tt>.
+      # <tt>:sig</tt>:: The search signature. Defaults to
+      #                 +582c1116317355adf613a6a843f19ece+.
+      # <tt>:key</tt>:: The search key. Defaults to <tt>:notsupplied</tt>.
+      # <tt>:version</tt>:: The desired API version. Defaults to
+      #                     <tt>1.0</tt>.
+      #
       def initialize(options={},&block)
         @agent = GScraper.web_agent(options)
 
@@ -66,6 +78,10 @@ module GScraper
         super(options,&block)
       end
 
+      #
+      # Creates a new AJAXQuery object from the specified URL. If a block is
+      # given, it will be passed the newly created AJAXQuery object.
+      #
       def self.from_url(url,options={},&block)
         url = URI(url.to_s)
 
@@ -79,6 +95,9 @@ module GScraper
         return self.new(options,&block)
       end
 
+      #
+      # Returns +RESULTS_PER_PAGE+.
+      #
       def results_per_page
         RESULTS_PER_PAGE
       end

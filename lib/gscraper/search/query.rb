@@ -85,7 +85,7 @@ module GScraper
 
       #
       # Creates a new Query object from the given search options. If a
-      # block is given, it will be passed the newly created query object.
+      # block is given, it will be passed the newly created Query object.
       #
       def initialize(options={},&block)
         @query = options[:query]

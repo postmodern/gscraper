@@ -144,12 +144,12 @@ module GScraper
       attr_accessor :links_to
 
       #
-      # Creates a new Query object from the given search options. If a
+      # Creates a new WebQuery object from the given search options. If a
       # block is given, it will be passed the newly created query object.
       #
-      #   Query.new(:query => 'ruby', :with_words => 'sow rspec')
+      #   WebQuery.new(:query => 'ruby', :with_words => 'sow rspec')
       #
-      #   Query.new(:exact_phrase => 'fluent interfaces') do |q|
+      #   WebQuery.new(:exact_phrase => 'fluent interfaces') do |q|
       #     q.within_past_week = true
       #   end
       #
@@ -199,12 +199,12 @@ module GScraper
       end
 
       #
-      # Creates a new Query object from the specified URL. If a block is
-      # given, it will be passed the newly created Query object.
+      # Creates a new WebQuery object from the specified URL. If a block is
+      # given, it will be passed the newly created WebQuery object.
       #
-      #   Query.from_url('http://www.google.com/search?q=ruby+zen)
+      #   WebQuery.from_url('http://www.google.com/search?q=ruby+zen)
       #
-      #   Query.from_url('http://www.google.com/search?q=ruby') do |q|
+      #   WebQuery.from_url('http://www.google.com/search?q=ruby') do |q|
       #     q.within_last_month = true
       #     q.occurrs_within = :title
       #   end
