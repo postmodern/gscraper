@@ -20,7 +20,8 @@
 #++
 #
 
-require 'gscraper/search/query'
+require 'gscraper/search/web_query'
+require 'gscraper/search/ajax_query'
 
 module GScraper
   module Search
@@ -34,7 +35,7 @@ module GScraper
     #   end
     #
     def Search.query(options={},&block)
-      Query.new(options,&block)
+      WebQuery.new(options,&block)
     end
 
     #
@@ -49,7 +50,25 @@ module GScraper
     #   end
     #
     def Search.query_from_url(url,&block)
-      Query.from_url(url,&block)
+      WebQuery.from_url(url,&block)
+    end
+
+    #
+    # Returns a new AJAXQuery object with the given _options_. See
+    # AJAXQuery.new.
+    #
+    #   Search.ajax_query(:query => 'ruby')
+    #
+    def Search.ajax_query(options={},&block)
+      AJAXQuery.new(options,&block)
+    end
+
+    #
+    # Returns the AJAXQuery object that represents the specified _url_.
+    # See AJAXQuery.from_url.
+    #
+    def Search.ajax_query_from_url(url,&block)
+      AJAXQuery.from_url(url,&block)
     end
   end
 end
