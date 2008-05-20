@@ -1,3 +1,23 @@
+== 0.2.0 / 2008-05-10
+
+* Removed GScraper::WebAgent.
+* Added GScraper::Page and GScraper::HasPages.
+* GScraper::Search::Result#page and GScraper::Search::Result#cached_page
+  no longer receives blocks.
+* GScraper::SponsoredLinks.new and GScraper::Search::Page.new now take 
+  blocks.
+* Renamed GScraper::Search::Query to GScraper::Search::WebQuery.
+* Added GScraper::Search::Query which supports building query expressions.
+* GScraper::Search::WebQuery#page and GScraper::Search::WebQuery#sponsored_links
+  no longer take blocks.
+* Added GScraper::Search::AJAXQuery.
+
+== 0.1.8 / 2008-04-30
+
+* Added the GScraper.user_agent_alias=(name) method.
+* Added URI::HTTP::QueryParams module.
+* Changed license from MIT to GPL-2.
+
 == 0.1.7 / 2008-04-28
 
 * Added support for specifing Search modifiers.
