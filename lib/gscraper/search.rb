@@ -20,4 +20,6 @@
 #++
 #
 
+require 'gscraper/search/web_query'
+require 'gscraper/search/ajax'
 require 'gscraper/search/search'
