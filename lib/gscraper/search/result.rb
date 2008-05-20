@@ -21,13 +21,11 @@
 #
 
 require 'gscraper/search/query'
-require 'gscraper/web_agent'
+require 'gscraper/gscraper'
 
 module GScraper
   module Search
     class Result
-
-      include WebAgent
 
       # Rank of the result page
       attr_reader :rank
@@ -52,6 +50,8 @@ module GScraper
       # _summary_, _url_, _size_, _cache_url_ and _similar_url_.
       #
       def initialize(rank,title,url,summary,cached_url=nil,similar_url=nil)
+        @agent = GScraper.web_agent
+
         @rank = rank
         @title = title
         @url = url
@@ -61,11 +61,10 @@ module GScraper
       end
 
       #
-      # Fetches the page of the result. If a _block_ is given it will be
-      # passed the page.
+      # Fetches the page of the result.
       #
-      def page(&block)
-        get_page(@url,&block)
+      def page
+        @agent.get(@url)
       end
 
       #
@@ -88,11 +87,10 @@ module GScraper
       end
 
       #
-      # Fetches the cached page of the result. If a _block_ is given it will
-      # be passed the cached page.
+      # Fetches the cached page of the result.
       #
-      def cached_page(&block)
-        get_page(@cached_url,&block)
+      def cached_page
+        @agent.get(@cached_url)
       end
 
       #
