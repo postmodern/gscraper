@@ -202,7 +202,7 @@ module GScraper
       # Creates a new WebQuery object from the specified URL. If a block is
       # given, it will be passed the newly created WebQuery object.
       #
-      #   WebQuery.from_url('http://www.google.com/search?q=ruby+zen)
+      #   WebQuery.from_url('http://www.google.com/search?q=ruby+zen')
       #
       #   WebQuery.from_url('http://www.google.com/search?q=ruby') do |q|
       #     q.within_last_month = true
