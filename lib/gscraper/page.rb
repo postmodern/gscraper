@@ -57,7 +57,7 @@ module GScraper
     #   page.select { |element| element.field =~ /ruby/i }
     #
     def select(&block)
-      self.new(super(&block))
+      self.class.new(super(&block))
     end
 
   end
