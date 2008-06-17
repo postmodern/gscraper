@@ -2,6 +2,8 @@
 
 require 'rubygems'
 require 'hoe'
+
+require './tasks/spec.rb'
 require './lib/gscraper/version.rb'
 
 Hoe.new('gscraper', GScraper::VERSION) do |p|
