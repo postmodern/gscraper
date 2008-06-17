@@ -21,5 +21,5 @@
 #
 
 require 'gscraper/search/web_query'
-require 'gscraper/search/ajax'
+require 'gscraper/search/ajax_query'
 require 'gscraper/search/search'
