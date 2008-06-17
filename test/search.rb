@@ -1,5 +1,0 @@
-require 'search/query_from_url'
-require 'search/query_result'
-require 'search/query_pages'
-require 'search/query_sponsored_links'
-require 'search/page_results'

@@ -11,6 +11,7 @@
 * GScraper::Search::WebQuery#page and GScraper::Search::WebQuery#sponsored_links
   no longer take blocks.
 * Added GScraper::Search::AJAXQuery.
+* Replaced Unit Tests with Rspec specifications.
 
 == 0.1.8 / 2008-04-30
 
