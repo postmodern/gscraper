@@ -212,9 +212,9 @@ module GScraper
       def self.from_url(url,options={},&block)
         url = URI(url.to_s)
 
-        options[:results_per_page] = url.query_params['num']
+        options[:results_per_page] = url.query_params['num'].to_i
 
-        options[:query] = url.query_params['as_q']
+        options[:query] = url.query_params['q']
         options[:exact_phrase] = url.query_params['as_epq']
         options[:with_words] = url.query_params['as_oq']
         options[:without_words] = url.query_params['as_eq']
