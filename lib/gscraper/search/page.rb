@@ -149,7 +149,7 @@ module GScraper
       #   page.cached_urls # => [...]
       #
       def cached_urls
-        map { |result| result.cached_url }
+        map { |result| result.cached_url }.compact
       end
 
       #
@@ -159,7 +159,7 @@ module GScraper
       #   page.cached_pages # => [...]
       #
       def cached_pages
-        map { |result| result.cached_page }
+        map { |result| result.cached_page }.compact
       end
 
       #
@@ -169,17 +169,7 @@ module GScraper
       #   page.similar_urls # => [...]
       #
       def similar_urls
-        map { |result| result.similar_url }
-      end
-
-      #
-      # Returns an Array containing the similar Queries of the results
-      # within the Page.
-      #
-      #   page.similar_queries # => [...]
-      #
-      def similar_queries
-        map { |result| result.similar_query }
+        map { |result| result.similar_url }.compact
       end
 
       #
@@ -253,20 +243,6 @@ module GScraper
       end
 
       #
-      # Iterates over each result's similar Query within the Page, passing
-      # each to the given _block_.
-      #
-      #   each_similar_query do |q|
-      #     q.first_page do |page|
-      #       puts page.urls.join("\n")
-      #     end
-      #   end
-      #
-      def each_similar_query(&block)
-        similar_queries.each(&block)
-      end
-
-      #
       # Returns the ranks of the results that match the specified _block_.
       #
       #   page.ranks_of { |result| result.title =~ /awesome/ }
@@ -332,16 +308,6 @@ module GScraper
       #
       def similar_urls_of(&block)
         results_with(&block).similar_urls
-      end
-
-      #
-      # Returns the similar Queries of the results that match the
-      # specified _block_.
-      #
-      #   page.similar_queries_of { |result| result.title =~ /hackety/ }
-      #
-      def similar_queries_of(&block)
-        results_with(&block).similar_queries
       end
 
     end

@@ -68,29 +68,12 @@ module GScraper
       end
 
       #
-      # Create a new Query for results that are similar to the Result. If
-      # a _block_ is given, it will be passed the newly created Query
-      # object.
-      #
-      #   result.similar_query # => Query
-      #
-      #   result.similar_query do |q|
-      #     q.first_page.each_url do |url|
-      #       puts url
-      #     end
-      #   end
-      #
-      def similar_query(&block)
-        if @similar_url
-          return Query.from_url(@similar_url,&block)
-        end
-      end
-
-      #
       # Fetches the cached page of the result.
       #
       def cached_page
-        @agent.get(@cached_url)
+        if @cached_url
+          return @agent.get(@cached_url)
+        end
       end
 
       #
