@@ -100,15 +100,29 @@ module GScraper
     #
     #   sponsored.ads_with_url(/\.com/) # => SponsoredLinks
     #
-    #   sponsored.ads_with_url(/^https:\/\//) do |ad|
-    #     puts ad.title
-    #   end
-    #
     def ads_with_url(url,&block)
       if url.kind_of?(Regexp)
         ads = ads_with { |ad| ad.url =~ url }
       else
         ads = ads_with { |ad| ad.url == url }
+      end
+
+      ads.each(&block) if block
+      return ads
+    end
+
+    #
+    # Selects the ads with the matching _direct_url_. The _direct_url_ may
+    # be either a String or a Regexp. If _block_ is given, each matching
+    # ad will be passed to the _block_.
+    #
+    #   sponsored.ads_with_direct_url(/\.com/) # => SponsoredLinks
+    #
+    def ads_with_direct_url(direct_url,&block)
+      if direct_url.kind_of?(Regexp)
+        ads = ads_with { |ad| ad.direct_url =~ direct_url }
+      else
+        ads = ads_with { |ad| ad.direct_url == direct_url }
       end
 
       ads.each(&block) if block
@@ -136,6 +150,16 @@ module GScraper
     end
 
     #
+    # Returns an Array containing the direct URLs of the ads within the
+    # SponsoredLinks.
+    #
+    #   sponsored.direct_urls # => [...]
+    #
+    def direct_urls
+      map { |ad| ad.direct_url }
+    end
+
+    #
     # Iterates over each ad's title within the SponsoredLinks, passing each to
     # the given _block_.
     #
@@ -146,13 +170,23 @@ module GScraper
     end
 
     #
-    # Iterates over each ad's url within the SponsoredLinks, passing each to
+    # Iterates over each ad's URL within the SponsoredLinks, passing each to
     # the given _block_.
     #
     #   each_url { |url| puts url }
     #
     def each_url(&block)
       urls.each(&block)
+    end
+
+    #
+    # Iterates over each ad's direct URL within the SponsoredLinks, passing
+    # each to the given _block_.
+    #
+    #   each_direct_url { |url| puts url }
+    #
+    def each_direct_url(&block)
+      direct_urls.each(&block)
     end
 
     #
@@ -165,12 +199,21 @@ module GScraper
     end
 
     #
-    # Returns the urls of the ads that match the specified _block_.
+    # Returns the URLs of the ads that match the specified _block_.
     #
     #   sponsored.urls_of { |ad| ad.title =~ /buy these pants/ }
     #
     def urls_of(&block)
       ads_with(&block).urls
+    end
+
+    #
+    # Returns the direct URLs of the ads that match the specified _block_.
+    #
+    #   sponsored.urls_of { |ad| ad.title =~ /buy these pants/ }
+    #
+    def direct_urls_of(&block)
+      ads_with(&block).direct_urls
     end
 
   end
