@@ -1,8 +1,6 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.join('spec_helper').expand_path
 
-require 'gscraper/has_pages'
-
 shared_examples_for "has Pages" do
 
   it "should have a first page" do
