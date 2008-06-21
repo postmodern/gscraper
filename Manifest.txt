@@ -24,6 +24,8 @@ lib/gscraper/version.rb
 lib/gscraper.rb
 tasks/spec.rb
 spec/spec_helper.rb
+spec/helpers/uri.rb
+spec/helpers/query.rb
 spec/extensions/uri/query_params_spec.rb
 spec/extensions/uri/http_spec.rb
 spec/has_pages_examples.rb
