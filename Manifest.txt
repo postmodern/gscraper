@@ -28,6 +28,7 @@ spec/extensions/uri/query_params_spec.rb
 spec/extensions/uri/http_spec.rb
 spec/has_pages_examples.rb
 spec/page_has_results_examples.rb
+spec/search/page_has_results_examples.rb
 spec/search/query_spec.rb
 spec/search/ajax_query_spec.rb
 spec/search/web_query_spec.rb
