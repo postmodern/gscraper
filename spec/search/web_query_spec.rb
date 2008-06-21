@@ -2,6 +2,7 @@ require 'pathname'
 require Pathname(__FILE__).dirname.join('..','spec_helper').expand_path
 require Pathname(__FILE__).dirname.join('..','has_pages_examples').expand_path
 require Pathname(__FILE__).dirname.join('..','page_has_results_examples').expand_path
+require Pathname(__FILE__).dirname.join('..','has_sponsored_links_examples').expand_path
 require Pathname(__FILE__).dirname.join('page_has_results_examples').expand_path
 
 require 'gscraper/search/web_query'
@@ -11,11 +12,13 @@ describe GScraper::Search::WebQuery do
   before(:all) do
     @query = GScraper::Search::WebQuery.new(:query => DEFAULT_QUERY)
     @page = @query.first_page
+    @links = @query.sponsored_links
   end
 
   it_should_behave_like "has Pages"
   it_should_behave_like "Page has Results"
   it_should_behave_like "Page has Search Results"
+  it_should_behave_like "has Sponsored Links"
 
   describe "Search URL" do
 
@@ -65,30 +68,6 @@ describe GScraper::Search::WebQuery do
 
     it "should have a query" do
       @query.query.should == DEFAULT_QUERY
-    end
-
-  end
-
-  describe "sponsored links" do
-
-    before(:all) do
-      @links = @query.sponsored_links
-    end
-
-    it "should have sponsored ads" do
-      @links.length.should_not == 0
-    end
-
-    it "should have titles" do
-      @links.each_title do |title|
-        title.should_not be_nil
-      end
-    end
-
-    it "should have URLs" do
-      @links.each_url do |url|
-        url.should_not be_nil
-      end
     end
 
   end
