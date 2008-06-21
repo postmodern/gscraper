@@ -69,4 +69,28 @@ describe GScraper::Search::WebQuery do
 
   end
 
+  describe "sponsored links" do
+
+    before(:all) do
+      @links = @query.sponsored_links
+    end
+
+    it "should have sponsored ads" do
+      @links.length.should_not == 0
+    end
+
+    it "should have titles" do
+      @links.each_title do |title|
+        title.should_not be_nil
+      end
+    end
+
+    it "should have URLs" do
+      @links.each_url do |url|
+        url.should_not be_nil
+      end
+    end
+
+  end
+
 end
