@@ -35,12 +35,26 @@ module GScraper
 
       include HasPages
 
+      # Maximum results per-page
       RESULTS_PER_PAGE = 8
 
       # AJAX API host
       API_HOST = 'www.google.com'
 
+      # AJAX API URL
       API_URL = "http://#{API_HOST}/uds/GwebSearch?callback=google.search.WebSearch.RawCompletion&context=0&lstkp=0&rsz=large"
+
+      # Default language
+      DEFAULT_LANGUAGE = 'en'
+
+      # Default signature
+      DEFAULT_SIG = '582c1116317355adf613a6a843f19ece'
+
+      # Default key
+      DEFAULT_KEY = 'notsupplied'
+
+      # Default version
+      DEFAULT_VERSION = '1.0'
 
       # The search language
       attr_accessor :language
@@ -69,11 +83,11 @@ module GScraper
       def initialize(options={},&block)
         @agent = GScraper.web_agent(options)
 
-        @language = (options[:language] || :en)
+        @language = (options[:language] || DEFAULT_LANGUAGE)
 
-        @sig = (options[:sig] || '582c1116317355adf613a6a843f19ece')
-        @key = (options[:key] || :notsupplied)
-        @version = (options[:version] || '1.0')
+        @sig = (options[:sig] || DEFAULT_SIG)
+        @key = (options[:key] || DEFAULT_KEY)
+        @version = (options[:version] || DEFAULT_VERSION)
 
         super(options,&block)
       end
