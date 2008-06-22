@@ -1,9 +1,8 @@
-require 'pathname'
-require Pathname(__FILE__).dirname.join('..','spec_helper').expand_path
-require Pathname(__FILE__).dirname.join('..','has_pages_examples').expand_path
-require Pathname(__FILE__).dirname.join('..','page_has_results_examples').expand_path
-require Pathname(__FILE__).dirname.join('..','has_sponsored_links_examples').expand_path
-require Pathname(__FILE__).dirname.join('page_has_results_examples').expand_path
+require 'spec_helper'
+require 'has_pages_examples'
+require 'page_has_results_examples'
+require 'has_sponsored_links_examples'
+require 'search/page_has_results_examples'
 
 require 'gscraper/search/web_query'
 

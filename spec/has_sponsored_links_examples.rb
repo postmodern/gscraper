@@ -1,5 +1,4 @@
-require 'pathname'
-require Pathname(__FILE__).dirname.join('spec_helper').expand_path
+require 'spec_helper'
 
 shared_examples_for "has Sponsored Links" do
 
