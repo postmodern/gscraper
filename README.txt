@@ -42,7 +42,7 @@ GScraper is a web-scraping interface to various Google Services.
 
     q = GScraper::Search.query_from_url('http://www.google.com/search?as_q=ruby&as_epq=&as_oq=rails&as_ft=i&as_qdr=all&as_occt=body&as_rights=%28cc_publicdomain%7Ccc_attribute%7Ccc_sharealike%7Ccc_noncommercial%29.-%28cc_nonderived%29')
 
-    q.query # =>; "ruby"
+    q.query # => "ruby"
     q.with_words # => "rails"
     q.occurrs_within # => :title
     q.rights # => :cc_by_nc
