@@ -71,4 +71,8 @@ describe GScraper::Search::WebQuery do
 
   end
 
+  it "should have atleast one similar query URL" do
+    @page.similar_urls.length.should_not == 0
+  end
+
 end

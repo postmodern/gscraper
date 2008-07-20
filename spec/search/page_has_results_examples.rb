@@ -28,24 +28,14 @@ shared_examples_for "Page has Search Results" do
     end
   end
 
-  it "should have non-empty URLs" do
-    @page.each_url do |url|
-      url.length.should_not == 0
-    end
-  end
-
   it "should have valid URLs" do
     @page.each_url do |url|
-      url_should_be_valid(url)
+      uri_should_be_valid(url)
     end
   end
 
   it "should have atleast one cached URL" do
-    @page.cached_urls.should_not == 0
-  end
-
-  it "should have atleast one similar query URL" do
-    @page.similar_urls.should_not == 0
+    @page.cached_urls.length.should_not == 0
   end
 
 end

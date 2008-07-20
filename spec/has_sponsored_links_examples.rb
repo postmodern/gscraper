@@ -24,15 +24,9 @@ shared_examples_for "has Sponsored Links" do
     end
   end
 
-  it "should have non-empty URLs" do
-    @links.each_url do |url|
-      url.length.should_not == 0
-    end
-  end
-
   it "should have valid URLs" do
     @links.each_url do |url|
-      url_should_be_valid(url)
+      uri_should_be_valid(url)
     end
   end
 
@@ -42,15 +36,9 @@ shared_examples_for "has Sponsored Links" do
     end
   end
 
-  it "should have non-empty direct URLs" do
-    @links.each_direct_url do |url|
-      url.length.should_not == 0
-    end
-  end
-
   it "should have valid direct URLs" do
     @links.each_direct_url do |url|
-      url_should_be_valid(url)
+      uri_should_be_valid(url)
     end
   end
 

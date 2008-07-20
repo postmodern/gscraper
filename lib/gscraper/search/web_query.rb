@@ -394,7 +394,7 @@ module GScraper
             rank = rank_offset + (index + 1)
             link = result.at('//a.l')
             title = link.inner_text
-            url = link.get_attribute('href')
+            url = URI(link.get_attribute('href'))
             summary_text = ''
             cached_url = nil
             similar_url = nil
@@ -407,11 +407,11 @@ module GScraper
               end
 
               if (cached_link = result.at('nobr/a:first'))
-                cached_url = cached_link.get_attribute('href')
+                cached_url = URI(cached_link.get_attribute('href'))
               end
 
               if (similar_link = result.at('nobr/a:last'))
-                similar_url = "http://#{SEARCH_HOST}" + similar_link.get_attribute('href')
+                similar_url = URI("http://#{SEARCH_HOST}" + similar_link.get_attribute('href'))
               end
             end
 
@@ -445,7 +445,7 @@ module GScraper
           # top and side ads
           doc.search('//a[@id="pa1"]|//a[@id*="an"]').each do |link|
             title = link.inner_text
-            url = "http://#{SEARCH_HOST}" + link.get_attribute('href')
+            url = URI("http://#{SEARCH_HOST}" + link.get_attribute('href'))
 
             links << SponsoredAd.new(title,url)
           end
