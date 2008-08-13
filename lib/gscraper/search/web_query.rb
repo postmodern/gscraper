@@ -50,51 +50,6 @@ module GScraper
       # Results per-page
       attr_accessor :results_per_page
 
-      # Search query
-      attr_accessor :query
-
-      # Search 'link' modifier
-      attr_accessor :link
-
-      # Search 'related' modifier
-      attr_accessor :related
-
-      # Search 'info' modifier
-      attr_accessor :info
-
-      # Search 'site' modifier
-      attr_accessor :site
-
-      # Search 'filetype' modifier
-      attr_accessor :filetype
-
-      # Search 'allintitle' modifier
-      attr_accessor :allintitle
-
-      # Search 'intitle' modifier
-      attr_accessor :intitle
-
-      # Search 'allinurl' modifier
-      attr_accessor :allinurl
-
-      # Search 'inurl' modifier
-      attr_accessor :inurl
-
-      # Search 'allintext' modifier
-      attr_accessor :allintext
-
-      # Search 'intext' modifier
-      attr_accessor :intext
-
-      # Search for results containing the exact phrase
-      attr_accessor :exact_phrase
-
-      # Search for results with the words
-      attr_accessor :with_words
-
-      # Search for results with-out the words
-      attr_accessor :without_words
-
       # Search for results written in the language
       attr_accessor :language
 
@@ -118,9 +73,6 @@ module GScraper
 
       # Search for results within the past year
       attr_accessor :within_past_year
-
-      # Search for results containing numbers between the range
-      attr_accessor :numeric_range
 
       # Search for results where the query ocurrs within the area
       attr_accessor :occurrs_within

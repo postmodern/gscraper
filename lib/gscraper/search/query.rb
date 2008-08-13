@@ -119,19 +119,15 @@ module GScraper
         expr = []
 
         append_modifier = lambda { |name|
-          modifier = instance_variable_get("@#{name}")
+          modifier = format_modifier(instance_variable_get("@#{name}"))
 
-          expr << "#{name}:#{modifier}" if modifier
+          expr << "#{name}:#{modifier}" unless modifier.empty?
         }
 
         append_options = lambda { |name|
-          ops = instance_variable_get("@#{name}")
+          ops = format_options(instance_variable_get("@#{name}"))
 
-          if ops.kind_of?(Array)
-            expr << "#{name}:#{ops.join(' ')}"
-          elsif ops
-            expr << "#{name}:#{ops}"
-          end
+          expr << "#{name}:#{ops}" unless ops.empty?
         }
 
         expr << @query if @query
@@ -166,6 +162,26 @@ module GScraper
         end
 
         return expr.join(' ')
+      end
+
+      protected
+
+      def format_modifier(value)
+        if value.kind_of?(Regexp)
+          return value.source
+        else
+          return value.to_s
+        end
+      end
+
+      def format_options(value)
+        if value.kind_of?(Array)
+          return value.map { |element|
+            format_modifier(element)
+          }.join(' ')
+        else
+          return format_modifier(value)
+        end
       end
 
     end
