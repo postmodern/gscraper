@@ -338,7 +338,7 @@ module GScraper
       def page(page_index)
         Page.new do |new_page|
           doc = @agent.get(page_url(page_index))
-          results = doc.search('//div.g')[0...@results_per_page.to_i]
+          results = doc.search('//li.g|//li/div.g')[0...@results_per_page.to_i]
 
           rank_offset = result_offset_of(page_index)
 
@@ -351,18 +351,18 @@ module GScraper
             cached_url = nil
             similar_url = nil
 
-            if (content = (result.at('//td.j//font|//td.j/div')))
+            if (content = (result.at('//div.s|//td.j//font')))
               content.children.each do |elem|
                 break if (!(elem.text?) && elem.name=='br')
 
                 summary_text << elem.inner_text
               end
 
-              if (cached_link = result.at('nobr/a:first'))
+              if (cached_link = result.at('span.gl/a:first'))
                 cached_url = URI(cached_link.get_attribute('href'))
               end
 
-              if (similar_link = result.at('nobr/a:last'))
+              if (similar_link = result.at('span.gl/a:last'))
                 similar_url = URI("http://#{SEARCH_HOST}" + similar_link.get_attribute('href'))
               end
             end
