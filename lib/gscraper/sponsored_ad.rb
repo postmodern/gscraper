@@ -43,9 +43,7 @@ module GScraper
     # Returns the direct URL of the ad.
     #
     def direct_url
-      uri = URI(@url)
-
-      return (uri.query_params['adurl'] || uri.query_params['q'])
+      URI(@url.query_params['adurl'] || @url.query_params['q'])
     end
 
     #

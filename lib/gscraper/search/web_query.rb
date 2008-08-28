@@ -50,51 +50,6 @@ module GScraper
       # Results per-page
       attr_accessor :results_per_page
 
-      # Search query
-      attr_accessor :query
-
-      # Search 'link' modifier
-      attr_accessor :link
-
-      # Search 'related' modifier
-      attr_accessor :related
-
-      # Search 'info' modifier
-      attr_accessor :info
-
-      # Search 'site' modifier
-      attr_accessor :site
-
-      # Search 'filetype' modifier
-      attr_accessor :filetype
-
-      # Search 'allintitle' modifier
-      attr_accessor :allintitle
-
-      # Search 'intitle' modifier
-      attr_accessor :intitle
-
-      # Search 'allinurl' modifier
-      attr_accessor :allinurl
-
-      # Search 'inurl' modifier
-      attr_accessor :inurl
-
-      # Search 'allintext' modifier
-      attr_accessor :allintext
-
-      # Search 'intext' modifier
-      attr_accessor :intext
-
-      # Search for results containing the exact phrase
-      attr_accessor :exact_phrase
-
-      # Search for results with the words
-      attr_accessor :with_words
-
-      # Search for results with-out the words
-      attr_accessor :without_words
-
       # Search for results written in the language
       attr_accessor :language
 
@@ -118,9 +73,6 @@ module GScraper
 
       # Search for results within the past year
       attr_accessor :within_past_year
-
-      # Search for results containing numbers between the range
-      attr_accessor :numeric_range
 
       # Search for results where the query ocurrs within the area
       attr_accessor :occurrs_within
@@ -386,7 +338,7 @@ module GScraper
       def page(page_index)
         Page.new do |new_page|
           doc = @agent.get(page_url(page_index))
-          results = doc.search('//div.g')[0...@results_per_page.to_i]
+          results = doc.search('//li.g|//li/div.g')[0...@results_per_page.to_i]
 
           rank_offset = result_offset_of(page_index)
 
@@ -394,24 +346,24 @@ module GScraper
             rank = rank_offset + (index + 1)
             link = result.at('//a.l')
             title = link.inner_text
-            url = link.get_attribute('href')
+            url = URI(link.get_attribute('href'))
             summary_text = ''
             cached_url = nil
             similar_url = nil
 
-            if (content = (result.at('//td.j//font|//td.j/div')))
+            if (content = (result.at('//div.s|//td.j//font')))
               content.children.each do |elem|
                 break if (!(elem.text?) && elem.name=='br')
 
                 summary_text << elem.inner_text
               end
 
-              if (cached_link = result.at('nobr/a:first'))
-                cached_url = cached_link.get_attribute('href')
+              if (cached_link = result.at('span.gl/a:first'))
+                cached_url = URI(cached_link.get_attribute('href'))
               end
 
-              if (similar_link = result.at('nobr/a:last'))
-                similar_url = "http://#{SEARCH_HOST}" + similar_link.get_attribute('href')
+              if (similar_link = result.at('span.gl/a:last'))
+                similar_url = URI("http://#{SEARCH_HOST}" + similar_link.get_attribute('href'))
               end
             end
 
@@ -445,7 +397,7 @@ module GScraper
           # top and side ads
           doc.search('//a[@id="pa1"]|//a[@id*="an"]').each do |link|
             title = link.inner_text
-            url = "http://#{SEARCH_HOST}" + link.get_attribute('href')
+            url = URI("http://#{SEARCH_HOST}" + link.get_attribute('href'))
 
             links << SponsoredAd.new(title,url)
           end

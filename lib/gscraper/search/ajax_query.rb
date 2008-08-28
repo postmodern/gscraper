@@ -161,9 +161,9 @@ module GScraper
             hash['results'].each_with_index do |result,index|
               rank = rank_offset + (index + 1)
               title = Hpricot(result['title']).inner_text
-              url = result['unescapedUrl']
+              url = URI(result['unescapedUrl'])
               summary = Hpricot(result['content']).inner_text
-              cached_url = result['cacheUrl']
+              cached_url = URI(result['cacheUrl'])
 
               new_page << Result.new(rank,title,url,summary,cached_url)
             end
