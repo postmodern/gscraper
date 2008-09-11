@@ -1,6 +1,6 @@
 = GScraper
 
-* http://rubyforge.org/projects/gscraper/
+* http://gscraper.rubyforge.org/
 * Postmodern Modulus III (postmodern.mod3@gmail.com)
 
 == DESCRIPTION:
