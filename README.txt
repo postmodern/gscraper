@@ -17,8 +17,7 @@ GScraper is a web-scraping interface to various Google Services.
 
 == REQUIREMENTS:
 
-* Hpricot
-* WWW::Mechanize
+* mechanize >= 0.9.0
 
 == INSTALL:
 
