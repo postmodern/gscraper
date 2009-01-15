@@ -107,6 +107,9 @@ module GScraper
       ((rank.to_i - 1) % results_per_page.to_i)
     end
 
+    #
+    # The cache of previously requested pages.
+    #
     def page_cache
       @page_cache ||= Hash.new { |hash,key| hash[key] = page(key.to_i) }
     end
