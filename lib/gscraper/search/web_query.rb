@@ -344,7 +344,7 @@ module GScraper
 
           rank_offset = result_offset_of(page_index)
 
-          for index in (0...@results_per_page)
+          (0...@results_per_page).each do |index|
             result = results[index]
 
             rank = rank_offset + (index + 1)
