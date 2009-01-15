@@ -48,10 +48,12 @@ module GScraper
   #
   def GScraper.proxy_uri(proxy_info=GScraper.proxy)
     if GScraper.proxy[:host]
-      return URI::HTTP.build(:host => GScraper.proxy[:host],
-                             :port => GScraper.proxy[:port],
-                             :userinfo => "#{GScraper.proxy[:user]}:#{GScraper.proxy[:password]}",
-                             :path => '/')
+      return URI::HTTP.build(
+        :host => GScraper.proxy[:host],
+        :port => GScraper.proxy[:port],
+        :userinfo => "#{GScraper.proxy[:user]}:#{GScraper.proxy[:password]}",
+        :path => '/'
+      )
     end
   end
   
