@@ -164,7 +164,11 @@ module GScraper
       def self.from_url(url,options={},&block)
         url = URI(url.to_s)
 
-        options[:results_per_page] = url.query_params['num'].to_i
+        if url.query_params['num']
+          options[:results_per_page] = url.query_params['num'].to_i
+        else
+          options[:results_per_page] = RESULTS_PER_PAGE
+        end
 
         options[:query] = url.query_params['q']
         options[:exact_phrase] = url.query_params['as_epq']
@@ -338,7 +342,7 @@ module GScraper
       def page(page_index)
         Page.new do |new_page|
           doc = @agent.get(page_url(page_index))
-          results = doc.search('//li.g|//li/div.g')[0...@results_per_page.to_i]
+          results = doc.search('//li.g|//li/div.g')
 
           rank_offset = result_offset_of(page_index)
 
