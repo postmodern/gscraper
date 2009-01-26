@@ -341,10 +341,11 @@ module GScraper
         Page.new do |new_page|
           doc = @agent.get(page_url(page_index))
           results = doc.search('li.g','li/div.g')
+          results_length = [@results_per_page, results.length].min
 
           rank_offset = result_offset_of(page_index)
 
-          (0...@results_per_page).each do |index|
+          (0...results_length).each do |index|
             result = results[index]
 
             rank = rank_offset + (index + 1)
