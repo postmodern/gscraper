@@ -1,3 +1,8 @@
+=== 0.2.3 / 2009-01-27
+
+* Fixed a bug in GScraper::Search::WebQuery#page, when the search query
+  returned less results than the expected results-per-page.
+
 === 0.2.2 / 2009-01-14
 
 * Updated GScraper::Search::WebQuery to use Nokogiri properly.
