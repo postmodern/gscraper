@@ -30,8 +30,6 @@ require 'gscraper/has_pages'
 require 'gscraper/licenses'
 require 'gscraper/gscraper'
 
-require 'hpricot'
-
 module GScraper
   module Search
     class WebQuery < Query
@@ -164,7 +162,11 @@ module GScraper
       def self.from_url(url,options={},&block)
         url = URI(url.to_s)
 
-        options[:results_per_page] = url.query_params['num'].to_i
+        if url.query_params['num']
+          options[:results_per_page] = url.query_params['num'].to_i
+        else
+          options[:results_per_page] = RESULTS_PER_PAGE
+        end
 
         options[:query] = url.query_params['q']
         options[:exact_phrase] = url.query_params['as_epq']
@@ -338,33 +340,37 @@ module GScraper
       def page(page_index)
         Page.new do |new_page|
           doc = @agent.get(page_url(page_index))
-          results = doc.search('//li.g|//li/div.g')[0...@results_per_page.to_i]
+          results = doc.search('li.g','li/div.g')
+          results_length = [@results_per_page, results.length].min
 
           rank_offset = result_offset_of(page_index)
 
-          results.each_with_index do |result,index|
+          (0...results_length).each do |index|
+            result = results[index]
+
             rank = rank_offset + (index + 1)
-            link = result.at('//a.l')
+            link = result.at('a.l')
             title = link.inner_text
             url = URI(link.get_attribute('href'))
             summary_text = ''
             cached_url = nil
             similar_url = nil
 
-            if (content = (result.at('//div.s|//td.j//font')))
+            if (content = (result.at('div.s','td.j//font')))
               content.children.each do |elem|
                 break if (!(elem.text?) && elem.name=='br')
 
                 summary_text << elem.inner_text
               end
 
-              if (cached_link = result.at('span.gl/a:first'))
-                cached_url = URI(cached_link.get_attribute('href'))
-              end
+            end
 
-              if (similar_link = result.at('span.gl/a:last'))
-                similar_url = URI("http://#{SEARCH_HOST}" + similar_link.get_attribute('href'))
-              end
+            if (cached_link = result.at('span.gl/a:first'))
+              cached_url = URI(cached_link.get_attribute('href'))
+            end
+
+            if (similar_link = result.at('span.gl/a:last'))
+              similar_url = URI("http://#{SEARCH_HOST}" + similar_link.get_attribute('href'))
             end
 
             new_page << Result.new(rank,title,url,summary_text,cached_url,similar_url)
@@ -395,7 +401,7 @@ module GScraper
           doc = @agent.get(search_url)
 
           # top and side ads
-          doc.search('//a[@id="pa1"]|//a[@id*="an"]').each do |link|
+          doc.search('#pa1', 'a[@id^="an"]').each do |link|
             title = link.inner_text
             url = URI("http://#{SEARCH_HOST}" + link.get_attribute('href'))
 
