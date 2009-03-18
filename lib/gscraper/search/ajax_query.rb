@@ -163,7 +163,13 @@ module GScraper
               rank = rank_offset + (index + 1)
               title = Nokogiri::HTML(result['title']).inner_text
               url = URI(URI.escape(result['unescapedUrl']))
-              summary = Nokogiri::HTML(result['content']).inner_text
+
+              unless result['content'].empty?
+                summary = Nokogiri::HTML(result['content']).inner_text
+              else
+                summary = ''
+              end
+
               cached_url = URI(result['cacheUrl'])
 
               new_page << Result.new(rank,title,url,summary,cached_url)
