@@ -103,6 +103,10 @@ module GScraper
       #                       appearing in the text.
       # <tt>:intext</tt>:: Search for results with the keyword appearing
       #                    in the text.
+      # <tt>:allinanchor</tt>:: Search for results with all of the keywords
+      #                         appearing in the text of links.
+      # <tt>:inanchor</tt>:: Search for results with the keyword appearing
+      #                      in the text of links.
       # <tt>:exact_phrase</tt>:: Search for results containing the specified
       #                          exact phrase.
       # <tt>:with_words</tt>:: Search for results containing all of the
@@ -127,6 +131,8 @@ module GScraper
         @inurl = options[:inurl]
         @allintext = options[:allintext]
         @intext = options[:intext]
+        @allinanchor = options[:allinanchor]
+        @inanchor = options[:inanchor]
 
         @exact_phrase = options[:exact_phrase]
         @with_words = options[:with_words]
@@ -169,6 +175,8 @@ module GScraper
         append_modifier.call(:inurl)
         append_options.call(:allintext)
         append_modifier.call(:intext)
+        append_options.call(:allinanchor)
+        append_modifier.call(:inanchor)
 
         if @exact_phrase
           expr << "\"#{@exact_phrase}\""
