@@ -115,6 +115,8 @@ module GScraper
       #                           the specified words.
       # <tt>:numeric_range</tt>:: Search for results contain numbers that
       #                           fall within the specified Range.
+      # <tt>:define</tt>:: Search for results containing the definition of
+      #                    the specified keyword.
       #
       def initialize(options={},&block)
         @query = options[:query]
@@ -139,6 +141,7 @@ module GScraper
         @without_words = options[:without_words]
 
         @numeric_range = options[:numeric_range]
+        @define = options[:define]
 
         block.call(self) if block
       end
@@ -193,6 +196,8 @@ module GScraper
         if @numeric_range.kind_of?(Range)
           expr << "#{@numeric_range.begin}..#{@numeric_range.end}"
         end
+
+        append_modifier.call(:define)
 
         return expr.join(' ')
       end
