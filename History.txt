@@ -1,5 +1,6 @@
 === 0.2.4 / 2009-03-18
 
+* Added SponsoredAd#direct_link.
 * Fixed a bug in SponsoredAd#direct_url where direct links we're not
   being URI escaped.
 * Removed last references to Hpricot, replacing them with Nokogiri.
