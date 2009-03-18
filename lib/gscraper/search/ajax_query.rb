@@ -162,7 +162,7 @@ module GScraper
             hash['results'].each_with_index do |result,index|
               rank = rank_offset + (index + 1)
               title = Nokogiri::HTML(result['title']).inner_text
-              url = URI(result['unescapedUrl'])
+              url = URI(URI.escape(result['unescapedUrl']))
               summary = Nokogiri::HTML(result['content']).inner_text
               cached_url = URI(result['cacheUrl'])
 
