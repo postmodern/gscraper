@@ -94,8 +94,31 @@ module GScraper
       attr_accessor :links_to
 
       #
-      # Creates a new WebQuery object from the given search options. If a
+      # Creates a new WebQuery object from the given search _options_. If a
       # block is given, it will be passed the newly created query object.
+      #
+      # _options_ may contain the following keys:
+      # <tt>:results_per_page</tt>:: Specifies the number of results
+      #                              for each page.
+      # <tt>:language</tt>:: Search for results in the specified language.
+      # <tt>:region</tt>:: Search for results from the specified region.
+      # <tt>:within_past_day</tt>:: Search for results that were created
+      #                             within the past day.
+      # <tt>:within_past_week</tt>:: Search for results that were created
+      #                              within the past week.
+      # <tt>:within_past_month</tt>:: Search for results that were created
+      #                               within the past month.
+      # <tt>:within_past_year</tt>:: Search for results that were created
+      #                              within the past year.
+      # <tt>:occurrs_within</tt>:: 
+      # <tt>:rights</tt>:: Search for results licensed under the specified
+      #                    license.
+      # <tt>:filtered</tt>:: Specifies whether or not to use SafeSearch.
+      #                      Defaults to +false+, if not specified.
+      # <tt>:similar_to<tt>:: Searches for results that are similar to the
+      #                       specified URI.
+      # <tt>:links_to</tt>:: Searches for results that link to the specified
+      #                      URI.
       #
       #   WebQuery.new(:query => 'ruby', :with_words => 'sow rspec')
       #
