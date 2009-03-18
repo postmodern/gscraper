@@ -181,6 +181,8 @@ module GScraper
         append_options.call(:allinanchor)
         append_modifier.call(:inanchor)
 
+        append_modifier.call(:define)
+
         if @exact_phrase
           expr << "\"#{@exact_phrase}\""
         end
@@ -196,8 +198,6 @@ module GScraper
         if @numeric_range.kind_of?(Range)
           expr << "#{@numeric_range.begin}..#{@numeric_range.end}"
         end
-
-        append_modifier.call(:define)
 
         return expr.join(' ')
       end
