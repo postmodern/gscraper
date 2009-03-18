@@ -105,7 +105,7 @@ module GScraper
       #                    in the text.
       # <tt>:exact_phrase</tt>:: Search for results containing the specified
       #                          exact phrase.
-      # <tt>:with_words</tt>:: Search for results containing any of the
+      # <tt>:with_words</tt>:: Search for results containing all of the
       #                        specified words.
       # <tt>:without_words</tt>:: Search for results not containing any of
       #                           the specified words.
