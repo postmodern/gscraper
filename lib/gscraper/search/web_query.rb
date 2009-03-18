@@ -87,11 +87,11 @@ module GScraper
       # Filter the search results
       attr_accessor :filtered
 
-      # Search for results similar to the page
-      attr_accessor :similar_to
+      alias similar_to related
+      alias similar_to= related=
 
-      # Search for results linking to the page
-      attr_accessor :links_to
+      alias links_to link
+      alias links_to= link=
 
       #
       # Creates a new WebQuery object from the given search _options_. If a
@@ -115,10 +115,6 @@ module GScraper
       #                    license.
       # <tt>:filtered</tt>:: Specifies whether or not to use SafeSearch.
       #                      Defaults to +false+, if not specified.
-      # <tt>:similar_to<tt>:: Searches for results that are similar to the
-      #                       specified URI.
-      # <tt>:links_to</tt>:: Searches for results that link to the specified
-      #                      URI.
       #
       #   WebQuery.new(:query => 'ruby', :with_words => 'sow rspec')
       #
@@ -164,9 +160,6 @@ module GScraper
         @occurrs_within = options[:occurrs_within]
         @rights = options[:rights]
         @filtered = options[:filtered]
-
-        @similar_to = options[:similar_to]
-        @links_to = options[:links_to]
 
         super(options,&block)
       end
@@ -254,9 +247,9 @@ module GScraper
         end
 
         if url.query_params['as_rq']
-          options[:similar_to] = url.query_params['as_rq']
+          options[:related] = url.query_params['as_rq']
         elsif url.query_params['as_lq']
-          options[:links_to] = url.query_params['as_lq']
+          options[:link] = url.query_params['as_lq']
         end
 
         return self.new(options,&block)
@@ -333,12 +326,6 @@ module GScraper
         end
 
         url.query_params['safe'] = 'active' if @filtered
-
-        if @similar_to
-          url.query_params['as_rq'] = @similar_to
-        elsif @links_to
-          url.query_params['as_lq'] = @links_to
-        end
 
         return url
       end
