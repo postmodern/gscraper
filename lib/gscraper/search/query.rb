@@ -82,8 +82,35 @@ module GScraper
       attr_accessor :numeric_range
 
       #
-      # Creates a new Query object from the given search options. If a
+      # Creates a new Query object from the given search _options_. If a
       # block is given, it will be passed the newly created Query object.
+      #
+      # _options_ may contain the following keys:
+      # <tt>:query</tt>:: The search query.
+      # <tt>:link</tt>:: Search for results which link to the specified
+      #                  URI.
+      # <tt>:related</tt>:: Search for results which relate to the
+      #                     specified URI.
+      # <tt>:info</tt>:: Return information about the specified URI.
+      # <tt>:site</tt>:: Limit results to the specified site.
+      # <tt>:filetype</tt>:: Limit results to those with the specified
+      #                      file-type.
+      # <tt>:allintitle</tt>:: Search for results with all of the keywords
+      #                        appearing in the title.
+      # <tt>:intitle</tt>:: Search for results with the keyword appearing
+      #                     in the title.
+      # <tt>:allintext</tt>:: Search for results with all of the keywords
+      #                       appearing in the text.
+      # <tt>:intext</tt>:: Search for results with the keyword appearing
+      #                    in the text.
+      # <tt>:exact_phrase</tt>:: Search for results containing the specified
+      #                          exact phrase.
+      # <tt>:with_words</tt>:: Search for results containing any of the
+      #                        specified words.
+      # <tt>:without_words</tt>:: Search for results not containing any of
+      #                           the specified words.
+      # <tt>:numeric_range</tt>:: Search for results contain numbers that
+      #                           fall within the specified Range.
       #
       def initialize(options={},&block)
         @query = options[:query]
