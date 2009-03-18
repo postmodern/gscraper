@@ -29,8 +29,6 @@ require 'gscraper/has_pages'
 require 'gscraper/licenses'
 require 'gscraper/gscraper'
 
-require 'hpricot'
-
 module GScraper
   module Search
     class Query
