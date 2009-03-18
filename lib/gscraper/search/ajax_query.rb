@@ -28,6 +28,7 @@ require 'gscraper/has_pages'
 require 'gscraper/gscraper'
 
 require 'json'
+require 'nokogiri'
 
 module GScraper
   module Search
@@ -160,9 +161,9 @@ module GScraper
           if (hash.kind_of?(Hash) && hash['results'])
             hash['results'].each_with_index do |result,index|
               rank = rank_offset + (index + 1)
-              title = Hpricot(result['title']).inner_text
+              title = Nokogiri::HTML(result['title']).inner_text
               url = URI(result['unescapedUrl'])
-              summary = Hpricot(result['content']).inner_text
+              summary = Nokogiri::HTML(result['content']).inner_text
               cached_url = URI(result['cacheUrl'])
 
               new_page << Result.new(rank,title,url,summary,cached_url)

@@ -22,6 +22,7 @@
 
 require 'uri/http'
 require 'mechanize'
+require 'nokogiri'
 require 'open-uri'
 
 module GScraper
@@ -127,10 +128,10 @@ module GScraper
   end
 
   #
-  # Similar to GScraper.open_uri but returns an Hpricot document.
+  # Similar to GScraper.open_uri but returns a Nokogiri::HTML document.
   #
   def GScraper.open_page(uri,options={})
-    Hpricot(GScraper.open_uri(uri,options))
+    Nokogiri::HTML(GScraper.open_uri(uri,options))
   end
 
   #
