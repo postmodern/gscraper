@@ -76,7 +76,7 @@ module GScraper
       # _options_ may contain the following keys:
       # <tt>:language</tt>:: The search language. Defaults to <tt>:en</tt>.
       # <tt>:sig</tt>:: The search signature. Defaults to
-      #                 +582c1116317355adf613a6a843f19ece+.
+      #                 <tt>582c1116317355adf613a6a843f19ece</tt>.
       # <tt>:key</tt>:: The search key. Defaults to <tt>:notsupplied</tt>.
       # <tt>:version</tt>:: The desired API version. Defaults to
       #                     <tt>1.0</tt>.
