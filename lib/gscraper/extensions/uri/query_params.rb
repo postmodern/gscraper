@@ -20,6 +20,8 @@
 #++
 #
 
+require 'cgi'
+
 module URI
   module QueryParams
     # Query parameters
@@ -80,9 +82,9 @@ module URI
             "#{name}=active"
           elsif value
             if value.kind_of?(Array)
-              "#{name}=#{URI.encode(value.join(' '))}"
+              "#{name}=#{CGI.escape(value.join(' '))}"
             else
-              "#{name}=#{URI.encode(value.to_s)}"
+              "#{name}=#{CGI.escape(value.to_s)}"
             end
           else
             "#{name}="
