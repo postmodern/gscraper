@@ -6,7 +6,7 @@ require 'hoe'
 require './tasks/spec.rb'
 require './lib/gscraper/version.rb'
 
-Hoe.new('gscraper', GScraper::VERSION) do |p|
+Hoe.spec('gscraper') do |p|
   p.rubyforge_name = 'gscraper'
   p.developer('Postmodern', 'postmodern.mod3@gmail.com')
   p.remote_rdoc_dir = ''
