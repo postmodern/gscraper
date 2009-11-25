@@ -51,6 +51,8 @@ module GScraper
         results_with do |result|
           if result.title.match(title)
             block.call(result) if block
+
+            true
           end
         end
       end
@@ -70,6 +72,8 @@ module GScraper
         results_with do |result|
           if result.url.match(url)
             block.call(result) if block
+
+            true
           end
         end
       end
@@ -89,6 +93,8 @@ module GScraper
         results_with do |result|
           if result.summary.match(summary)
             block.call(result) if block
+
+            true
           end
         end
       end
