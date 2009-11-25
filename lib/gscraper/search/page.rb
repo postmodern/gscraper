@@ -48,14 +48,11 @@ module GScraper
       #   end
       #
       def results_with_title(title,&block)
-        if title.kind_of?(Regexp)
-          results = results_with { |result| result.title =~ title }
-        else
-          results = results_with { |result| result.title == title }
+        results_with do |result|
+          if result.title.match(title)
+            block.call(result) if block
+          end
         end
-
-        results.each(&block) if block
-        return results
       end
 
       #
@@ -70,14 +67,11 @@ module GScraper
       #   end
       #
       def results_with_url(url,&block)
-        if url.kind_of?(Regexp)
-          results = results_with { |result| result.url =~ url }
-        else
-          results = results_with { |result| result.url == url }
+        results_with do |result|
+          if result.url.match(url)
+            block.call(result) if block
+          end
         end
-
-        results.each(&block) if block
-        return results
       end
 
       #
@@ -92,14 +86,11 @@ module GScraper
       #   end
       #
       def results_with_summary(summary,&block)
-        if summary.kind_of?(Regexp)
-          results = results_with { |result| result.summary =~ summary }
-        else
-          results = results_with { |result| result.summary == summary }
+        results_with do |result|
+          if result.summary.match(summary)
+            block.call(result) if block
+          end
         end
-
-        results.each(&block) if block
-        return results
       end
 
       #
