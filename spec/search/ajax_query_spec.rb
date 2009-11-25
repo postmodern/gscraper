@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'helpers/query'
 require 'has_pages_examples'
 require 'page_has_results_examples'
 require 'search/page_has_results_examples'
@@ -6,8 +7,10 @@ require 'search/page_has_results_examples'
 require 'gscraper/search/ajax_query'
 
 describe GScraper::Search::AJAXQuery do
+  include Helpers
+
   before(:all) do
-    @query = GScraper::Search::AJAXQuery.new(:query => DEFAULT_QUERY)
+    @query = GScraper::Search::AJAXQuery.new(:query => Helpers::DEFAULT_QUERY)
     @page = @query.first_page
   end
 
@@ -55,7 +58,7 @@ describe GScraper::Search::AJAXQuery do
     end
 
     it "should have a 'q' query-param" do
-      @uri.query_params['q'].should == DEFAULT_QUERY
+      @uri.query_params['q'].should == Helpers::DEFAULT_QUERY
     end
 
     it "should have a default 'sig' query-param" do
@@ -90,7 +93,7 @@ describe GScraper::Search::AJAXQuery do
       @language = 'en'
       @sig = '582c1116317355adf613a6a843f19ece'
       @key = 'notsupplied'
-      @query = GScraper::Search::AJAXQuery.from_url("http://www.google.com/uds/GwebSearch?v=#{@version}&lstkp=0&rsz=large&hl=#{@language}&callback=google.search.WebSearch.RawCompletion&sig=#{@sig}&q=#{DEFAULT_QUERY}&gss=.com&context=0&key=#{@key}")
+      @query = GScraper::Search::AJAXQuery.from_url("http://www.google.com/uds/GwebSearch?v=#{@version}&lstkp=0&rsz=large&hl=#{@language}&callback=google.search.WebSearch.RawCompletion&sig=#{@sig}&q=#{Helpers::DEFAULT_QUERY}&gss=.com&context=0&key=#{@key}")
     end
 
     it "should have a version" do
@@ -110,7 +113,7 @@ describe GScraper::Search::AJAXQuery do
     end
 
     it "should have a query" do
-      @query.query.should == DEFAULT_QUERY
+      @query.query.should == Helpers::DEFAULT_QUERY
     end
   end
 end

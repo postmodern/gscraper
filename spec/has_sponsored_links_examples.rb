@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'helpers/uri'
 
 shared_examples_for "has Sponsored Links" do
+  include Helpers
+
   it "should have ads" do
     @links.length.should_not == 0
   end

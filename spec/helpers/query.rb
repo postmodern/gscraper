@@ -1,1 +1,3 @@
-DEFAULT_QUERY = 'Ruby'
+module Helpers
+  DEFAULT_QUERY = 'Ruby'
+end

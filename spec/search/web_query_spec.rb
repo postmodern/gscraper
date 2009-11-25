@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'helpers/query'
 require 'has_pages_examples'
 require 'page_has_results_examples'
 require 'has_sponsored_links_examples'
@@ -7,8 +8,10 @@ require 'search/page_has_results_examples'
 require 'gscraper/search/web_query'
 
 describe GScraper::Search::WebQuery do
+  include Helpers
+
   before(:all) do
-    @query = GScraper::Search::WebQuery.new(:query => DEFAULT_QUERY)
+    @query = GScraper::Search::WebQuery.new(:query => Helpers::DEFAULT_QUERY)
     @page = @query.first_page
     @links = @query.sponsored_links
   end
@@ -28,7 +31,7 @@ describe GScraper::Search::WebQuery do
     end
 
     it "should have a 'q' query-param" do
-      @uri.query_params['q'].should == DEFAULT_QUERY
+      @uri.query_params['q'].should == Helpers::DEFAULT_QUERY
     end
 
     it "should have a 'num' query-param" do
@@ -52,7 +55,7 @@ describe GScraper::Search::WebQuery do
 
   describe "queries from Web search URLs" do
     before(:all) do
-      @query = GScraper::Search::WebQuery.from_url("http://www.google.com/search?sa=N&start=0&q=#{DEFAULT_QUERY}&num=20")
+      @query = GScraper::Search::WebQuery.from_url("http://www.google.com/search?sa=N&start=0&q=#{Helpers::DEFAULT_QUERY}&num=20")
     end
 
     it "should have a results-per-page" do
@@ -60,7 +63,7 @@ describe GScraper::Search::WebQuery do
     end
 
     it "should have a query" do
-      @query.query.should == DEFAULT_QUERY
+      @query.query.should == Helpers::DEFAULT_QUERY
     end
   end
 
