@@ -6,7 +6,6 @@ require 'search/page_has_results_examples'
 require 'gscraper/search/ajax_query'
 
 describe GScraper::Search::AJAXQuery do
-
   before(:all) do
     @query = GScraper::Search::AJAXQuery.new(:query => DEFAULT_QUERY)
     @page = @query.first_page
@@ -17,7 +16,6 @@ describe GScraper::Search::AJAXQuery do
   it_should_behave_like "Page has Search Results"
 
   describe "Search URL" do
-
     before(:all) do
       @uri = @query.search_url
     end
@@ -74,11 +72,9 @@ describe GScraper::Search::AJAXQuery do
       v = @uri.query_params['v']
       v.should == GScraper::Search::AJAXQuery::DEFAULT_VERSION
     end
-
   end
 
   describe "page specific URLs" do
-
     before(:all) do
       @uri = @query.page_url(2)
     end
@@ -86,11 +82,9 @@ describe GScraper::Search::AJAXQuery do
     it "should have a 'start' query-param" do
       @uri.query_params['start'].should == @query.results_per_page
     end
-
   end
 
   describe "queries from AJAX search URLs" do
-
     before(:all) do
       @version = '1.0'
       @language = 'en'
@@ -118,7 +112,5 @@ describe GScraper::Search::AJAXQuery do
     it "should have a query" do
       @query.query.should == DEFAULT_QUERY
     end
-
   end
-
 end

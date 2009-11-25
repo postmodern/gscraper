@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 shared_examples_for "has Pages" do
-
   it "should have a first page" do
     @query.first_page.should_not be_nil
   end
@@ -15,5 +14,4 @@ shared_examples_for "has Pages" do
     pages.should_not be_nil
     pages.length.should == 2
   end
-
 end

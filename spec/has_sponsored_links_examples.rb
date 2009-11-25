@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 shared_examples_for "has Sponsored Links" do
-
   it "should have ads" do
     @links.length.should_not == 0
   end
@@ -41,5 +40,4 @@ shared_examples_for "has Sponsored Links" do
       uri_should_be_valid(url)
     end
   end
-
 end

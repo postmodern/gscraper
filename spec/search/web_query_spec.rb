@@ -7,7 +7,6 @@ require 'search/page_has_results_examples'
 require 'gscraper/search/web_query'
 
 describe GScraper::Search::WebQuery do
-
   before(:all) do
     @query = GScraper::Search::WebQuery.new(:query => DEFAULT_QUERY)
     @page = @query.first_page
@@ -20,7 +19,6 @@ describe GScraper::Search::WebQuery do
   it_should_behave_like "has Sponsored Links"
 
   describe "Search URL" do
-
     before(:all) do
       @uri = @query.search_url
     end
@@ -36,11 +34,9 @@ describe GScraper::Search::WebQuery do
     it "should have a 'num' query-param" do
       @uri.query_params['num'].should == @query.results_per_page
     end
-
   end
 
   describe "page specific URLs" do
-
     before(:all) do
       @uri = @query.page_url(2)
     end
@@ -52,11 +48,9 @@ describe GScraper::Search::WebQuery do
     it "should have a 'sa' query-param" do
       @uri.query_params['sa'].should == 'N'
     end
-
   end
 
   describe "queries from Web search URLs" do
-
     before(:all) do
       @query = GScraper::Search::WebQuery.from_url("http://www.google.com/search?sa=N&start=0&q=#{DEFAULT_QUERY}&num=20")
     end
@@ -68,11 +62,9 @@ describe GScraper::Search::WebQuery do
     it "should have a query" do
       @query.query.should == DEFAULT_QUERY
     end
-
   end
 
   it "should have atleast one similar query URL" do
     @page.similar_urls.length.should_not == 0
   end
-
 end

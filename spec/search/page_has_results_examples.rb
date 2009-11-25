@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 shared_examples_for "Page has Search Results" do
-
   it "should have incremental ranks" do
     ranks = @page.ranks
 
@@ -37,5 +36,4 @@ shared_examples_for "Page has Search Results" do
   it "should have atleast one cached URL" do
     @page.cached_urls.length.should_not == 0
   end
-
 end
