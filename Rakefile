@@ -13,6 +13,10 @@ Hoe.spec('gscraper') do
 
   self.remote_rdoc_dir = ''
   self.extra_deps = [['mechanize', '>=0.9.0']]
+
+  self.extra_dev_deps += [
+    ['rspec', '>=1.3.0']
+  ]
 end
 
 # vim: syntax=Ruby
