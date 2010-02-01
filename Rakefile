@@ -7,6 +7,7 @@ require './lib/gscraper/version.rb'
 
 Hoe.spec('gscraper') do
   self.rubyforge_name = 'gscraper'
+  self.version = GScraper::VERSION
   self.developer('Postmodern', 'postmodern.mod3@gmail.com')
 
   self.rspec_options += ['--colour', '--format', 'specdoc']
