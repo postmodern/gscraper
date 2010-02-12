@@ -62,7 +62,7 @@ module GScraper
   # Returns the supported GScraper User-Agent Aliases.
   #
   def GScraper.user_agent_aliases
-    WWW::Mechanize::AGENT_ALIASES
+    Mechanize::AGENT_ALIASES
   end
 
   #
@@ -112,7 +112,7 @@ module GScraper
     headers = {}
 
     if options[:user_agent_alias]
-      headers['User-Agent'] = WWW::Mechanize::AGENT_ALIASES[options[:user_agent_alias]]
+      headers['User-Agent'] = Mechanize::AGENT_ALIASES[options[:user_agent_alias]]
     elsif options[:user_agent]
       headers['User-Agent'] = options[:user_agent]
     elsif GScraper.user_agent
@@ -135,7 +135,7 @@ module GScraper
   end
 
   #
-  # Creates a new WWW::Mechanize agent with the given _options_.
+  # Creates a new Mechanize agent with the given _options_.
   #
   # _options_ may contain the following keys:
   # <tt>:user_agent_alias</tt>:: The User-Agent Alias to use.
@@ -153,7 +153,7 @@ module GScraper
   #   GScraper.web_agent(:user_agent => 'Google Bot')
   #
   def GScraper.web_agent(options={},&block)
-    agent = WWW::Mechanize.new
+    agent = Mechanize.new
 
     if options[:user_agent_alias]
       agent.user_agent_alias = options[:user_agent_alias]
