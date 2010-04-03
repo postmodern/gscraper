@@ -7,6 +7,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = 'gscraper'
     gem.version = GScraper::VERSION
+    gem.license = 'GPL-2'
     gem.summary = %Q{GScraper is a web-scraping interface to various Google Services.}
     gem.description = %Q{GScraper is a web-scraping interface to various Google Services.}
     gem.email = 'postmodern.mod3@gmail.com'
