@@ -27,14 +27,7 @@ module GScraper
   module Search
     class Page < GScraper::Page
 
-      #
-      # Selects the results using the specified _block_.
-      #
-      #   page.results_with { |result| result.title =~ /blog/ }
-      #
-      def results_with(&block)
-        select(&block)
-      end
+      alias results_with select
 
       #
       # Selects the results with the matching _title_. The _title_ may be

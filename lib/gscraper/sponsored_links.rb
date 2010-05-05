@@ -68,14 +68,7 @@ module GScraper
       end
     end
 
-    #
-    # Selects the ads using the specified _block_.
-    #
-    #   sponsored.ads_with { |ad| ad.title =~ /status symbol/ }
-    #
-    def ads_with(&block)
-      select(&block)
-    end
+    alias ads_with select
 
     #
     # Selects the ads with the matching _title_. The _title_ may be
