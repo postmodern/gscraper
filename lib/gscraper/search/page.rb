@@ -106,13 +106,117 @@ module GScraper
       end
 
       #
+      # Iterates over each result's rank within the Page, passing each to
+      # the given _block_.
+      #
+      #   each_rank { |rank| puts rank }
+      #
+      def each_rank
+        unless block_given?
+          enum_for(:each_rank)
+        else
+          each { |result| yield result.rank }
+        end
+      end
+
+      #
+      # Iterates over each result's title within the Page, passing each to
+      # the given _block_.
+      #
+      #   each_title { |title| puts title }
+      #
+      def each_title
+        unless block_given?
+          enum_for(:each_title)
+        else
+          each { |result| yield result.title }
+        end
+      end
+
+      #
+      # Iterates over each result's url within the Page, passing each to
+      # the given _block_.
+      #
+      #   each_url { |url| puts url }
+      #
+      def each_url
+        unless block_given?
+          enum_for(:each_url)
+        else
+          each { |result| yield result.url }
+        end
+      end
+
+      #
+      # Iterates over each result's summary within the Page, passing each
+      # to the given _block_.
+      #
+      #   each_summary { |summary| puts summary }
+      #
+      def each_summary
+        unless block_given?
+          enum_for(:each_summary)
+        else
+          each { |result| yield result.summary }
+        end
+      end
+
+      #
+      # Iterates over each result's cached URLs within the Page, passing
+      # each to the given _block_.
+      #
+      #   each_cached_url { |url| puts url }
+      #
+      def each_cached_url
+        unless block_given?
+          enum_for(:each_cached_url)
+        else
+          each do |result|
+            yield result.cached_url if result.cached_url
+          end
+        end
+      end
+
+      #
+      # Iterates over each result's cached pages within the Page, passing
+      # each to the given _block_.
+      #
+      #   each_cached_page { |page| puts page.readlines }
+      #
+      def each_cached_page
+        unless block_given?
+          enum_for(:each_cached_page)
+        else
+          each do |result|
+            yield result.cached_page if result.cached_page
+          end
+        end
+      end
+
+      #
+      # Iterates over each result's similar Query URLs within the Page,
+      # passing each to the given _block_.
+      #
+      #   each_similar_url { |url| puts url }
+      #
+      def each_similar_url
+        unless block_given?
+          enum_for(:each_similar_url)
+        else
+          each do |result|
+            yield result.similar_url if result.similar_url
+          end
+        end
+      end
+
+      #
       # Returns an Array containing the ranks of the results within the
       # Page.
       #
       #   page.ranks # => [...]
       #
       def ranks
-        map { |result| result.rank }
+        each_rank.to_a
       end
 
       #
@@ -122,7 +226,7 @@ module GScraper
       #   page.titles # => [...]
       #
       def titles
-        map { |result| result.title }
+        each_title.to_a
       end
 
       #
@@ -132,7 +236,7 @@ module GScraper
       #   page.urls # => [...]
       #
       def urls
-        map { |result| result.url }
+        each_url.to_a
       end
 
       #
@@ -142,7 +246,7 @@ module GScraper
       #   page.summaries # => [...]
       #
       def summaries
-        map { |result| result.summary }
+        each_summary.to_a
       end
 
       #
@@ -152,7 +256,7 @@ module GScraper
       #   page.cached_urls # => [...]
       #
       def cached_urls
-        map { |result| result.cached_url }.compact
+        each_cached_url.to_a
       end
 
       #
@@ -162,7 +266,7 @@ module GScraper
       #   page.cached_pages # => [...]
       #
       def cached_pages
-        map { |result| result.cached_page }.compact
+        each_cached_page.to_a
       end
 
       #
@@ -172,77 +276,7 @@ module GScraper
       #   page.similar_urls # => [...]
       #
       def similar_urls
-        map { |result| result.similar_url }.compact
-      end
-
-      #
-      # Iterates over each result's rank within the Page, passing each to
-      # the given _block_.
-      #
-      #   each_rank { |rank| puts rank }
-      #
-      def each_rank(&block)
-        ranks.each(&block)
-      end
-
-      #
-      # Iterates over each result's title within the Page, passing each to
-      # the given _block_.
-      #
-      #   each_title { |title| puts title }
-      #
-      def each_title(&block)
-        titles.each(&block)
-      end
-
-      #
-      # Iterates over each result's url within the Page, passing each to
-      # the given _block_.
-      #
-      #   each_url { |url| puts url }
-      #
-      def each_url(&block)
-        urls.each(&block)
-      end
-
-      #
-      # Iterates over each result's summary within the Page, passing each
-      # to the given _block_.
-      #
-      #   each_summary { |summary| puts summary }
-      #
-      def each_summary(&block)
-        summaries.each(&block)
-      end
-
-      #
-      # Iterates over each result's cached URLs within the Page, passing
-      # each to the given _block_.
-      #
-      #   each_cached_url { |url| puts url }
-      #
-      def each_cached_url(&block)
-        cached_urls.each(&block)
-      end
-
-      #
-      # Iterates over each result's cached pages within the Page, passing
-      # each to the given _block_.
-      #
-      #   each_cached_page { |page| puts page.readlines }
-      #
-      def each_cached_page(&block)
-        cached_pages.each(&block)
-      end
-
-      #
-      # Iterates over each result's similar Query URLs within the Page,
-      # passing each to the given _block_.
-      #
-      #   each_similar_url { |url| puts url }
-      #
-      def each_similar_url(&block)
-        similar_urls.each(&block)
+        each_similar_url.to_a
       end
 
       #
