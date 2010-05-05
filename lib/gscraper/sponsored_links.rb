@@ -129,13 +129,55 @@ module GScraper
     end
 
     #
+    # Iterates over each ad's title within the SponsoredLinks, passing
+    # each to the given _block_.
+    #
+    #   each_title { |title| puts title }
+    #
+    def each_title
+      unless block_given?
+        enum_for(:each_title)
+      else
+        each { |ad| yield ad.title }
+      end
+    end
+
+    #
+    # Iterates over each ad's URL within the SponsoredLinks, passing each to
+    # the given _block_.
+    #
+    #   each_url { |url| puts url }
+    #
+    def each_url
+      unless block_given?
+        enum_for(:each_url)
+      else
+        each { |ad| yield ad.url }
+      end
+    end
+
+    #
+    # Iterates over each ad's direct URL within the SponsoredLinks, passing
+    # each to the given _block_.
+    #
+    #   each_direct_url { |url| puts url }
+    #
+    def each_direct_url
+      unless block_given?
+        enum_for(:each_direct_url)
+      else
+        each { |ad| yield ad.direct_url }
+      end
+    end
+
+    #
     # Returns an Array containing the titles of the ads within the
     # SponsoredLinks.
     #
     #   sponsored.titles # => [...]
     #
     def titles
-      map { |ad| ad.title }
+      each_title.to_a
     end
 
     #
@@ -145,7 +187,7 @@ module GScraper
     #   sponsored.urls # => [...]
     #
     def urls
-      map { |ad| ad.url }
+      each_url.to_a
     end
 
     #
@@ -155,37 +197,7 @@ module GScraper
     #   sponsored.direct_urls # => [...]
     #
     def direct_urls
-      map { |ad| ad.direct_url }
-    end
-
-    #
-    # Iterates over each ad's title within the SponsoredLinks, passing each to
-    # the given _block_.
-    #
-    #   each_title { |title| puts title }
-    #
-    def each_title(&block)
-      titles.each(&block)
-    end
-
-    #
-    # Iterates over each ad's URL within the SponsoredLinks, passing each to
-    # the given _block_.
-    #
-    #   each_url { |url| puts url }
-    #
-    def each_url(&block)
-      urls.each(&block)
-    end
-
-    #
-    # Iterates over each ad's direct URL within the SponsoredLinks, passing
-    # each to the given _block_.
-    #
-    #   each_direct_url { |url| puts url }
-    #
-    def each_direct_url(&block)
-      direct_urls.each(&block)
+      each_direct_url.to_a
     end
 
     #
