@@ -81,15 +81,22 @@ module GScraper
     #     puts ad.url
     #   end
     #
-    def ads_with_title(title,&block)
-      if title.kind_of?(Regexp)
-        ads = ads_with { |ad| ad.title =~ title }
-      else
-        ads = ads_with { |ad| ad.title == title }
-      end
+    def ads_with_title(title)
+      return enum_for(:ads_with_title,title) unless block_given?
 
-      ads.each(&block) if block
-      return ads
+      comparitor = if title.kind_of?(Regexp)
+                     lambda { |ad| ad.title =~ title }
+                   else
+                     lambda { |ad| ad.title == title }
+                   end
+
+      return ads_with do |ad|
+        if comparitor.call(ad)
+          yield ad
+
+          true
+        end
+      end
     end
 
     #
@@ -99,15 +106,22 @@ module GScraper
     #
     #   sponsored.ads_with_url(/\.com/) # => SponsoredLinks
     #
-    def ads_with_url(url,&block)
-      if url.kind_of?(Regexp)
-        ads = ads_with { |ad| ad.url =~ url }
-      else
-        ads = ads_with { |ad| ad.url == url }
-      end
+    def ads_with_url(url)
+      return enum_for(:ads_with_url,url) unless block_given?
 
-      ads.each(&block) if block
-      return ads
+      comparitor = if url.kind_of?(Regexp)
+                     lambda { |ad| ad.url =~ url }
+                   else
+                     lambda { |ad| ad.url == url }
+                   end
+
+      return ads_with do |ad|
+        if comparitor.call(ad)
+          yield ad
+
+          true
+        end
+      end
     end
 
     #
@@ -117,15 +131,22 @@ module GScraper
     #
     #   sponsored.ads_with_direct_url(/\.com/) # => SponsoredLinks
     #
-    def ads_with_direct_url(direct_url,&block)
-      if direct_url.kind_of?(Regexp)
-        ads = ads_with { |ad| ad.direct_url =~ direct_url }
-      else
-        ads = ads_with { |ad| ad.direct_url == direct_url }
-      end
+    def ads_with_direct_url(direct_url)
+      return enum_for(:ads_with_direct_url,direct_url) unless block_given?
 
-      ads.each(&block) if block
-      return ads
+      comparitor = if direct_url.kind_of?(Regexp)
+                     lambda { |ad| ad.direct_url =~ direct_url }
+                   else
+                     lambda { |ad| ad.direct_url == direct_url }
+                   end
+
+      return ads_with do |ad|
+        if comparitor.call(ad)
+          yield ad
+
+          true
+        end
+      end
     end
 
     #
