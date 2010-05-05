@@ -41,13 +41,15 @@ module GScraper
       #   end
       #
       def results_with_title(title)
-        return enum_for(:results_with_title,title) unless block_given?
+        unless block_given?
+          enum_for(:results_with_title,title)
+        else
+          results_with do |result|
+            if result.title.match(title)
+              yield result
 
-        results_with do |result|
-          if result.title.match(title)
-            yield result if block_given?
-
-            true
+              true
+            end
           end
         end
       end
@@ -64,13 +66,15 @@ module GScraper
       #   end
       #
       def results_with_url(url)
-        return enum_for(:results_with_url,url) unless block_given?
+        unless block_given?
+          enum_for(:results_with_url,url)
+        else
+          results_with do |result|
+            if result.url.match(url)
+              yield result
 
-        results_with do |result|
-          if result.url.match(url)
-            yield result if block_given?
-
-            true
+              true
+            end
           end
         end
       end
@@ -87,13 +91,15 @@ module GScraper
       #   end
       #
       def results_with_summary(summary)
-        return enum_for(:results_with_summary,summary) unless block_given?
+        unless block_given?
+          enum_for(:results_with_summary,summary)
+        else
+          results_with do |result|
+            if result.summary.match(summary)
+              yield result
 
-        results_with do |result|
-          if result.summary.match(summary)
-            yield result if block_given?
-
-            true
+              true
+            end
           end
         end
       end
