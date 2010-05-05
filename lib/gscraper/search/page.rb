@@ -48,6 +48,8 @@ module GScraper
       #   end
       #
       def results_with_title(title)
+        return enum_for(:results_with_title,title) unless block_given?
+
         results_with do |result|
           if result.title.match(title)
             yield result if block_given?
@@ -69,6 +71,8 @@ module GScraper
       #   end
       #
       def results_with_url(url)
+        return enum_for(:results_with_url,url) unless block_given?
+
         results_with do |result|
           if result.url.match(url)
             yield result if block_given?
@@ -90,6 +94,8 @@ module GScraper
       #   end
       #
       def results_with_summary(summary)
+        return enum_for(:results_with_summary,summary) unless block_given?
+
         results_with do |result|
           if result.summary.match(summary)
             yield result if block_given?

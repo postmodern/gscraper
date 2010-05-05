@@ -20,6 +20,8 @@
 #++
 #
 
+require 'enumerator'
+
 module GScraper
   module HasPages
     include Enumerable
@@ -50,7 +52,11 @@ module GScraper
     # to the specified _block_.
     #
     def each_page(indices)
-      indices.map { |index| yield page_cache[index] }
+      unless block_given?
+        enum_for(:each_page,indices)
+      else
+        indices.map { |index| yield page_cache[index] }
+      end
     end
 
     #
@@ -58,6 +64,8 @@ module GScraper
     # specified _block_.
     #
     def each
+      return enum_for(:each) unless block_given?
+
       index = 1
 
       until ((next_page = page_cache[index]).empty?) do

@@ -22,6 +22,8 @@
 
 require 'gscraper/sponsored_ad'
 
+require 'enumerator'
+
 module GScraper
   class SponsoredLinks < Array
     #
@@ -45,7 +47,7 @@ module GScraper
     #   sponsored.map { |ad| ad.url } # => [...]
     #
     def map
-      return self unless block_given?
+      return enum_for(:map) unless block_given?
 
       mapped = []
 
@@ -59,7 +61,11 @@ module GScraper
     #   sponsored.select { |ad| ad.title =~ /consume/i }
     #
     def select(&block)
-      SponsoredLinks.new(super(&block))
+      unless block
+        enum_for(:select)
+      else
+        SponsoredLinks.new(super(&block))
+      end
     end
 
     #

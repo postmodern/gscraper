@@ -20,6 +20,8 @@
 #++
 #
 
+require 'enumerator'
+
 module GScraper
   class Page < Array
 
@@ -43,7 +45,7 @@ module GScraper
     #   page.map { |element| element.field } # => [...]
     #
     def map
-      return self unless block_given?
+      return enum_for(:map) unless block_given?
 
       mapped = []
 
@@ -57,7 +59,11 @@ module GScraper
     #   page.select { |element| element.field =~ /ruby/i }
     #
     def select(&block)
-      self.class.new(super(&block))
+      unless block
+        enum_for(:select)
+      else
+        self.class.new(super(&block))
+      end
     end
 
   end
