@@ -9,54 +9,54 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-04-02}
+  s.date = %q{2010-05-05}
   s.description = %q{GScraper is a web-scraping interface to various Google Services.}
   s.email = %q{postmodern.mod3@gmail.com}
   s.extra_rdoc_files = [
     "ChangeLog.rdoc",
-    "README.rdoc"
+     "README.rdoc"
   ]
   s.files = [
     ".gitignore",
-    ".specopts",
-    ".yardopts",
-    "COPYING.txt",
-    "ChangeLog.rdoc",
-    "README.rdoc",
-    "Rakefile",
-    "gscraper.gemspec",
-    "lib/gscraper.rb",
-    "lib/gscraper/extensions.rb",
-    "lib/gscraper/extensions/uri.rb",
-    "lib/gscraper/extensions/uri/http.rb",
-    "lib/gscraper/extensions/uri/query_params.rb",
-    "lib/gscraper/gscraper.rb",
-    "lib/gscraper/has_pages.rb",
-    "lib/gscraper/licenses.rb",
-    "lib/gscraper/page.rb",
-    "lib/gscraper/search.rb",
-    "lib/gscraper/search/ajax_query.rb",
-    "lib/gscraper/search/page.rb",
-    "lib/gscraper/search/query.rb",
-    "lib/gscraper/search/result.rb",
-    "lib/gscraper/search/search.rb",
-    "lib/gscraper/search/web_query.rb",
-    "lib/gscraper/sponsored_ad.rb",
-    "lib/gscraper/sponsored_links.rb",
-    "lib/gscraper/version.rb",
-    "spec/extensions/uri/http_spec.rb",
-    "spec/extensions/uri/query_params_spec.rb",
-    "spec/gscraper_spec.rb",
-    "spec/has_pages_examples.rb",
-    "spec/has_sponsored_links_examples.rb",
-    "spec/helpers/query.rb",
-    "spec/helpers/uri.rb",
-    "spec/page_has_results_examples.rb",
-    "spec/search/ajax_query_spec.rb",
-    "spec/search/page_has_results_examples.rb",
-    "spec/search/query_spec.rb",
-    "spec/search/web_query_spec.rb",
-    "spec/spec_helper.rb"
+     ".specopts",
+     ".yardopts",
+     "COPYING.txt",
+     "ChangeLog.rdoc",
+     "README.rdoc",
+     "Rakefile",
+     "gscraper.gemspec",
+     "lib/gscraper.rb",
+     "lib/gscraper/extensions.rb",
+     "lib/gscraper/extensions/uri.rb",
+     "lib/gscraper/extensions/uri/http.rb",
+     "lib/gscraper/extensions/uri/query_params.rb",
+     "lib/gscraper/gscraper.rb",
+     "lib/gscraper/has_pages.rb",
+     "lib/gscraper/licenses.rb",
+     "lib/gscraper/page.rb",
+     "lib/gscraper/search.rb",
+     "lib/gscraper/search/ajax_query.rb",
+     "lib/gscraper/search/page.rb",
+     "lib/gscraper/search/query.rb",
+     "lib/gscraper/search/result.rb",
+     "lib/gscraper/search/search.rb",
+     "lib/gscraper/search/web_query.rb",
+     "lib/gscraper/sponsored_ad.rb",
+     "lib/gscraper/sponsored_links.rb",
+     "lib/gscraper/version.rb",
+     "spec/extensions/uri/http_spec.rb",
+     "spec/extensions/uri/query_params_spec.rb",
+     "spec/gscraper_spec.rb",
+     "spec/has_pages_examples.rb",
+     "spec/has_sponsored_links_examples.rb",
+     "spec/helpers/query.rb",
+     "spec/helpers/uri.rb",
+     "spec/page_has_results_examples.rb",
+     "spec/search/ajax_query_spec.rb",
+     "spec/search/page_has_results_examples.rb",
+     "spec/search/query_spec.rb",
+     "spec/search/web_query_spec.rb",
+     "spec/spec_helper.rb"
   ]
   s.has_rdoc = %q{yard}
   s.homepage = %q{http://github.com/postmodern/gscraper}
@@ -66,19 +66,19 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{GScraper is a web-scraping interface to various Google Services.}
   s.test_files = [
-    "spec/extensions/uri/http_spec.rb",
-    "spec/extensions/uri/query_params_spec.rb",
-    "spec/gscraper_spec.rb",
-    "spec/has_pages_examples.rb",
-    "spec/has_sponsored_links_examples.rb",
-    "spec/helpers/query.rb",
-    "spec/helpers/uri.rb",
-    "spec/page_has_results_examples.rb",
-    "spec/search/ajax_query_spec.rb",
-    "spec/search/page_has_results_examples.rb",
     "spec/search/query_spec.rb",
-    "spec/search/web_query_spec.rb",
-    "spec/spec_helper.rb"
+     "spec/search/page_has_results_examples.rb",
+     "spec/search/web_query_spec.rb",
+     "spec/search/ajax_query_spec.rb",
+     "spec/gscraper_spec.rb",
+     "spec/page_has_results_examples.rb",
+     "spec/spec_helper.rb",
+     "spec/has_pages_examples.rb",
+     "spec/extensions/uri/query_params_spec.rb",
+     "spec/extensions/uri/http_spec.rb",
+     "spec/helpers/query.rb",
+     "spec/helpers/uri.rb",
+     "spec/has_sponsored_links_examples.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -86,18 +86,18 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<mechanize>, [">= 1.0.0"])
-      s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
-      s.add_development_dependency(%q<yard>, [">= 0.5.3"])
+      s.add_runtime_dependency(%q<mechanize>, ["~> 1.0.0"])
+      s.add_development_dependency(%q<rspec>, ["~> 1.3.0"])
+      s.add_development_dependency(%q<yard>, ["~> 0.5.3"])
     else
-      s.add_dependency(%q<mechanize>, [">= 1.0.0"])
-      s.add_dependency(%q<rspec>, [">= 1.3.0"])
-      s.add_dependency(%q<yard>, [">= 0.5.3"])
+      s.add_dependency(%q<mechanize>, ["~> 1.0.0"])
+      s.add_dependency(%q<rspec>, ["~> 1.3.0"])
+      s.add_dependency(%q<yard>, ["~> 0.5.3"])
     end
   else
-    s.add_dependency(%q<mechanize>, [">= 1.0.0"])
-    s.add_dependency(%q<rspec>, [">= 1.3.0"])
-    s.add_dependency(%q<yard>, [">= 0.5.3"])
+    s.add_dependency(%q<mechanize>, ["~> 1.0.0"])
+    s.add_dependency(%q<rspec>, ["~> 1.3.0"])
+    s.add_dependency(%q<yard>, ["~> 0.5.3"])
   end
 end
 
