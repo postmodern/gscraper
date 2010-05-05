@@ -118,7 +118,7 @@ module GScraper
       # <tt>:define</tt>:: Search for results containing the definition of
       #                    the specified keyword.
       #
-      def initialize(options={},&block)
+      def initialize(options={})
         @query = options[:query]
 
         @link = options[:link]
@@ -143,7 +143,7 @@ module GScraper
         @numeric_range = options[:numeric_range]
         @define = options[:define]
 
-        block.call(self) if block
+        yield self if block_given?
       end
 
       #

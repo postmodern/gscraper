@@ -29,10 +29,10 @@ module GScraper
     # _block_ is given, it will be passed the newly created SponsoredLinks
     # object.
     #
-    def initialize(ads=[],&block)
+    def initialize(ads=[])
       super(ads)
 
-      block.call(self) if block
+      yield self if block_given?
     end
 
     #
@@ -44,12 +44,12 @@ module GScraper
     #
     #   sponsored.map { |ad| ad.url } # => [...]
     #
-    def map(&block)
-      return self unless block
+    def map
+      return self unless block_given?
 
       mapped = []
 
-      each { |ad| mapped << block.call(ad) }
+      each { |ad| mapped << yield(ad) }
       return mapped
     end
 

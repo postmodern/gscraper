@@ -152,7 +152,7 @@ module GScraper
   #   GScraper.web_agent(:user_agent_alias => 'Linux Mozilla')
   #   GScraper.web_agent(:user_agent => 'Google Bot')
   #
-  def GScraper.web_agent(options={},&block)
+  def GScraper.web_agent(options={})
     agent = Mechanize.new
 
     if options[:user_agent_alias]
@@ -168,7 +168,7 @@ module GScraper
       agent.set_proxy(proxy[:host],proxy[:port],proxy[:user],proxy[:password])
     end
 
-    block.call(agent) if block
+    yield agent if block_given?
     return agent
   end
 end

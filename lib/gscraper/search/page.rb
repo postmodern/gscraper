@@ -47,10 +47,10 @@ module GScraper
       #     puts result.url
       #   end
       #
-      def results_with_title(title,&block)
+      def results_with_title(title)
         results_with do |result|
           if result.title.match(title)
-            block.call(result) if block
+            yield result if block_given?
 
             true
           end
@@ -68,10 +68,10 @@ module GScraper
       #     puts result.title
       #   end
       #
-      def results_with_url(url,&block)
+      def results_with_url(url)
         results_with do |result|
           if result.url.match(url)
-            block.call(result) if block
+            yield result if block_given?
 
             true
           end
@@ -89,10 +89,10 @@ module GScraper
       #     puts result.url
       #   end
       #
-      def results_with_summary(summary,&block)
+      def results_with_summary(summary)
         results_with do |result|
           if result.summary.match(summary)
-            block.call(result) if block
+            yield result if block_given?
 
             true
           end

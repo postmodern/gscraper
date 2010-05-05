@@ -49,19 +49,19 @@ module GScraper
     # Iterates over the pages with the specified _indices_, passing each
     # to the specified _block_.
     #
-    def each_page(indices,&block)
-      indices.map { |index| block.call(page_cache[index]) }
+    def each_page(indices)
+      indices.map { |index| yield page_cache[index] }
     end
 
     #
     # Iterates over all the pages of the query, passing each to the
     # specified _block_.
     #
-    def each(&block)
+    def each
       index = 1
 
       until ((next_page = page_cache[index]).empty?) do
-        block.call(next_page)
+        yield next_page
         index = index + 1
       end
 

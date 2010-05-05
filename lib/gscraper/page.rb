@@ -27,10 +27,10 @@ module GScraper
     # Creates a new Page object with the given _elements_. If a _block_
     # is given, it will be passed the newly created Page object.
     #
-    def initialize(elements=[],&block)
+    def initialize(elements=[])
       super(elements)
 
-      block.call(self) if block
+      yield self if block_given?
     end
 
     #
@@ -42,12 +42,12 @@ module GScraper
     #
     #   page.map { |element| element.field } # => [...]
     #
-    def map(&block)
-      return self unless block
+    def map
+      return self unless block_given?
 
       mapped = []
 
-      each { |element| mapped << block.call(element) }
+      each { |element| mapped << yield(element) }
       return mapped
     end
 
