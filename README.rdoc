@@ -1,7 +1,7 @@
 = GScraper
 
-* http://gscraper.rubyforge.org/
 * http://github.com/postmodern/gscraper/
+* http://github.com/postmodern/gscraper/issues
 * Postmodern (postmodern.mod3 at gmail.com)
 
 == DESCRIPTION:
