@@ -2,7 +2,7 @@ doc
 pkg
 tmp/*
 .DS_Store
-.bundler
+.bundle
 .yardoc
 *.swp
 *~
