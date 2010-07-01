@@ -18,7 +18,7 @@ GScraper is a web-scraping interface to various Google Services.
 
 ## Requirements
 
-* mechanize >= 0.9.0
+* [mechanize](http://mechanize.rubyforge.org/mechanize/) ~> 1.0.0
 
 ## Install
 
