@@ -1,3 +1,22 @@
+### 0.3.0 / 2010-07-01
+
+* Upgraded to mechanize ~> 1.0.0.
+* Switched from Hoe to Jeweler for building RubyGems.
+* Switched to MarkDown documentation syntax with full YARD tags.
+* Added support for `:allinanchor` and `:inanchor` options to
+  {GScraper::Search::Query}.
+* Added support for the `:define` option in {GScraper::Search::Query}.
+* Aliased {GScraper::Search::WebQuery#similar_to} to `related`.
+* Aliased {GScraper::Search::WebQuery#similar_to=} to `related=`.
+* Aliased {GScraper::Search::WebQuery#links_to} to `link`.
+* Aliased {GScraper::Search::WebQuery#links_to=} to `link=`.
+* Removed `GScraper.open_uri`.
+* Removed `GScraper.open_page`.
+* Fixed the escaping/unescaping of URL query params in {URI::QueryParams}.
+* Use `yield` when possible, instead of the explicit `block.call`.
+* All enumerable methods now return an `Enumerator` object, if no block was
+  given.
+
 ### 0.2.4 / 2009-03-18
 
 * Added SponsoredAd#direct_link.
