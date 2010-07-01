@@ -110,53 +110,6 @@ module GScraper
   end
 
   #
-  # Opens the _uri_ with the given _options_. The contents of the _uri_
-  # will be returned.
-  #
-  # _options_ may contain the following keys:
-  # <tt>:user_agent_alias</tt>:: The User-Agent Alias to use.
-  # <tt>:user_agent</tt>:: The User-Agent String to use.
-  # <tt>:proxy</tt>:: A +Hash+ of proxy information which may
-  #                   contain the following keys:
-  #                   <tt>:host</tt>:: The proxy host.
-  #                   <tt>:port</tt>:: The proxy port.
-  #                   <tt>:user</tt>:: The user-name to login as.
-  #                   <tt>:password</tt>:: The password to login with.
-  #
-  #   GScraper.open_uri('http://www.hackety.org/')
-  #
-  #   GScraper.open_uri('http://tenderlovemaking.com/',
-  #     :user_agent_alias => 'Linux Mozilla')
-  #   GScraper.open_uri('http://www.wired.com/',
-  #     :user_agent => 'the future')
-  #
-  def GScraper.open_uri(uri,options={})
-    headers = {}
-
-    if options[:user_agent_alias]
-      headers['User-Agent'] = Mechanize::AGENT_ALIASES[options[:user_agent_alias]]
-    elsif options[:user_agent]
-      headers['User-Agent'] = options[:user_agent]
-    elsif GScraper.user_agent
-      headers['User-Agent'] = GScraper.user_agent
-    end
-
-    proxy = (options[:proxy] || GScraper.proxy)
-    if proxy[:host]
-      headers[:proxy] = GScraper.proxy_uri(proxy)
-    end
-
-    return Kernel.open(uri,headers)
-  end
-
-  #
-  # Similar to GScraper.open_uri but returns a Nokogiri::HTML document.
-  #
-  def GScraper.open_page(uri,options={})
-    Nokogiri::HTML(GScraper.open_uri(uri,options))
-  end
-
-  #
   # Creates a new Mechanize agent.
   #
   # @param [Hash] options
