@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'gscraper/search/result'
@@ -82,41 +80,75 @@ module GScraper
       attr_accessor :numeric_range
 
       #
-      # Creates a new Query object from the given search _options_. If a
-      # block is given, it will be passed the newly created Query object.
+      # Creates a new query.
       #
-      # _options_ may contain the following keys:
-      # <tt>:query</tt>:: The search query.
-      # <tt>:link</tt>:: Search for results which link to the specified
-      #                  URI.
-      # <tt>:related</tt>:: Search for results which relate to the
-      #                     specified URI.
-      # <tt>:info</tt>:: Return information about the specified URI.
-      # <tt>:site</tt>:: Limit results to the specified site.
-      # <tt>:filetype</tt>:: Limit results to those with the specified
-      #                      file-type.
-      # <tt>:allintitle</tt>:: Search for results with all of the keywords
-      #                        appearing in the title.
-      # <tt>:intitle</tt>:: Search for results with the keyword appearing
-      #                     in the title.
-      # <tt>:allintext</tt>:: Search for results with all of the keywords
-      #                       appearing in the text.
-      # <tt>:intext</tt>:: Search for results with the keyword appearing
-      #                    in the text.
-      # <tt>:allinanchor</tt>:: Search for results with all of the keywords
-      #                         appearing in the text of links.
-      # <tt>:inanchor</tt>:: Search for results with the keyword appearing
-      #                      in the text of links.
-      # <tt>:exact_phrase</tt>:: Search for results containing the specified
-      #                          exact phrase.
-      # <tt>:with_words</tt>:: Search for results containing all of the
-      #                        specified words.
-      # <tt>:without_words</tt>:: Search for results not containing any of
-      #                           the specified words.
-      # <tt>:numeric_range</tt>:: Search for results contain numbers that
-      #                           fall within the specified Range.
-      # <tt>:define</tt>:: Search for results containing the definition of
-      #                    the specified keyword.
+      # @param [Hash] options
+      #   Additional options.
+      #
+      # @option options [String] :query
+      #   The search query.
+      #
+      # @option options [String] :link
+      #   Search for results which link to the specified URI.
+      #
+      # @option options [String] :related
+      #   Search for results which relate to the specified URI.
+      #
+      # @option options [String] :info
+      #   Return information about the specified URI.
+      #
+      # @option options [String] :site
+      #   Limit results to the specified site.
+      #
+      # @option options [String] :filetype
+      #   Limit results to those with the specified file-type.
+      #
+      # @option options [String, Array] :allintitle
+      #   Search for results with all of the keywords appearing in the
+      #   title.
+      #
+      # @option options [String] :intitle
+      #   Search for results with the keyword appearing in the title.
+      #
+      # @option options [String, Array] :allintext
+      #   Search for results with all of the keywords appearing in the text.
+      #
+      # @option options [String] :intext
+      #   Search for results with the keyword appearing in the text.
+      #
+      # @option options [String, Array] :allinanchor
+      #   Search for results with all of the keywords appearing in the
+      #   text of links.
+      #
+      # @option options [String] :inanchor
+      #   Search for results with the keyword appearing in the text of
+      #   links.
+      #
+      # @option options [String] :exact_phrase
+      #   Search for results containing the specified exact phrase.
+      #
+      # @option options [String, Array] :with_words
+      #   Search for results containing all of the specified words.
+      #
+      # @option options [String, Array] :without_words
+      #   Search for results not containing any of the specified words.
+      #
+      # @option options [Range] :numeric_range
+      #   Search for results contain numbers that fall within the
+      #   specified Range.
+      #
+      # @option options [String] :define
+      #   Search for results containing the definition of the specified
+      #   keyword.
+      #
+      # @yield [query]
+      #   If a block is given, it will be passed the new query.
+      #
+      # @yieldparam [Query] query
+      #   The new query.
+      #
+      # @return [Query]
+      #   The new query.
       #
       def initialize(options={})
         @query = options[:query]
@@ -147,7 +179,10 @@ module GScraper
       end
 
       #
-      # Returns the query expression.
+      # The query expression.
+      #
+      # @return [String]
+      #   The expression representing the query.
       #
       def expression
         expr = []
@@ -204,6 +239,15 @@ module GScraper
 
       protected
 
+      #
+      # Formats the value for a search modifer.
+      #
+      # @param [Regexp, String]
+      #   The value for the search modifier.
+      #
+      # @return [String]
+      #   The formatted value.
+      #
       def format_modifier(value)
         if value.kind_of?(Regexp)
           return value.source
@@ -212,6 +256,15 @@ module GScraper
         end
       end
 
+      #
+      # Formats the value(s) for a search option.
+      #
+      # @param [Array, Regexp, String]
+      #   The value(s) for the search modifier.
+      #
+      # @return [String]
+      #   The formatted value.
+      #
       def format_options(value)
         if value.kind_of?(Array)
           return value.map { |element|

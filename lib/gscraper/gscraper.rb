@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'uri/http'
@@ -30,22 +28,31 @@ module GScraper
   COMMON_PROXY_PORT = 8080
 
   #
-  # Returns the +Hash+ of proxy information.
+  # The proxy information.
+  #
+  # @return [Hash]
   #
   def GScraper.proxy
     @@gscraper_proxy ||= {:host => nil, :port => COMMON_PROXY_PORT, :user => nil, :password => nil}
   end
 
   #
-  # Creates a HTTP URI based from the given _proxy_info_ hash. The
-  # _proxy_info_ hash defaults to Web.proxy, if not given.
+  # Creates a HTTP URI for the current proxy.
   #
-  # _proxy_info_ may contain the following keys:
-  # <tt>:host</tt>:: The proxy host.
-  # <tt>:port</tt>:: The proxy port. Defaults to COMMON_PROXY_PORT,
-  #                  if not specified.
-  # <tt>:user</tt>:: The user-name to login as.
-  # <tt>:password</tt>:: The password to login with.
+  # @param [Hash] proxy_info
+  #   The proxy information.
+  #
+  # @option proxy_info [String] :host
+  #   The proxy host.
+  #
+  # @option proxy_info [Integer] :port (COMMON_PROXY_PORT)
+  #   The proxy port.
+  #
+  # @option proxy_info [String] :user
+  #   The user-name to login as.
+  #
+  # @option proxy_info [String] :password
+  #   The password to login with.
   #
   def GScraper.proxy_uri(proxy_info=GScraper.proxy)
     if GScraper.proxy[:host]
@@ -59,29 +66,44 @@ module GScraper
   end
   
   #
-  # Returns the supported GScraper User-Agent Aliases.
+  # The supported GScraper User-Agent Aliases.
+  #
+  # @return [Array<String>]
   #
   def GScraper.user_agent_aliases
     Mechanize::AGENT_ALIASES
   end
 
   #
-  # Returns the GScraper User-Agent
+  # The GScraper User-Agent.
+  #
+  # @return [String]
   #
   def GScraper.user_agent
     @@gscraper_user_agent ||= GScraper.user_agent_aliases['Windows IE 6']
   end
 
   #
-  # Sets the GScraper User-Agent to the specified _agent_.
+  # Sets the GScraper User-Agent.
+  #
+  # @param [String] agent
+  #   The new User-Agent string.
+  #
+  # @return [String]
+  #   The new User-Agent string.
   #
   def GScraper.user_agent=(agent)
     @@gscraper_user_agent = agent
   end
 
   #
-  # Sets the GScraper User-Agent using the specified user-agent alias
-  # _name_.
+  # Sets the GScraper User-Agent.
+  #
+  # @param [String] name
+  #   The User-Agent alias.
+  #
+  # @return [String]
+  #   The new User-Agent string.
   # 
   def GScraper.user_agent_alias=(name)
     @@gscraper_user_agent = GScraper.user_agent_aliases[name.to_s]
@@ -135,20 +157,36 @@ module GScraper
   end
 
   #
-  # Creates a new Mechanize agent with the given _options_.
+  # Creates a new Mechanize agent.
   #
-  # _options_ may contain the following keys:
-  # <tt>:user_agent_alias</tt>:: The User-Agent Alias to use.
-  # <tt>:user_agent</tt>:: The User-Agent string to use.
-  # <tt>:proxy</tt>:: A +Hash+ of proxy information which may
-  #                   contain the following keys:
-  #                   <tt>:host</tt>:: The proxy host.
-  #                   <tt>:port</tt>:: The proxy port.
-  #                   <tt>:user</tt>:: The user-name to login as.
-  #                   <tt>:password</tt>:: The password to login with.
+  # @param [Hash] options
+  #   Additional options.
   #
+  # @option options [String] :user_agent_alias
+  #   The User-Agent Alias to use.
+  #
+  # @option options [String] :user_agent
+  #   The User-Agent string to use.
+  #
+  # @option options [Hash] :proxy
+  #   The proxy information to use.
+  #
+  # @option :proxy [String] :host
+  #   The proxy host.
+  #
+  # @option :proxy [Integer] :port
+  #   The proxy port.
+  #
+  # @option :proxy [String] :user
+  #   The user-name to login as.
+  #
+  # @option :proxy [String] :password
+  #   The password to login with.
+  #
+  # @example
   #   GScraper.web_agent
   #
+  # @example
   #   GScraper.web_agent(:user_agent_alias => 'Linux Mozilla')
   #   GScraper.web_agent(:user_agent => 'Google Bot')
   #

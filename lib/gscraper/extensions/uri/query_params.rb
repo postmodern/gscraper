@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2008 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,12 +16,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'cgi'
 
 module URI
+  #
+  # Adds the ability to parse individual parameters from a the query field
+  # of a URI.
+  #
   module QueryParams
     # Query parameters
     attr_reader :query_params
@@ -41,6 +43,16 @@ module URI
 
     #
     # Sets the query data and updates query_params.
+    #
+    # @param [String] query_str
+    #   The new URI query string to use.
+    #
+    # @return [String]
+    #   The new URI query string.
+    #
+    # @example
+    #   url.query = 'a=1&b=2'
+    #   # => "a=1&b=2"
     #
     def query=(query_str)
       new_query = super(query_str)
@@ -72,7 +84,6 @@ module URI
 
     private
 
-    # :nodoc
     def path_query
       str = @path
 

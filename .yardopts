@@ -1,1 +1,1 @@
---markup rdoc --title 'GScraper Documentation' --protected --files ChangeLog.rdoc,COPYING.txt
+--markup markdown --title 'GScraper Documentation' --protected --files ChangeLog.md,COPYING.txt

@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'gscraper/search/result'
@@ -87,37 +85,56 @@ module GScraper
       # Filter the search results
       attr_accessor :filtered
 
-      alias similar_to related
-      alias similar_to= related=
-
-      alias links_to link
-      alias links_to= link=
-
       #
-      # Creates a new WebQuery object from the given search _options_. If a
-      # block is given, it will be passed the newly created query object.
+      # Creates a new Web query.
       #
-      # _options_ may contain the following keys:
-      # <tt>:results_per_page</tt>:: Specifies the number of results
-      #                              for each page.
-      # <tt>:language</tt>:: Search for results in the specified language.
-      # <tt>:region</tt>:: Search for results from the specified region.
-      # <tt>:within_past_day</tt>:: Search for results that were created
-      #                             within the past day.
-      # <tt>:within_past_week</tt>:: Search for results that were created
-      #                              within the past week.
-      # <tt>:within_past_month</tt>:: Search for results that were created
-      #                               within the past month.
-      # <tt>:within_past_year</tt>:: Search for results that were created
-      #                              within the past year.
-      # <tt>:occurrs_within</tt>:: 
-      # <tt>:rights</tt>:: Search for results licensed under the specified
-      #                    license.
-      # <tt>:filtered</tt>:: Specifies whether or not to use SafeSearch.
-      #                      Defaults to +false+, if not specified.
+      # @param [Hash] options
+      #   Additional options.
       #
+      # @option options [Integer] :results_per_page
+      #   Specifies the number of results for each page.
+      #
+      # @option options [String] :language
+      #   Search for results in the specified language.
+      #
+      # @option options [String] :region
+      #   Search for results from the specified region.
+      #
+      # @option options [Boolean] :within_past_day
+      #   Search for results that were created within the past day.
+      #
+      # @option options [Boolean] :within_past_week
+      #   Search for results that were created within the past week.
+      #
+      # @option options [Boolean] :within_past_month
+      #   Search for results that were created within the past month.
+      #
+      # @option options [Boolean] :within_past_year
+      #   Search for results that were created within the past year.
+      #
+      # @option options [:title, :body, :url] :occurrs_within
+      #   Searches for results where the keywords occurr within a specific
+      #   part of the result page.
+      #
+      # @option options [Symbol] :rights
+      #   Search for results licensed under the specified license.
+      #
+      # @option options [Boolean] :filtered
+      #   Specifies whether or not to use SafeSearch.
+      #
+      # @yield [query]
+      #   If a block is given, it will be passed the new Web query.
+      #
+      # @yieldparam [WebQuery] query
+      #   The new Web query.
+      #
+      # @return [WebQuery]
+      #   The new Web query.
+      #
+      # @example
       #   WebQuery.new(:query => 'ruby', :with_words => 'sow rspec')
       #
+      # @example
       #   WebQuery.new(:exact_phrase => 'fluent interfaces') do |q|
       #     q.within_past_week = true
       #   end
@@ -164,12 +181,34 @@ module GScraper
         super(options,&block)
       end
 
+      alias similar_to related
+      alias similar_to= related=
+
+      alias links_to link
+      alias links_to= link=
+
       #
-      # Creates a new WebQuery object from the specified URL. If a block is
-      # given, it will be passed the newly created WebQuery object.
+      # Creates a new Web query from a search URL.
       #
+      # @param [URI::HTTP, String] url
+      #   The search URL.
+      #
+      # @param [Hash] options
+      #   Additional options.
+      #
+      # @yield [query]
+      #   If a block is given, it will be passed the new Web query.
+      #
+      # @yieldparam [WebQuery] query
+      #   The new web query.
+      #
+      # @return [WebQuery]
+      #   The new Web query.
+      #
+      # @example
       #   WebQuery.from_url('http://www.google.com/search?q=ruby+zen')
       #
+      # @example
       #   WebQuery.from_url('http://www.google.com/search?q=ruby') do |q|
       #     q.within_last_month = true
       #     q.occurrs_within = :title
@@ -214,8 +253,10 @@ module GScraper
         end
 
         if (url.query_params['as_nlo'] || url.query_params['as_nhi'])
-          options[:numeric_range] = Range.new(url.query_params['as_nlo'].to_i,
-                                              url.query_params['as_nhi'].to_i)
+          options[:numeric_range] = Range.new(
+            url.query_params['as_nlo'].to_i,
+            url.query_params['as_nhi'].to_i
+          )
         end
 
         case url.query_params['as_occt']
@@ -256,7 +297,10 @@ module GScraper
       end
 
       #
-      # Returns the URL that represents the query.
+      # The URL that represents the query.
+      #
+      # @return [URI::HTTP]
+      #   The URL for the query.
       #
       def search_url
         url = URI(SEARCH_URL)
@@ -331,8 +375,13 @@ module GScraper
       end
 
       #
-      # Returns the URL that represents the query at the specific
-      # _page_index_.
+      # Returns the URL that represents the query at a specific page index.
+      #
+      # @param [Integer] page_index
+      #   The page index to create the URL for.
+      #
+      # @return [URI::HTTP]
+      #   The URL for a query at the given page index.
       #
       def page_url(page_index)
         url = search_url
@@ -344,8 +393,13 @@ module GScraper
       end
 
       #
-      # Returns a Page object containing Result objects at the specified
-      # _page_index_.
+      # Returns a page containing results at the specific page index.
+      #
+      # @param [Integer] page_index
+      #   The page index to query.
+      #
+      # @return [Page<Result>]
+      #   The page at the given index for the query.
       #
       def page(page_index)
         Page.new do |new_page|
@@ -389,22 +443,30 @@ module GScraper
       end
 
       #
-      # Returns the first Result on the first_page.
+      # Returns the first result on the first page.
+      #
+      # @return [Result]
+      #   The first result.
       #
       def top_result
         first_page.first
       end
 
       #
-      # Returns the Result at the specified _index_.
+      # Returns the result at the specified index.
+      #
+      # @param [Integer]
+      #   The index of the result.
       #
       def result_at(index)
         page(page_index_of(index))[result_index_of(index)]
       end
 
       #
-      # Returns a SponsoredLinks object containing SponsoredAd objects of
-      # the query.
+      # Returns the sponsored links for the query.
+      #
+      # @return [SponsoredLinks<SponsoredAd>]
+      #   The sponsored links for the query.
       #
       def sponsored_links
         SponsoredLinks.new do |links|
@@ -421,15 +483,26 @@ module GScraper
       end
 
       #
-      # Returns the first sponsored link on the first page of results.
+      # Returns the first sponsored ad on the first page of results.
+      #
+      # @return [SponsoredAd]
+      #   The first sponsored ad.
       #
       def top_sponsored_link
         top_sponsored_links.first
       end
 
       #
-      # Iterates over the sponsored links on the first page of
-      # results passing each to the specified _block_.
+      # Iterates over the sponsored ads on the first page.
+      #
+      # @yield [ad]
+      #   The given block will be passed each sponsored ad.
+      #
+      # @yieldparam [SponsoredAd] ad
+      #   A sponsored ad on the first page.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
       #
       def each_sponsored_link(&block)
         sponsored_links.each(&block)

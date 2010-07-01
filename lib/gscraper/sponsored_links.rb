@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'gscraper/sponsored_ad'
@@ -26,10 +24,19 @@ require 'enumerator'
 
 module GScraper
   class SponsoredLinks < Array
+
     #
-    # Creates a new SponsoredLinks object with the given _ads_. If a
-    # _block_ is given, it will be passed the newly created SponsoredLinks
-    # object.
+    # Creates a new SponsoredLinks object.
+    #
+    # @param [Array] ads
+    #   The ads to populate the sponsored links object with.
+    #
+    # @yield [links]
+    #   If a block is given, it will be passed the new sponsored links
+    #   object.
+    #
+    # @yieldparam [SponsoredLinks] links
+    #   The new sponsored links object.
     #
     def initialize(ads=[])
       super(ads)
@@ -38,13 +45,25 @@ module GScraper
     end
 
     #
-    # Returns a mapped Array of the ads within the SponsoredLinks
-    # using the given _block_. If the _block_ is not given, the
-    # SponsoredLinks will be returned.
+    # Maps the sponsored ads.
     #
-    #   sponsored.map # => SponsoredLinks
+    # @yield [ad]
+    #   The given block will be passed each ad.
     #
-    #   sponsored.map { |ad| ad.url } # => [...]
+    # @yieldparam [SponsoredAd] ad
+    #   The sponsored ad.
+    #
+    # @return [Array, Enumerator]
+    #   The mapped result. If no block was given, an Enumerator object will
+    #   be returned.
+    #
+    # @example
+    #   sponsored.map
+    #   # => SponsoredLinks
+    #
+    # @example
+    #   sponsored.map { |ad| ad.url }
+    #   # => [...]
     #
     def map
       return enum_for(:map) unless block_given?
@@ -56,8 +75,19 @@ module GScraper
     end
 
     #
-    # Selects the ads within the SponsoredLinks which match the given _block_.
+    # Selects the ads within the sponsored links.
     #
+    # @yield [ad]
+    #   The given block will determine which ads to select.
+    #
+    # @yieldparam [SponsoredAd] ad
+    #   A sponsored ad.
+    #
+    # @return [Array, Enumerator]
+    #   The selected ads. If no block is given, an Enumerator object will
+    #   be returned.
+    #
+    # @example
     #   sponsored.select { |ad| ad.title =~ /consume/i }
     #
     def select(&block)
@@ -71,12 +101,26 @@ module GScraper
     alias ads_with select
 
     #
-    # Selects the ads with the matching _title_. The _title_ may be
-    # either a String or a Regexp. If _block_ is given, each matching
-    # ad will be passed to the _block_.
+    # Selects the ads with the matching title.
     #
-    #   sponsored.ads_with_title('be attractive') #=> SponsoredLinks
+    # @param [String, Regexp] title
+    #   The title to search for.
     #
+    # @yield [ad]
+    #   Each matching ad will be passed to the given block.
+    #
+    # @yieldparam [SponsoredAd] ad
+    #   A sponsored ad with the matching title.
+    #
+    # @return [Array, Enumerator]
+    #   The sponsored ads with the matching title. If no block is given,
+    #   an Enumerator object will be returned.
+    #
+    # @example
+    #   sponsored.ads_with_title('be attractive')
+    #   # => SponsoredLinks
+    #
+    # @example
     #   sponsored.ads_with_title(/buy me/) do |ad|
     #     puts ad.url
     #   end
@@ -100,11 +144,24 @@ module GScraper
     end
 
     #
-    # Selects the ads with the matching _url_. The _url_ may be
-    # either a String or a Regexp. If _block_ is given, each matching
-    # ad will be passed to the _block_.
+    # Selects the ads with the matching URL.
     #
-    #   sponsored.ads_with_url(/\.com/) # => SponsoredLinks
+    # @param [String, Regexp] url
+    #   The URL to search for.
+    #
+    # @yield [ad]
+    #   Each matching ad will be passed to the given block.
+    #
+    # @yieldparam [SponsoredAd] ad
+    #   A sponsored ad with the matching URL.
+    #
+    # @return [Array, Enumerator]
+    #   The sponsored ads with the matching URL. If no block is given,
+    #   an Enumerator object will be returned.
+    #
+    # @example
+    #   sponsored.ads_with_url(/\.com/)
+    #   # => SponsoredLinks
     #
     def ads_with_url(url)
       return enum_for(:ads_with_url,url) unless block_given?
@@ -125,11 +182,24 @@ module GScraper
     end
 
     #
-    # Selects the ads with the matching _direct_url_. The _direct_url_ may
-    # be either a String or a Regexp. If _block_ is given, each matching
-    # ad will be passed to the _block_.
+    # Selects the ads with the matching direct URL.
     #
-    #   sponsored.ads_with_direct_url(/\.com/) # => SponsoredLinks
+    # @param [String, Regexp] direct_url
+    #   The direct URL to search for.
+    #
+    # @yield [ad]
+    #   Each matching ad will be passed to the given block.
+    #
+    # @yieldparam [SponsoredAd] ad
+    #   A sponsored ad with the matching direct URL.
+    #
+    # @return [Array, Enumerator]
+    #   The sponsored ads with the matching URL. If no block is given,
+    #   an Enumerator object will be returned.
+    #
+    # @example
+    #   sponsored.ads_with_direct_url(/\.com/)
+    #   # => SponsoredLinks
     #
     def ads_with_direct_url(direct_url)
       return enum_for(:ads_with_direct_url,direct_url) unless block_given?
@@ -150,9 +220,18 @@ module GScraper
     end
 
     #
-    # Iterates over each ad's title within the SponsoredLinks, passing
-    # each to the given _block_.
+    # Iterates over the titles of each ad.
     #
+    # @yield [title]
+    #   The given block will be passed each title.
+    #
+    # @yieldparam [String] title
+    #   A title of an ad.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an Enumerator object will be returned.
+    #
+    # @example
     #   each_title { |title| puts title }
     #
     def each_title
@@ -164,9 +243,18 @@ module GScraper
     end
 
     #
-    # Iterates over each ad's URL within the SponsoredLinks, passing each to
-    # the given _block_.
+    # Iterates over the URLs of each ad.
     #
+    # @yield [url]
+    #   The given block will be passed each URL.
+    #
+    # @yieldparam [URI::HTTP] url
+    #   An URL of an ad.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an Enumerator object will be returned.
+    #
+    # @example
     #   each_url { |url| puts url }
     #
     def each_url
@@ -178,9 +266,18 @@ module GScraper
     end
 
     #
-    # Iterates over each ad's direct URL within the SponsoredLinks, passing
-    # each to the given _block_.
+    # Iterates over the direct URLs of each ad.
     #
+    # @yield [direct_url]
+    #   The given block will be passed each direct URL.
+    #
+    # @yieldparam [URI::HTTP] direct_url
+    #   A direct URL of an ad.
+    #
+    # @return [Enumerator]
+    #   If no block is given, an Enumerator object will be returned.
+    #
+    # @example
     #   each_direct_url { |url| puts url }
     #
     def each_direct_url
@@ -192,9 +289,12 @@ module GScraper
     end
 
     #
-    # Returns an Array containing the titles of the ads within the
-    # SponsoredLinks.
+    # The titles for the ads.
     #
+    # @return [Array<String>]
+    #   The titles for the ads.
+    #
+    # @example
     #   sponsored.titles # => [...]
     #
     def titles
@@ -202,9 +302,12 @@ module GScraper
     end
 
     #
-    # Returns an Array containing the URLs of the ads within the
-    # SponsoredLinks.
+    # The URLs for the ads.
     #
+    # @return [Array<URI::HTTP>]
+    #   The URLs for the ads.
+    #
+    # @example
     #   sponsored.urls # => [...]
     #
     def urls
@@ -212,9 +315,12 @@ module GScraper
     end
 
     #
-    # Returns an Array containing the direct URLs of the ads within the
-    # SponsoredLinks.
+    # The direct URLs for the ads.
     #
+    # @return [Array<URI::HTTP>]
+    #   The direct URLs for the ads.
+    #
+    # @example
     #   sponsored.direct_urls # => [...]
     #
     def direct_urls
@@ -222,8 +328,18 @@ module GScraper
     end
 
     #
-    # Returns the titles of the ads that match the specified _block_.
+    # The titles of the selected ads.
     #
+    # @yield [ad]
+    #   The given block will be passed each ad to be selected.
+    #
+    # @yieldparam [SponsoredAd] ad
+    #   An ad to be selected.
+    #
+    # @return [Array<String>]
+    #   The titles of the selected ads.
+    #
+    # @example
     #   sponsored.titles_of { |ad| ad.url.include?('www') }
     #
     def titles_of(&block)
@@ -231,8 +347,18 @@ module GScraper
     end
 
     #
-    # Returns the URLs of the ads that match the specified _block_.
+    # The URLs of the selected ads.
     #
+    # @yield [ad]
+    #   The given block will be passed each ad to be selected.
+    #
+    # @yieldparam [SponsoredAd] ad
+    #   An ad to be selected.
+    #
+    # @return [Array<String>]
+    #   The URLs of the selected ads.
+    #
+    # @example
     #   sponsored.urls_of { |ad| ad.title =~ /buy these pants/ }
     #
     def urls_of(&block)
@@ -240,8 +366,18 @@ module GScraper
     end
 
     #
-    # Returns the direct URLs of the ads that match the specified _block_.
+    # The direct URLs of the selected ads.
     #
+    # @yield [ad]
+    #   The given block will be passed each ad to be selected.
+    #
+    # @yieldparam [SponsoredAd] ad
+    #   An ad to be selected.
+    #
+    # @return [Array<String>]
+    #   The direct URLs of the selected ads.
+    #
+    # @example
     #   sponsored.urls_of { |ad| ad.title =~ /buy these pants/ }
     #
     def direct_urls_of(&block)

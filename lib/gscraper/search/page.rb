@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'gscraper/search/result'
@@ -30,12 +28,24 @@ module GScraper
       alias results_with select
 
       #
-      # Selects the results with the matching _title_. The _title_ may be
-      # either a String or a Regexp. If _block_ is given, each matching
-      # result will be passed to the _block_.
+      # Selects the results with the matching title.
       #
+      # @param [String, Regexp] title
+      #   The title to search for.
+      #
+      # @yield [result]
+      #   The given block will be passed each matching result.
+      #
+      # @yieldparam [Result] result
+      #   A result with the matching title.
+      #
+      # @return [Array<Result>]
+      #   The results with the matching title.
+      #
+      # @example
       #   page.results_with_title('hackety org') #=> Page
       #
+      # @example
       #   page.results_with_title(/awesome/) do |result|
       #     puts result.url
       #   end
@@ -55,12 +65,24 @@ module GScraper
       end
 
       #
-      # Selects the results with the matching _url_. The _url_ may be
-      # either a String or a Regexp. If _block_ is given, each matching
-      # result will be passed to the _block_.
+      # Selects the results with the matching URL.
       #
+      # @param [String, Regexp] url
+      #   The URL to search for.
+      #
+      # @yield [result]
+      #   The given block will be passed each matching result.
+      #
+      # @yieldparam [Result] result
+      #   A result with the matching URL.
+      #
+      # @return [Array<Result>]
+      #   The results with the matching URL.
+      #
+      # @example
       #   page.results_with_url(/\.com/) # => Page
       #
+      # @example
       #   page.results_with_url(/^https:\/\//) do |result|
       #     puts result.title
       #   end
@@ -80,12 +102,24 @@ module GScraper
       end
 
       #
-      # Selects the results with the matching _summary_. The _summary_ may
-      # be either a String or a Regexp. If _block_ is given, each matching
-      # result will be passed to the _block_.
+      # Selects the results with the matching summary.
       #
+      # @param [String, Regexp] summary
+      #   The summary to search for.
+      #
+      # @yield [result]
+      #   The given block will be passed each matching result.
+      #
+      # @yieldparam [Result] result
+      #   A result with the matching summary.
+      #
+      # @return [Array<Result>]
+      #   The results with the matching summary.
+      #
+      # @example
       #   page.results_with_summary(/cheese cake/) # => Page
       #
+      # @example
       #   page.results_with_summary(/Scientifically/) do |result|
       #     puts result.url
       #   end
@@ -105,9 +139,19 @@ module GScraper
       end
 
       #
-      # Iterates over each result's rank within the Page, passing each to
-      # the given _block_.
+      # Iterates over each result's rank within the page.
       #
+      # @yield [rank]
+      #   The given block will be passed the ranks of each result in
+      #   the page.
+      #
+      # @yieldparam [Integer] rank
+      #   The rank of a result in the page.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
       #   each_rank { |rank| puts rank }
       #
       def each_rank
@@ -119,9 +163,19 @@ module GScraper
       end
 
       #
-      # Iterates over each result's title within the Page, passing each to
-      # the given _block_.
+      # Iterates over each result's title within the page.
       #
+      # @yield [title]
+      #   The given block will be passed the title of each result in
+      #   the page.
+      #  
+      # @yieldparam [String] title
+      #   The title of a result in the page.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
       #   each_title { |title| puts title }
       #
       def each_title
@@ -133,9 +187,19 @@ module GScraper
       end
 
       #
-      # Iterates over each result's url within the Page, passing each to
-      # the given _block_.
+      # Iterates over each result's url within the page.
       #
+      # @yield [url]
+      #   The given block will be passed the URL of each result in
+      #   the page.
+      #  
+      # @yieldparam [URI::HTTP] url
+      #   The URL of a result in the page.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
       #   each_url { |url| puts url }
       #
       def each_url
@@ -147,9 +211,19 @@ module GScraper
       end
 
       #
-      # Iterates over each result's summary within the Page, passing each
-      # to the given _block_.
+      # Iterates over each result's summary within the page.
       #
+      # @yield [summary]
+      #   The given block will be passed the summary of each result in
+      #   the page.
+      #  
+      # @yieldparam [String] summary
+      #   The summary of a result in the page.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
       #   each_summary { |summary| puts summary }
       #
       def each_summary
@@ -161,10 +235,20 @@ module GScraper
       end
 
       #
-      # Iterates over each result's cached URLs within the Page, passing
-      # each to the given _block_.
+      # Iterates over each result's cached URLs within the page.
       #
-      #   each_cached_url { |url| puts url }
+      # @yield [cached_url]
+      #   The given block will be passed the Cached URL of each result in
+      #   the page.
+      #  
+      # @yieldparam [URI::HTTP] cached_url
+      #   The Cached URL of a result in the page.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   each_cached_url { |cached_url| puts cached_url }
       #
       def each_cached_url
         unless block_given?
@@ -177,9 +261,19 @@ module GScraper
       end
 
       #
-      # Iterates over each result's cached pages within the Page, passing
-      # each to the given _block_.
+      # Iterates over each result's cached pages within the page.
       #
+      # @yield [cached_page]
+      #   The given block will be passed the Cached Page of each result in
+      #   the page.
+      #  
+      # @yieldparam [Mechanize::Page] cached_page
+      #   The Cached Page of a result in the page.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
       #   each_cached_page { |page| puts page.readlines }
       #
       def each_cached_page
@@ -193,10 +287,20 @@ module GScraper
       end
 
       #
-      # Iterates over each result's similar Query URLs within the Page,
-      # passing each to the given _block_.
+      # Iterates over each result's similar Query URLs within the page.
       #
-      #   each_similar_url { |url| puts url }
+      # @yield [similar_url]
+      #   The given block will be passed the Similar Query URL of each
+      #   result in the page.
+      #  
+      # @yieldparam [URI::HTTP] similar_url
+      #   The Cached URL of a result in the page.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
+      # @example
+      #   each_similar_url { |similar_url| puts similar_url }
       #
       def each_similar_url
         unless block_given?
@@ -209,78 +313,88 @@ module GScraper
       end
 
       #
-      # Returns an Array containing the ranks of the results within the
-      # Page.
+      # Returns the ranks of the results in the page.
       #
-      #   page.ranks # => [...]
+      # @return [Array<Integer>]
+      #   The ranks of the results.
       #
       def ranks
         each_rank.to_a
       end
 
       #
-      # Returns an Array containing the titles of the results within the
-      # Page.
+      # Returns the titles of the results in the page.
       #
-      #   page.titles # => [...]
+      # @return [Array<String>]
+      #   The titles of the results.
       #
       def titles
         each_title.to_a
       end
 
       #
-      # Returns an Array containing the URLs of the results within the
-      # Page.
+      # Returns the URLs of the results in the page.
       #
-      #   page.urls # => [...]
+      # @return [Array<URI::HTTP>]
+      #   The URLs of the results.
       #
       def urls
         each_url.to_a
       end
 
       #
-      # Returns an Array containing the summaries of the results within the
-      # Page.
+      # Returns the summaries of the results in the page.
       #
-      #   page.summaries # => [...]
+      # @return [Array<String>]
+      #   The summaries of the results.
       #
       def summaries
         each_summary.to_a
       end
 
       #
-      # Returns an Array containing the cached URLs of the results within
-      # the Page.
+      # Returns the Cached URLs of the results in the page.
       #
-      #   page.cached_urls # => [...]
+      # @return [Array<URI::HTTP>]
+      #   The Cached URLs of the results.
       #
       def cached_urls
         each_cached_url.to_a
       end
 
       #
-      # Returns an Array containing the cached pages of the results within
-      # the Page.
+      # Returns the Cached Pages of the results in the page.
       #
-      #   page.cached_pages # => [...]
+      # @return [Array<Mechanize::Page>]
+      #   The Cached Pages of the results.
       #
       def cached_pages
         each_cached_page.to_a
       end
 
       #
-      # Returns an Array containing the similar Query URLs of the results
-      # within the Page.
+      # Returns the Similar Query URLs of the results in the page.
       #
-      #   page.similar_urls # => [...]
+      # @return [Array<URI::HTTP>]
+      #   The Similar Query URLs of the results.
       #
       def similar_urls
         each_similar_url.to_a
       end
 
       #
-      # Returns the ranks of the results that match the specified _block_.
+      # Returns the ranks of the results that match the given block.
       #
+      # @yield [result]
+      #   The given block will be used to filter the results in the page.
+      #
+      # @yieldparam [Result] result
+      #   A result in the page.
+      #
+      # @return [Array<Integer>]
+      #   The ranks of the results which match the given block.
+      #
+      # @example
       #   page.ranks_of { |result| result.title =~ /awesome/ }
       #
       def ranks_of(&block)
@@ -288,8 +402,18 @@ module GScraper
       end
 
       #
-      # Returns the titles of the results that match the specified _block_.
+      # Returns the titles of the results that match the given block.
       #
+      # @yield [result]
+      #   The given block will be used to filter the results in the page.
+      #
+      # @yieldparam [Result] result
+      #   A result in the page.
+      #
+      # @return [Array<String>]
+      #   The titles of the results which match the given block.
+      #
+      # @example
       #   page.titles_of { |result| result.url.include?('www') }
       #
       def titles_of(&block)
@@ -297,8 +421,18 @@ module GScraper
       end
 
       #
-      # Returns the urls of the results that match the specified _block_.
+      # Returns the urls of the results that match the given block.
       #
+      # @yield [result]
+      #   The given block will be used to filter the results in the page.
+      #
+      # @yieldparam [Result] result
+      #   A result in the page.
+      #
+      # @return [Array<URI::HTTP>]
+      #   The URLs of the results which match the given block.
+      #
+      # @example
       #   page.urls_of { |result| result.summary =~ /awesome pants/ }
       #
       def urls_of(&block)
@@ -306,9 +440,18 @@ module GScraper
       end
 
       #
-      # Returns the summaries of the results that match the specified
-      # _block_.
+      # Returns the summaries of the results that match the given block.
       #
+      # @yield [result]
+      #   The given block will be used to filter the results in the page.
+      #
+      # @yieldparam [Result] result
+      #   A result in the page.
+      #
+      # @return [Array<String>]
+      #   The summaries of the results which match the given block.
+      #
+      # @example
       #   page.summaries_of { |result| result.title =~ /what if/ }
       #
       def summaries_of(&block)
@@ -316,9 +459,18 @@ module GScraper
       end
 
       #
-      # Returns the cached URLs of the results that match the specified
-      # _block_.
+      # Returns the Cached URLs of the results that match the given block.
       #
+      # @yield [result]
+      #   The given block will be used to filter the results in the page.
+      #
+      # @yieldparam [Result] result
+      #   A result in the page.
+      #
+      # @return [Array<URI::HTTP>]
+      #   The Cached URLs of the results which match the given block.
+      #
+      # @example
       #   page.cached_urls_of { |result| result.title =~ /howdy/ }
       #
       def cached_urls_of(&block)
@@ -326,20 +478,38 @@ module GScraper
       end
 
       #
-      # Returns the cached pages of the results that match the specified
-      # _block_. If _options_ are given, they will be used in accessing
-      # the cached pages.
+      # Returns the cached pages of the results that match the given block.
       #
+      # @yield [result]
+      #   The given block will be used to filter the results in the page.
+      #
+      # @yieldparam [Result] result
+      #   A result in the page.
+      #
+      # @return [Array<Mechanize::Page>]
+      #   The Cached Page of the results which match the given block.
+      #
+      # @example
       #   page.cached_pages_of { |result| result.title =~ /dude/ }
       #
-      def cached_pages_of(options={},&block)
-        results_with(&block).cached_pages(options)
+      def cached_pages_of(&block)
+        results_with(&block).cached_pages
       end
 
       #
-      # Returns the similar query URLs of the results that match the
-      # specified _block_.
+      # Returns the Similar Query URLs of the results that match the given
+      # block.
       #
+      # @yield [result]
+      #   The given block will be used to filter the results in the page.
+      #
+      # @yieldparam [Result] result
+      #   A result in the page.
+      #
+      # @return [Array<URI::HTTP>]
+      #   The Similar Query URLs of the results which match the given block.
+      #
+      # @example
       #   page.similar_urls_of { |result| result.title =~ /what if/ }
       #
       def similar_urls_of(&block)

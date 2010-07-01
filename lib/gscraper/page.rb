@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'enumerator'
@@ -26,8 +24,16 @@ module GScraper
   class Page < Array
 
     #
-    # Creates a new Page object with the given _elements_. If a _block_
-    # is given, it will be passed the newly created Page object.
+    # Creates a new Page object.
+    #
+    # @param [Array] elements
+    #   The elements to populate the page with.
+    #
+    # @yield [page]
+    #   If a block is given, it will be passed the newly created page.
+    #
+    # @yieldparam [Page] page
+    #   The newly created page.
     #
     def initialize(elements=[])
       super(elements)
@@ -36,13 +42,22 @@ module GScraper
     end
 
     #
-    # Returns a mapped Array of the elements within the Page using the
-    # given _block_. If the _block_ is not given, the page will be
-    # returned.
+    # Maps the elements within the page.
     #
-    #   page.map # => Page
+    # @yield [element]
+    #   The given block will be passed each element in the page.
     #
-    #   page.map { |element| element.field } # => [...]
+    # @return [Array, Enumerator]
+    #   The mapped result. If no block was given, an Enumerator object will
+    #   be returned.
+    #
+    # @example
+    #   page.map
+    #   # => Page
+    #
+    # @example
+    #   page.map { |element| element.field }
+    #   # => [...]
     #
     def map
       return enum_for(:map) unless block_given?
@@ -54,8 +69,16 @@ module GScraper
     end
 
     #
-    # Selects the elements within the Page which match the given _block_.
+    # Selects the elements within the page.
     #
+    # @yield [element]
+    #   The given block will be passed each element in the page.
+    #
+    # @return [Array, Enumerator]
+    #   The selected elements. If no block was given, an Enumerator object
+    #   is returned.
+    #
+    # @example
     #   page.select { |element| element.field =~ /ruby/i }
     #
     def select(&block)

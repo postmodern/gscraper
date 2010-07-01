@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'gscraper/search/query'
@@ -46,8 +44,22 @@ module GScraper
       attr_reader :similar_url
 
       #
-      # Creates a new Result object with the given _rank_, _title_
-      # _summary_, _url_, _size_, _cache_url_ and _similar_url_.
+      # Creates a new {Result} object.
+      #
+      # @param [Integer] rank
+      #   The rank of the result.
+      #
+      # @param [String] title
+      #   The title of the result.
+      #
+      # @param [String] summary
+      #   The summary of the result.
+      #
+      # @param [URI::HTTP] cached_url
+      #   The Cached URL for the result.
+      #
+      # @param [URI::HTTP] similar_url
+      #   The Similar Query URL for the result.
       #
       def initialize(rank,title,url,summary,cached_url=nil,similar_url=nil)
         @agent = GScraper.web_agent
@@ -63,12 +75,18 @@ module GScraper
       #
       # Fetches the page of the result.
       #
+      # @return [Mechanize::Page]
+      #   The page the result represents.
+      #
       def page
         @agent.get(@url)
       end
 
       #
-      # Fetches the cached page of the result.
+      # Fetches the Cached Page of the result.
+      #
+      # @return [Mechanize::Page]
+      #   The Cached Page for the result.
       #
       def cached_page
         if @cached_url
@@ -77,7 +95,10 @@ module GScraper
       end
 
       #
-      # Returns a string containing the result's title.
+      # The result's title.
+      #
+      # @return [String]
+      #   The title of the result.
       #
       def to_s
         @title.to_s

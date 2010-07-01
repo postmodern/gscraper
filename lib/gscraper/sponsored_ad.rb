@@ -1,5 +1,4 @@
 #
-#--
 # GScraper - A web-scraping interface to various Google Services.
 #
 # Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
@@ -17,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#++
 #
 
 require 'gscraper/extensions/uri'
@@ -32,7 +30,13 @@ module GScraper
     attr_reader :url
 
     #
-    # Creates a new SponsoredAd with the specified _title_ and _url_.
+    # Creates a new SponsoredAd.
+    #
+    # @param [String] title
+    #   The title of the ad.
+    #
+    # @param [URI::HTTP] url
+    #   The URL of the ad.
     #
     def initialize(title,url)
       @title = title
@@ -40,21 +44,30 @@ module GScraper
     end
 
     #
-    # Returns the direct link of the ad.
+    # The direct link of the ad.
+    #
+    # @return [String]
+    #   The direct link.
     #
     def direct_link
       @url.query_params['adurl'] || @url.query_params['q']
     end
 
     #
-    # Returns the direct URL of the ad.
+    # The direct URI of the ad.
+    #
+    # @return [URI::HTTP]
+    #   The direct URI.
     #
     def direct_url
       URI(URI.escape(direct_link))
     end
 
     #
-    # Returns the title of the ad.
+    # The title of the ad.
+    #
+    # @return [String]
+    #   The title.
     #
     def to_s
       @title.to_s
