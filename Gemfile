@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 group(:runtime) do
+  gem 'json_pure',	'~> 1.4.0'
   gem 'mechanize',	'~> 1.0.0'
 end
 
