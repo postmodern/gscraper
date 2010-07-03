@@ -1,6 +1,7 @@
 ### 0.3.0 / 2010-07-01
 
 * Upgraded to mechanize ~> 1.0.0.
+* Upgraded from json to json_pure ~> 1.4.0.
 * Switched from Hoe to Jeweler for building RubyGems.
 * Switched to MarkDown documentation syntax with full YARD tags.
 * Added support for `:allinanchor` and `:inanchor` options to
