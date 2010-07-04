@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gscraper}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-07-02}
+  s.date = %q{2010-07-03}
   s.description = %q{GScraper is a web-scraping interface to various Google Services.}
   s.email = %q{postmodern.mod3@gmail.com}
   s.extra_rdoc_files = [
@@ -33,10 +33,13 @@ Gem::Specification.new do |s|
     "lib/gscraper/extensions/uri/query_params.rb",
     "lib/gscraper/gscraper.rb",
     "lib/gscraper/has_pages.rb",
+    "lib/gscraper/hosts.rb",
     "lib/gscraper/licenses.rb",
     "lib/gscraper/page.rb",
     "lib/gscraper/search.rb",
     "lib/gscraper/search/ajax_query.rb",
+    "lib/gscraper/search/exceptions.rb",
+    "lib/gscraper/search/exceptions/blocked.rb",
     "lib/gscraper/search/page.rb",
     "lib/gscraper/search/query.rb",
     "lib/gscraper/search/result.rb",
