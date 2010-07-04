@@ -18,6 +18,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require 'gscraper/search/exceptions/blocked'
 require 'gscraper/search/result'
 require 'gscraper/search/page'
 require 'gscraper/search/query'
@@ -404,6 +405,11 @@ module GScraper
       def page(page_index)
         Page.new do |new_page|
           doc = @agent.get(page_url(page_index))
+
+          if doc.at('//div/a[@href="http://www.google.com/support/bin/answer.py?answer=86640"]')
+            raise(Blocked,"Google has temporarily blocked our IP Address",caller)
+          end
+
           results = doc.search('li.g','li/div.g')
           results_length = [@results_per_page, results.length].min
 
