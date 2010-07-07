@@ -79,7 +79,7 @@ module GScraper
       # @option options [String] :sig ('582c1116317355adf613a6a843f19ece')
       #   The search signature.
       #
-      # @option options [Symbol] :key (:notsupplied)
+      # @option options [String, Symbol] :key ('notsupplied')
       #   The search key.
       #
       # @option options [Float] :version (1.0)
