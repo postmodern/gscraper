@@ -146,5 +146,8 @@ module GScraper
       google.kz
       google.co.uz
     ]
+
+    # The primary domain
+    PRIMARY_DOMAIN = DOMAINS.first
   end
 end
