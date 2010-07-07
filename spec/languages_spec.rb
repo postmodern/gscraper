@@ -21,4 +21,8 @@ describe GScraper::Languages do
   it "should map zh_TW* to zh-TW" do
     GScraper::Languages.find('zh_TW').should == 'zh-TW'
   end
+
+  it "should auto-detect the native language" do
+    GScraper::Languages.native.should_not be_nil
+  end
 end
