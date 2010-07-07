@@ -131,7 +131,7 @@ module GScraper
         options[:key] = url.query_params['key']
         options[:version] = url.query_params['v']
 
-        return self.new(options,&block)
+        return AJAXQuery.new(options,&block)
       end
 
       #
