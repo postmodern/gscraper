@@ -30,8 +30,11 @@ module GScraper
       # Web Search sub-domain
       SUB_DOMAIN = 'www'
 
+      # Default host to submit queries to
+      DEFAULT_HOST = "#{SUB_DOMAIN}.#{Hosts::PRIMARY_DOMAIN}"
+
       # The host to submit queries to
-      attr_accessor :search_host
+      attr_writer :search_host
 
       # Search query
       attr_accessor :query
@@ -165,7 +168,7 @@ module GScraper
         if options[:search_host]
           @search_host = options[:search_host]
         else
-          @search_host = "#{SUB_DOMAIN}.#{Hosts::PRIMARY_DOMAIN}"
+          @search_host = DEFAULT_HOST
         end
 
         @query = options[:query]
