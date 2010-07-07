@@ -19,8 +19,9 @@
 #
 
 module GScraper
-  # List of all google domain-names.
-  HOSTS = %w[
+  module Hosts
+    # List of all google domain-names.
+    DOMAINS = %w[
     google.com
     google.de
     google.at
@@ -144,5 +145,6 @@ module GScraper
     google.com.om
     google.kz
     google.co.uz
-  ]
+    ]
+  end
 end
