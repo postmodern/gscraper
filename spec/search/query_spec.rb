@@ -18,6 +18,12 @@ describe GScraper::Search::Query do
     query.search_host.should == alternate_host
   end
 
+  it "should have a default language" do
+    query = GScraper::Search::Query.new
+
+    query.language.should_not be_nil
+  end
+
   it "should support basic queries" do
     expr = 'ruby -blog'
     query = GScraper::Search::Query.new(:query => expr)

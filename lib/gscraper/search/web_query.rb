@@ -44,9 +44,6 @@ module GScraper
       # Results per-page
       attr_accessor :results_per_page
 
-      # Search for results written in the language
-      attr_accessor :language
-
       # Search for results from the region
       attr_accessor :region
 
@@ -95,7 +92,7 @@ module GScraper
       # @option options [Integer] :results_per_page
       #   Specifies the number of results for each page.
       #
-      # @option options [String] :language
+      # @option options [String, Symbol] :language (Languages.native)
       #   Search for results in the specified language.
       #
       # @option options [String] :region
@@ -145,7 +142,6 @@ module GScraper
 
         @results_per_page = (options[:results_per_page] || RESULTS_PER_PAGE)
 
-        @language = options[:language]
         @region = options[:region]
 
         if options[:within_past_day]

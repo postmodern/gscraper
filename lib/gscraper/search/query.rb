@@ -19,6 +19,7 @@
 #
 
 require 'gscraper/hosts'
+require 'gscraper/languages'
 require 'gscraper/licenses'
 require 'gscraper/gscraper'
 
@@ -34,6 +35,9 @@ module GScraper
 
       # Search query
       attr_accessor :query
+
+      # The search language
+      attr_accessor :language
 
       # Search 'link' modifier
       attr_accessor :link
@@ -91,6 +95,9 @@ module GScraper
       #
       # @option options [String] :query
       #   The search query.
+      #
+      # @option options [String, Symbol] :language (Languages.native)
+      #   The search language.
       #
       # @option options [String] :link
       #   Search for results which link to the specified URI.
@@ -162,6 +169,7 @@ module GScraper
         end
 
         @query = options[:query]
+        @language = (options[:language] || Languages.native)
 
         @link = options[:link]
         @related = options[:related]

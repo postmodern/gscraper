@@ -23,7 +23,6 @@ require 'gscraper/search/page'
 require 'gscraper/search/query'
 require 'gscraper/extensions/uri'
 require 'gscraper/has_pages'
-require 'gscraper/languages'
 require 'gscraper/gscraper'
 
 require 'json'
@@ -56,9 +55,6 @@ module GScraper
       # Default version
       DEFAULT_VERSION = '1.0'
 
-      # The search language
-      attr_accessor :language
-
       # The search signature
       attr_accessor :sig
 
@@ -77,7 +73,7 @@ module GScraper
       # @option options [String] :search_host (www.google.com)
       #   The host to submit queries to.
       #
-      # @option options [Symbol] :language (:en)
+      # @option options [String, Symbol] :language (Languages.native)
       #   The search language.
       #
       # @option options [String] :sig ('582c1116317355adf613a6a843f19ece')
@@ -97,8 +93,6 @@ module GScraper
       #
       def initialize(options={},&block)
         @agent = GScraper.web_agent(options)
-
-        @language = (options[:language] || Languages.native)
 
         @sig = (options[:sig] || DEFAULT_SIG)
         @key = (options[:key] || DEFAULT_KEY)
