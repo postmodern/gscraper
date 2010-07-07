@@ -19,10 +19,10 @@
 #
 
 module GScraper
-  # List of all google host-names.
+  # List of all google domain-names.
   HOSTS = %w[
-    google.de
     google.com
+    google.de
     google.at
     google.pl
     google.fr
@@ -140,7 +140,6 @@ module GScraper
     google.co.ug
     google.com.vc
     # googlenews.de # redirect
-    google.com
     google.at
     google.com.gi
     google.to
