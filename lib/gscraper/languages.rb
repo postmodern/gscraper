@@ -68,7 +68,7 @@ module GScraper
       vi
       zh-CN
       zh-TW
-    ]%
+    ]
 
     #
     # Looks up the language for the given locale.
@@ -82,12 +82,14 @@ module GScraper
     # @since 0.3.1
     #
     def Languages.find(locale)
-      if locale =~ /^zh_CN'/
+      if locale =~ /^zh_CN/
         'zh-CN'
       elsif locale =~ /^zh_TW/
         'zh-TW'
-      elsif NAMES.include?(locale)
-        locale
+      else
+        if (match = locale.match(/^([^_@]+)([_@].+)?$/))
+          match[1] if (match[1] && NAMES.include?(match[1]))
+        end
       end
     end
 
