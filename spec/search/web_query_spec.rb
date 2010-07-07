@@ -11,7 +11,9 @@ describe GScraper::Search::WebQuery do
   include Helpers
 
   before(:all) do
-    @query = GScraper::Search::WebQuery.new(:query => Helpers::DEFAULT_QUERY)
+    @query = GScraper::Search::WebQuery.new(
+      :query => Helpers::DEFAULT_QUERY
+    )
     @page = @query.first_page
     @links = @query.sponsored_links
   end
@@ -28,6 +30,24 @@ describe GScraper::Search::WebQuery do
 
     it "should be a valid HTTP URI" do
       @uri.class.should == URI::HTTP
+    end
+
+    it "should have a default host of www.google.com" do
+      @uri.host.should == 'www.google.com'
+    end
+
+    it "should allow using alternate hosts" do
+      other_host = 'www.google.com.ar'
+      other_query = GScraper::Search::WebQuery.new(
+        :search_host => other_host,
+        :query => Helpers::DEFAULT_QUERY
+      )
+
+      other_query.search_url.host.should == other_host
+    end
+
+    it "should have a path of /search" do
+      @uri.path.should == '/search'
     end
 
     it "should have a 'q' query-param" do

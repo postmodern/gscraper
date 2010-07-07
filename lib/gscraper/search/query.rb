@@ -24,12 +24,19 @@ require 'gscraper/sponsored_ad'
 require 'gscraper/sponsored_links'
 require 'gscraper/extensions/uri'
 require 'gscraper/has_pages'
+require 'gscraper/hosts'
 require 'gscraper/licenses'
 require 'gscraper/gscraper'
 
 module GScraper
   module Search
     class Query
+
+      # Web Search sub-domain
+      SUB_DOMAIN = 'www'
+
+      # The host to submit queries to
+      attr_accessor :search_host
 
       # Search query
       attr_accessor :query
@@ -84,6 +91,9 @@ module GScraper
       #
       # @param [Hash] options
       #   Additional options.
+      #
+      # @option options [String] :search_host (www.google.com)
+      #   The host to submit queries to.
       #
       # @option options [String] :query
       #   The search query.
@@ -151,6 +161,12 @@ module GScraper
       #   The new query.
       #
       def initialize(options={})
+        if options[:search_host]
+          @search_host = options[:search_host]
+        else
+          @search_host = "#{SUB_DOMAIN}.#{Hosts::PRIMARY_DOMAIN}"
+        end
+
         @query = options[:query]
 
         @link = options[:link]

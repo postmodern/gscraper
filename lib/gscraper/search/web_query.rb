@@ -35,11 +35,8 @@ module GScraper
 
       include HasPages
 
-      # Search host
-      SEARCH_HOST = 'www.google.com'
-
-      # Search URL
-      SEARCH_URL = "http://#{SEARCH_HOST}/search"
+      # Web Search path
+      PATH = '/search'
 
       # Default results per-page
       RESULTS_PER_PAGE = 10
@@ -91,6 +88,9 @@ module GScraper
       #
       # @param [Hash] options
       #   Additional options.
+      #
+      # @option options [String] :search_host (www.google.com)
+      #   The host to submit queries to.
       #
       # @option options [Integer] :results_per_page
       #   Specifies the number of results for each page.
@@ -218,6 +218,8 @@ module GScraper
       def self.from_url(url,options={},&block)
         url = URI(url.to_s)
 
+        options[:search_host] = url.host
+
         if url.query_params['num']
           options[:results_per_page] = url.query_params['num'].to_i
         else
@@ -304,8 +306,7 @@ module GScraper
       #   The URL for the query.
       #
       def search_url
-        url = URI(SEARCH_URL)
-        query_expr = []
+        url = URI::HTTP.build(:host => search_host, :path => PATH)
 
         set_param = lambda { |param,value|
           url.query_params[param.to_s] = value if value
@@ -440,7 +441,7 @@ module GScraper
             end
 
             if (similar_link = result.at('span.gl/a:last'))
-              similar_url = URI("http://#{SEARCH_HOST}" + similar_link.get_attribute('href'))
+              similar_url = URI("http://#{search_host}" + similar_link.get_attribute('href'))
             end
 
             new_page << Result.new(rank,title,url,summary_text,cached_url,similar_url)
@@ -481,7 +482,7 @@ module GScraper
           # top and side ads
           doc.search('#pa1', 'a[@id^="an"]').each do |link|
             title = link.inner_text
-            url = URI("http://#{SEARCH_HOST}" + link.get_attribute('href'))
+            url = URI("http://#{search_host}" + link.get_attribute('href'))
 
             links << SponsoredAd.new(title,url)
           end

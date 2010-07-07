@@ -3,6 +3,20 @@ require 'spec_helper'
 require 'gscraper/search/query'
 
 describe GScraper::Search::Query do
+  it "should have a default host of www.google.com" do
+    query = GScraper::Search::Query.new
+
+    query.search_host.should == 'www.google.com'
+  end
+
+  it "should allow using alternate hosts" do
+    alternate_host = 'www.google.com.ar'
+    query = GScraper::Search::Query.new(
+      :search_host => alternate_host
+    )
+
+    query.search_host.should == alternate_host
+  end
 
   it "should support basic queries" do
     expr = 'ruby -blog'

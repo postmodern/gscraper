@@ -40,11 +40,11 @@ module GScraper
       # Maximum results per-page
       RESULTS_PER_PAGE = 8
 
-      # AJAX API host
-      API_HOST = 'www.google.com'
+      # AJAX API Path
+      PATH = '/uds/GwebSearch'
 
-      # AJAX API URL
-      API_URL = "http://#{API_HOST}/uds/GwebSearch?callback=google.search.WebSearch.RawCompletion&context=0&lstkp=0&rsz=large"
+      # AJAX API Query string
+      QUERY = 'callback=google.search.WebSearch.RawCompletion&context=0&lstkp=0&rsz=large'
 
       # Default language
       DEFAULT_LANGUAGE = 'en'
@@ -75,6 +75,9 @@ module GScraper
       #
       # @param [Hash] options
       #   Query options.
+      #
+      # @option options [String] :search_host (www.google.com)
+      #   The host to submit queries to.
       #
       # @option options [Symbol] :language (:en)
       #   The search language.
@@ -158,7 +161,11 @@ module GScraper
       #   The URL for the query.
       #
       def search_url
-        search_url = URI(API_URL)
+        search_url = URI::HTTP.build(
+          :host => search_host,
+          :path => PATH,
+          :query => QUERY
+        )
 
         search_url.query_params['hl'] = @language
         search_url.query_params['gss'] = '.com'
