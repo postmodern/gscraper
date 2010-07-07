@@ -215,7 +215,7 @@ module GScraper
       #     q.occurrs_within = :title
       #   end
       #
-      def self.from_url(url,options={},&block)
+      def WebQuery.from_url(url,options={},&block)
         url = URI(url.to_s)
 
         options[:search_host] = url.host
@@ -296,7 +296,7 @@ module GScraper
           options[:link] = url.query_params['as_lq']
         end
 
-        return self.new(options,&block)
+        return WebQuery.new(options,&block)
       end
 
       #
