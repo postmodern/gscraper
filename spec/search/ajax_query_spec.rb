@@ -50,7 +50,8 @@ describe GScraper::Search::AJAXQuery do
 
     it "should have a default 'hl' query-param" do
       hl = @uri.query_params['hl']
-      hl.should == GScraper::Search::AJAXQuery::DEFAULT_LANGUAGE
+
+      hl.should_not be_empty
     end
 
     it "should have a default 'gss' query-param of '.com'" do

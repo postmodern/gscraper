@@ -23,6 +23,7 @@ require 'gscraper/search/page'
 require 'gscraper/search/query'
 require 'gscraper/extensions/uri'
 require 'gscraper/has_pages'
+require 'gscraper/languages'
 require 'gscraper/gscraper'
 
 require 'json'
@@ -45,9 +46,6 @@ module GScraper
 
       # AJAX API Query string
       QUERY = 'callback=google.search.WebSearch.RawCompletion&context=0&lstkp=0&rsz=large'
-
-      # Default language
-      DEFAULT_LANGUAGE = 'en'
 
       # Default signature
       DEFAULT_SIG = '582c1116317355adf613a6a843f19ece'
@@ -100,7 +98,7 @@ module GScraper
       def initialize(options={},&block)
         @agent = GScraper.web_agent(options)
 
-        @language = (options[:language] || DEFAULT_LANGUAGE)
+        @language = (options[:language] || Languages.native)
 
         @sig = (options[:sig] || DEFAULT_SIG)
         @key = (options[:key] || DEFAULT_KEY)
