@@ -131,7 +131,6 @@ module GScraper
     google.am
     google.sn
     google.je
-    # googlee.com # redirect
     google.com.bn
     google.com.ai
     google.co.zm
@@ -139,7 +138,6 @@ module GScraper
     google.rw
     google.co.ug
     google.com.vc
-    # googlenews.de # redirect
     google.at
     google.com.gi
     google.to
