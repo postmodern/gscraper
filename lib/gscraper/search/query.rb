@@ -34,7 +34,7 @@ module GScraper
       DEFAULT_HOST = "#{SUB_DOMAIN}.#{Hosts::PRIMARY_DOMAIN}"
 
       # The host to submit queries to
-      attr_writer :search_host
+      attr_accessor :search_host
 
       # Search query
       attr_accessor :query
