@@ -34,7 +34,7 @@ module GScraper
       DEFAULT_HOST = "#{SUB_DOMAIN}.#{Hosts::PRIMARY_DOMAIN}"
 
       # The host to submit queries to
-      attr_accessor :search_host
+      attr_writer :search_host
 
       # Search query
       attr_accessor :query
@@ -155,6 +155,10 @@ module GScraper
       #   Search for results containing the definition of the specified
       #   keyword.
       #
+      # @option options [Boolean] :load_balance (false)
+      #   Specifies whether to distribute queries accross multiple Google
+      #   domains.
+      #
       # @yield [query]
       #   If a block is given, it will be passed the new query.
       #
@@ -196,7 +200,29 @@ module GScraper
         @numeric_range = options[:numeric_range]
         @define = options[:define]
 
+        @load_balance = false
+
+        if options.has_key?(:load_balance)
+          @load_balance = options[:load_balance]
+        end
+
         yield self if block_given?
+      end
+
+      #
+      # The host to submit queries to.
+      #
+      # @return [String]
+      #   The host to submit queries to.
+      #
+      # @since 0.3.1
+      #
+      def search_host
+        if @load_balance
+          Hosts::DOMAINS[rand(Hosts::DOMAINS.length)]
+        else
+          @search_host
+        end
       end
 
       #
