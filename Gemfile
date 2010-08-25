@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
-group(:runtime) do
-  gem 'json_pure',	'~> 1.4.0'
-  gem 'mechanize',	'~> 1.0.0'
-end
+gem 'json_pure',	'~> 1.4.0'
+gem 'mechanize',	'~> 1.0.0'
 
 group(:development) do
   gem 'bundler',		'~> 1.0.0'
