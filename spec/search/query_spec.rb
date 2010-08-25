@@ -18,6 +18,15 @@ describe GScraper::Search::Query do
     query.search_host.should == alternate_host
   end
 
+  it "should use random hosts if load balancing is enabled" do
+    query = GScraper::Search::Query.new(:load_balance => true)
+
+    host1 = query.search_host
+    host2 = query.search_host
+
+    host1.should_not == host2
+  end
+
   it "should have a default language" do
     query = GScraper::Search::Query.new
 
