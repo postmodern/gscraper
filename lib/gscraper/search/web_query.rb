@@ -24,10 +24,11 @@ require 'gscraper/search/page'
 require 'gscraper/search/query'
 require 'gscraper/sponsored_ad'
 require 'gscraper/sponsored_links'
-require 'gscraper/extensions/uri'
 require 'gscraper/has_pages'
 require 'gscraper/licenses'
 require 'gscraper/gscraper'
+
+require 'uri/query_params'
 
 module GScraper
   module Search

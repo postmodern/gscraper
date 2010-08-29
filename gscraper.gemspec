@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-08-24}
+  s.date = %q{2010-08-29}
   s.description = %q{GScraper is a web-scraping interface to various Google Services.}
   s.email = %q{postmodern.mod3@gmail.com}
   s.extra_rdoc_files = [
@@ -28,10 +28,6 @@ Gem::Specification.new do |s|
     "Rakefile",
     "gscraper.gemspec",
     "lib/gscraper.rb",
-    "lib/gscraper/extensions.rb",
-    "lib/gscraper/extensions/uri.rb",
-    "lib/gscraper/extensions/uri/http.rb",
-    "lib/gscraper/extensions/uri/query_params.rb",
     "lib/gscraper/gscraper.rb",
     "lib/gscraper/has_pages.rb",
     "lib/gscraper/hosts.rb",
@@ -94,6 +90,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<json_pure>, ["~> 1.4.0"])
+      s.add_runtime_dependency(%q<uri-query_params>, ["~> 0.4.0"])
       s.add_runtime_dependency(%q<mechanize>, ["~> 1.0.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<rake>, ["~> 0.8.7"])
@@ -101,6 +98,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, ["~> 1.3.0"])
     else
       s.add_dependency(%q<json_pure>, ["~> 1.4.0"])
+      s.add_dependency(%q<uri-query_params>, ["~> 0.4.0"])
       s.add_dependency(%q<mechanize>, ["~> 1.0.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<rake>, ["~> 0.8.7"])
@@ -109,6 +107,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<json_pure>, ["~> 1.4.0"])
+    s.add_dependency(%q<uri-query_params>, ["~> 0.4.0"])
     s.add_dependency(%q<mechanize>, ["~> 1.0.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<rake>, ["~> 0.8.7"])

@@ -21,11 +21,11 @@
 require 'gscraper/search/result'
 require 'gscraper/search/page'
 require 'gscraper/search/query'
-require 'gscraper/extensions/uri'
 require 'gscraper/has_pages'
 require 'gscraper/gscraper'
 
 require 'json'
+require 'uri/query_params'
 require 'nokogiri'
 
 module GScraper

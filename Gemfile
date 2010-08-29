@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'json_pure',	'~> 1.4.0'
+gem 'uri-query_params',	'~> 0.4.0'
 gem 'mechanize',	'~> 1.0.0'
 
 group(:development) do
