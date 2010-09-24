@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-08-29}
+  s.date = %q{2010-09-23}
   s.description = %q{GScraper is a web-scraping interface to various Google Services.}
   s.email = %q{postmodern.mod3@gmail.com}
   s.extra_rdoc_files = [
@@ -46,8 +46,6 @@ Gem::Specification.new do |s|
     "lib/gscraper/sponsored_ad.rb",
     "lib/gscraper/sponsored_links.rb",
     "lib/gscraper/version.rb",
-    "spec/extensions/uri/http_spec.rb",
-    "spec/extensions/uri/query_params_spec.rb",
     "spec/gscraper_spec.rb",
     "spec/has_pages_examples.rb",
     "spec/has_sponsored_links_examples.rb",
@@ -68,8 +66,6 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{GScraper is a web-scraping interface to various Google Services.}
   s.test_files = [
-    "spec/extensions/uri/http_spec.rb",
-    "spec/extensions/uri/query_params_spec.rb",
     "spec/gscraper_spec.rb",
     "spec/has_pages_examples.rb",
     "spec/has_sponsored_links_examples.rb",
@@ -92,26 +88,23 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<json_pure>, ["~> 1.4.0"])
       s.add_runtime_dependency(%q<uri-query_params>, ["~> 0.4.0"])
       s.add_runtime_dependency(%q<mechanize>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<rake>, ["~> 0.8.7"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.5.0"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.5.0.pre"])
       s.add_development_dependency(%q<rspec>, ["~> 1.3.0"])
     else
       s.add_dependency(%q<json_pure>, ["~> 1.4.0"])
       s.add_dependency(%q<uri-query_params>, ["~> 0.4.0"])
       s.add_dependency(%q<mechanize>, ["~> 1.0.0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<rake>, ["~> 0.8.7"])
-      s.add_dependency(%q<jeweler>, ["~> 1.5.0"])
+      s.add_dependency(%q<jeweler>, ["~> 1.5.0.pre"])
       s.add_dependency(%q<rspec>, ["~> 1.3.0"])
     end
   else
     s.add_dependency(%q<json_pure>, ["~> 1.4.0"])
     s.add_dependency(%q<uri-query_params>, ["~> 0.4.0"])
     s.add_dependency(%q<mechanize>, ["~> 1.0.0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<rake>, ["~> 0.8.7"])
-    s.add_dependency(%q<jeweler>, ["~> 1.5.0"])
+    s.add_dependency(%q<jeweler>, ["~> 1.5.0.pre"])
     s.add_dependency(%q<rspec>, ["~> 1.3.0"])
   end
 end
