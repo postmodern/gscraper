@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.files = [
     ".gitignore",
     ".rspec",
-    ".specopts",
     ".yardopts",
     "COPYING.txt",
     "ChangeLog.md",
