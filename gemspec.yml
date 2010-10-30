@@ -15,7 +15,7 @@ dependencies:
   mechanize: ~> 1.0.0
 
 development_dependencies:
-  ore: ~> 0.2.0
-  ore-tasks: ~> 0.1.2
+  ore: ~> 0.2.2
+  ore-tasks: ~> 0.1.3
   rspec: ~> 2.0.0
   yard: ~> 0.6.0
