@@ -421,7 +421,7 @@ module GScraper
       end
 
       #
-      # Returns the urls of the results that match the given block.
+      # Returns the URLs of the results that match the given block.
       #
       # @yield [result]
       #   The given block will be used to filter the results in the page.

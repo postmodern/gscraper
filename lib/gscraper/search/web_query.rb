@@ -66,8 +66,8 @@ module GScraper
       # Search for results within the past year
       attr_accessor :within_past_year
 
-      # Search for results where the query ocurrs within the area
-      attr_accessor :occurrs_within
+      # Search for results where the query occurs within the area
+      attr_accessor :occurs_within
 
       # Search for results inside the domain
       attr_accessor :inside_domain
@@ -111,7 +111,7 @@ module GScraper
       # @option options [Boolean] :within_past_year
       #   Search for results that were created within the past year.
       #
-      # @option options [:title, :body, :url] :occurrs_within
+      # @option options [:title, :body, :url] :occurs_within
       #   Searches for results where the keywords occurr within a specific
       #   part of the result page.
       #
@@ -172,7 +172,7 @@ module GScraper
           @within_past_year = false
         end
 
-        @occurrs_within = options[:occurrs_within]
+        @occurs_within = options[:occurs_within]
         @rights = options[:rights]
         @filtered = options[:filtered]
 
@@ -209,7 +209,7 @@ module GScraper
       # @example
       #   WebQuery.from_url('http://www.google.com/search?q=ruby') do |q|
       #     q.within_last_month = true
-      #     q.occurrs_within = :title
+      #     q.occurs_within = :title
       #   end
       #
       def WebQuery.from_url(url,options={},&block)
@@ -261,13 +261,13 @@ module GScraper
 
         case url.query_params['as_occt']
         when 'title'
-          options[:occurrs_within] = :title
+          options[:occurs_within] = :title
         when 'body'
-          options[:occurrs_within] = :body
+          options[:occurs_within] = :body
         when 'url'
-          options[:occurrs_within] = :url
+          options[:occurs_within] = :url
         when 'links'
-          options[:occurrs_within] = :links
+          options[:occurs_within] = :links
         end
 
         options[:site] = url.query_params['as_sitesearch']
@@ -344,7 +344,7 @@ module GScraper
           url.query_params['as_nhi'] = @numeric_range.end
         end
 
-        case @occurrs_within
+        case @occurs_within
         when :title, 'title'
           url.query_params['as_occt'] = 'title'
         when :body, 'body'

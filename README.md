@@ -45,7 +45,7 @@ Queries from URLs:
 
     q.query # => "ruby"
     q.with_words # => "rails"
-    q.occurrs_within # => :title
+    q.occurs_within # => :title
     q.rights # => :cc_by_nc
 
 Getting the search results:

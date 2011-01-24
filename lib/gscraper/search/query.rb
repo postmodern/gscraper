@@ -287,7 +287,7 @@ module GScraper
       protected
 
       #
-      # Formats the value for a search modifer.
+      # Formats the value for a search modifier.
       #
       # @param [Regexp, String]
       #   The value for the search modifier.

@@ -73,7 +73,7 @@ module GScraper
     # @example
     #   Search.query_from_url('http://www.google.com/search?q=ruby') do |q|
     #     q.within_last_month = true
-    #     q.occurrs_within = :title
+    #     q.occurs_within = :title
     #   end
     #
     # @see WebQuery.from_url.
