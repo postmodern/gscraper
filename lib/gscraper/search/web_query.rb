@@ -421,8 +421,6 @@ module GScraper
             title = link.inner_text
             url = URI(link.get_attribute('href'))
             summary_text = ''
-            cached_url = nil
-            similar_url = nil
 
             if (content = (result.at('//div[@class="s"]','//td[@class="j"]//font')))
               content.children.each do |elem|
@@ -432,6 +430,9 @@ module GScraper
               end
 
             end
+
+            cached_url = nil
+            similar_url = nil
 
             if (gl = result.at('//span[@class="gl"]'))
               if (cached_link = gl.at('a:first'))
