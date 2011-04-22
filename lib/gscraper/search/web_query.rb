@@ -408,7 +408,7 @@ module GScraper
             raise(Blocked,"Google has temporarily blocked our IP Address",caller)
           end
 
-          results = doc.search('li.g')
+          results = doc.search('//li[@class="g"]')
           results_length = [@results_per_page, results.length].min
 
           rank_offset = result_offset_of(page_index)
