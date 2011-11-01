@@ -1,3 +1,8 @@
+### 0.4.0 2011-11-01
+
+* Upgraded to json_pure ~> 1.6.1
+
+
 ### 0.3.0 / 2010-07-01
 
 * Upgraded to mechanize ~> 1.0.0.
