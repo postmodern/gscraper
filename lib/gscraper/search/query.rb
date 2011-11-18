@@ -87,6 +87,9 @@ module GScraper
       # Search for results containing numbers between the range
       attr_accessor :numeric_range
 
+      # Search for results containing the definitions of the keywords
+      attr_accessor :define
+
       #
       # Creates a new query.
       #
