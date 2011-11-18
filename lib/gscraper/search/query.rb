@@ -102,7 +102,7 @@ module GScraper
       # @option options [String] :query
       #   The search query.
       #
-      # @option options [String, Symbol] :language (Languages.native)
+      # @option options [Symbol, String] :language (Languages.native)
       #   The search language.
       #
       # @option options [String] :link
@@ -120,20 +120,20 @@ module GScraper
       # @option options [String] :filetype
       #   Limit results to those with the specified file-type.
       #
-      # @option options [String, Array] :allintitle
+      # @option options [Array, String] :allintitle
       #   Search for results with all of the keywords appearing in the
       #   title.
       #
       # @option options [String] :intitle
       #   Search for results with the keyword appearing in the title.
       #
-      # @option options [String, Array] :allintext
+      # @option options [Array, String] :allintext
       #   Search for results with all of the keywords appearing in the text.
       #
       # @option options [String] :intext
       #   Search for results with the keyword appearing in the text.
       #
-      # @option options [String, Array] :allinanchor
+      # @option options [Array, String] :allinanchor
       #   Search for results with all of the keywords appearing in the
       #   text of links.
       #
@@ -144,10 +144,10 @@ module GScraper
       # @option options [String] :exact_phrase
       #   Search for results containing the specified exact phrase.
       #
-      # @option options [String, Array] :with_words
+      # @option options [Array, String] :with_words
       #   Search for results containing all of the specified words.
       #
-      # @option options [String, Array] :without_words
+      # @option options [Array, String] :without_words
       #   Search for results not containing any of the specified words.
       #
       # @option options [Range, Array, String] :numeric_range
@@ -272,20 +272,26 @@ module GScraper
           expr << "\"#{@exact_phrase}\""
         end
 
-        if @with_words.kind_of?(Array)
+        case @with_words
+        when String
+          expr << @with_words
+        when Enumerable
           expr << @with_words.join(' OR ')
         end
-        
-        if @without_words.kind_of?(Array)
+
+        case @without_words
+        when String
+          expr << @without_words
+        when Enumerable
           expr << @without_words.map { |word| "-#{word}" }.join(' ')
         end
 
-        expr << case @numeric_range
-                when Range, Array
-                  "#{@numeric_range.first}..#{@numeric_range.last}"
-                else
-                  @numeric_range.to_s
-                end
+        case @numeric_range
+        when String
+          expr << @numeric_range
+        when Range, Array
+          expr << "#{@numeric_range.first}..#{@numeric_range.last}"
+        end
 
         return expr.join(' ')
       end
