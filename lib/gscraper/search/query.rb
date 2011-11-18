@@ -150,7 +150,7 @@ module GScraper
       # @option options [String, Array] :without_words
       #   Search for results not containing any of the specified words.
       #
-      # @option options [Range] :numeric_range
+      # @option options [Range, Array, String] :numeric_range
       #   Search for results contain numbers that fall within the
       #   specified Range.
       #
@@ -280,9 +280,12 @@ module GScraper
           expr << @without_words.map { |word| "-#{word}" }.join(' ')
         end
 
-        if @numeric_range.kind_of?(Range)
-          expr << "#{@numeric_range.begin}..#{@numeric_range.end}"
-        end
+        expr << case @numeric_range
+                when Range, Array
+                  "#{@numeric_range.first}..#{@numeric_range.last}"
+                else
+                  @numeric_range.to_s
+                end
 
         return expr.join(' ')
       end
