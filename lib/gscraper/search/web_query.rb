@@ -417,12 +417,12 @@ module GScraper
             result = results[index]
 
             rank = rank_offset + (index + 1)
-            link = result.at('//h3[@class="r"]/a')
+            link = result.at('.//h3[@class="r"]/a')
             title = link.inner_text
             url = URI(link.get_attribute('href'))
             summary_text = ''
 
-            if (content = (result.at('//div[@class="s"]','//td[@class="j"]//font')))
+            if (content = (result.at('.//div[@class="s"]','.//td[@class="j"]//font')))
               content.children.each do |elem|
                 break if (!(elem.text?) && elem.name=='br')
 
@@ -434,7 +434,7 @@ module GScraper
             cached_url = nil
             similar_url = nil
 
-            if (gl = result.at('//span[@class="gl"]'))
+            if (gl = result.at('.//span[@class="gl"]'))
               if (cached_link = gl.at('a:first'))
                 cached_url = URI(cached_link.get_attribute('href'))
               end
