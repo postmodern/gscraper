@@ -11,7 +11,7 @@ has_yard: true
 
 dependencies:
   json: ~> 1.6
-  uri-query_params: ~> 0.5.0
+  uri-query_params: ~> 0.5
   mechanize: ~> 1.0.0
 
 development_dependencies:
