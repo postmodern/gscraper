@@ -1,8 +1,8 @@
 # GScraper
 
-* [github.com/postmodern/gscraper](http://github.com/postmodern/gscraper/)
-* [github.com/postmodern/gscraper/issues](http://github.com/postmodern/gscraper/issues)
-* Postmodern (postmodern.mod3 at gmail.com)
+* [Source](http://github.com/postmodern/gscraper/)
+* [Issues](http://github.com/postmodern/gscraper/issues)
+* [Email](mailto:postmodern.mod3 at gmail.com)
 
 ## Description
   
