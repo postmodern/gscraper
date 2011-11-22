@@ -27,7 +27,7 @@ GScraper is a web-scraping interface to various Google Services.
 
 ## Install
 
-    $ sudo gem install gscraper
+    $ gem install gscraper
 
 ## Examples
 
