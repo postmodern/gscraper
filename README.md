@@ -23,7 +23,7 @@ GScraper is a web-scraping interface to various Google Services.
 * [uri-query_params](http://github.com/postmodern/uri-query_params#readme)
   ~> 0.5
 * [mechanize](http://mechanize.rubyforge.org/mechanize/)
-  ~> 1.0.0
+  ~> 2.0
 
 ## Install
 
