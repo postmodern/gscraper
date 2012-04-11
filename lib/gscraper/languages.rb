@@ -102,7 +102,8 @@ module GScraper
     # @since 0.3.1
     #
     def Languages.native
-      Languages.find(ENV['LANG'])
+      language = ENV['LANG'] || 'en'
+      Languages.find(language)
     end
   end
 end
