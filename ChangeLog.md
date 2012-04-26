@@ -32,7 +32,7 @@
 * Aliased {GScraper::Search::WebQuery#links_to=} to `link=`.
 * Removed `GScraper.open_uri`.
 * Removed `GScraper.open_page`.
-* Fixed the escaping/unescaping of URL query params in {URI::QueryParams}.
+* Fixed the escaping/unescaping of URL query params in `URI::QueryParams`.
 * Use `yield` instead of `block.call`, when possible.
 * All enumerable methods now return an `Enumerator` object, if no block was
   given.
@@ -76,7 +76,7 @@
 ### 0.1.8 / 2008-04-30
 
 * Added the {GScraper.user_agent_alias=} method.
-* Added {URI::HTTP::QueryParams} module.
+* Added `URI::HTTP::QueryParams` module.
 * Changed license from MIT to GPL-2.
 
 ### 0.1.7 / 2008-04-28
