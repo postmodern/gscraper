@@ -466,7 +466,7 @@ module GScraper
           doc = @agent.get(search_url)
 
           # top and side ads
-          doc.search('#pa1', 'a[@id^="an"]').each do |link|
+          doc.search('//h3/a[starts-with(@id,"pa")]').each do |link|
             title = link.inner_text
             url   = URI("http://#{search_host}" + link.get_attribute('href'))
 
