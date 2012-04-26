@@ -1,7 +1,7 @@
 # GScraper
 
-* [Source](http://github.com/postmodern/gscraper/)
-* [Issues](http://github.com/postmodern/gscraper/issues)
+* [Source](https://github.com/postmodern/gscraper/)
+* [Issues](https://github.com/postmodern/gscraper/issues)
 * [Email](mailto:postmodern.mod3 at gmail.com)
 
 ## Description
@@ -20,7 +20,7 @@ GScraper is a web-scraping interface to various Google Services.
 
 * [json](http://flori.github.com/json/)
   ~> 1.6
-* [uri-query_params](http://github.com/postmodern/uri-query_params#readme)
+* [uri-query_params](https://github.com/postmodern/uri-query_params#readme)
   ~> 0.5
 * [mechanize](http://mechanize.rubyforge.org/mechanize/)
   ~> 2.0
