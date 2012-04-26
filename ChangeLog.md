@@ -15,6 +15,9 @@
   submit queries to alternate domains via the `:search_host` option.
 * Renamed `#occurrs_within`, `:occurrs_within` to `#occurs_within`,
   `:occurs_within`, respectively in {GScraper::Search::WebQuery}.
+* Prefer XPath over CSS-path expressions.
+* Fixed XPath expressions in {GScraper::Search::WebQuery#page}
+  (thanks Jake Auswick and Ezekiel Templin).
 * Fixed spelling errors.
 
 ### 0.3.0 / 2010-07-01
