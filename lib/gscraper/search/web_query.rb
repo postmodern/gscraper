@@ -42,6 +42,14 @@ module GScraper
       # Default results per-page
       RESULTS_PER_PAGE = 10
 
+      # Web Search licenses
+      LICENSES = {
+        '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived)' => Licenses::CC_BY_NC_ND,
+        '(cc_publicdomain|cc_attribute|cc_sharealike|cc_nonderived).-(cc_noncommercial)' => Licenses::CC_BY_SA,
+        '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial).-(cc_nonderived)' => Licenses::CC_BY_NC,
+        '(cc_publicdomain|cc_attribute|cc_sharealike).-(cc_noncommercial|cc_nonderived)' => Licenses::CC_BY
+      }
+
       # Results per-page
       attr_accessor :results_per_page
 
@@ -141,40 +149,40 @@ module GScraper
       def initialize(options={},&block)
         @agent = GScraper.web_agent(options)
 
-        @results_per_page = (options[:results_per_page] || RESULTS_PER_PAGE)
+        @results_per_page = options.fetch(:results_per_page,RESULTS_PER_PAGE)
 
         @region = options[:region]
 
         if options[:within_past_day]
-          @within_past_day = options[:within_past_day]
-          @within_past_week = false
+          @within_past_day    = options[:within_past_day]
+          @within_past_week   = false
           @within_past_months = false
-          @within_past_year = false
+          @within_past_year   = false
         elsif options[:within_past_week]
-          @within_past_day = false
-          @within_past_week = options[:within_past_week]
+          @within_past_day    = false
+          @within_past_week   = options[:within_past_week]
           @within_past_months = false
-          @within_past_year = false
+          @within_past_year   = false
         elsif options[:within_past_months]
-          @within_past_day = false
-          @within_past_week = false
+          @within_past_day    = false
+          @within_past_week   = false
           @within_past_months = options[:within_past_months]
-          @within_past_year = false
+          @within_past_year   = false
         elsif options[:within_past_year]
-          @within_past_day = false
-          @within_past_week = false
+          @within_past_day    = false
+          @within_past_week   = false
           @within_past_months = false
-          @within_past_year = options[:within_past_year]
+          @within_past_year   = options[:within_past_year]
         else
-          @within_past_day = false
-          @within_past_week = false
+          @within_past_day    = false
+          @within_past_week   = false
           @within_past_months = false
-          @within_past_year = false
+          @within_past_year   = false
         end
 
         @occurs_within = options[:occurs_within]
-        @rights = options[:rights]
-        @filtered = options[:filtered]
+        @rights        = options[:rights]
+        @filtered      = options[:filtered]
 
         super(options,&block)
       end
@@ -217,19 +225,19 @@ module GScraper
 
         options[:search_host] = url.host
 
-        if url.query_params['num']
-          options[:results_per_page] = url.query_params['num'].to_i
-        else
-          options[:results_per_page] = RESULTS_PER_PAGE
-        end
+        options[:results_per_page] = if url.query_params['num']
+                                       url.query_params['num'].to_i
+                                     else
+                                       RESULTS_PER_PAGE
+                                     end
 
-        options[:query] = url.query_params['q']
-        options[:exact_phrase] = url.query_params['as_epq']
-        options[:with_words] = url.query_params['as_oq']
+        options[:query]         = url.query_params['q']
+        options[:exact_phrase]  = url.query_params['as_epq']
+        options[:with_words]    = url.query_params['as_oq']
         options[:without_words] = url.query_params['as_eq']
 
         options[:language] = url.query_params['lr']
-        options[:region] = url.query_params['cr']
+        options[:region]   = url.query_params['cr']
 
         if url.query_params['as_filetype']
           options[:filetype] = url.query_params['as_filetype']
@@ -259,33 +267,14 @@ module GScraper
           )
         end
 
-        case url.query_params['as_occt']
-        when 'title'
-          options[:occurs_within] = :title
-        when 'body'
-          options[:occurs_within] = :body
-        when 'url'
-          options[:occurs_within] = :url
-        when 'links'
-          options[:occurs_within] = :links
+        if url.query_params['as_occt']
+          options[:occurs_within] = url.query_params['as_occt'].to_sym
         end
 
         options[:site] = url.query_params['as_sitesearch']
 
-        case url.query_params['as_rights']
-        when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived)'
-          options[:rights] = Licenses::CC_BY_NC_ND
-        when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_nonderived).-(cc_noncommercial)'
-          options[:rights] = Licenses::CC_BY_SA
-        when '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial).-(cc_nonderived)'
-          options[:rights] = Licenses::CC_BY_NC
-        when '(cc_publicdomain|cc_attribute|cc_sharealike).-(cc_noncommercial|cc_nonderived)'
-          options[:rights] = Licenses::CC_BY
-        end
-
-        if url.query_params[:safe] == 'active'
-          options[:filtered] = true
-        end
+        options[:rights] = LICENSES[url.query_params['as_rights']]
+        options[:filtered] = (url.query_params[:safe] == 'active')
 
         if url.query_params['as_rq']
           options[:related] = url.query_params['as_rq']
@@ -357,18 +346,13 @@ module GScraper
 
         set_param.call('as_sitesearch',@site)
 
-        case @rights
-        when Licenses::CC_BY_NC_ND
-          url.query_params['as_rights'] = '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived)'
-        when Licenses::CC_BY_SA
-          url.query_params['as_rights'] = '(cc_publicdomain|cc_attribute|cc_sharealike|cc_nonderived).-(cc_noncommercial)'
-        when Licenses::CC_BY_ND
-          url.query_params['as_rights'] = '(cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial).-(cc_nonderived)'
-        when Licenses::CC_BY
-          url.query_params['as_rights'] = '(cc_publicdomain|cc_attribute|cc_sharealike).-(cc_noncommercial|cc_nonderived)'
+        if @rights
+          url.query_params['as_rights'] = LICENSES.reverse[@rights]
         end
 
-        url.query_params['safe'] = 'active' if @filtered
+        if @filtered
+          url.query_params['safe'] = 'active'
+        end
 
         return url
       end
@@ -386,7 +370,7 @@ module GScraper
         url = search_url
 
         url.query_params['start'] = result_offset_of(page_index)
-        url.query_params['sa'] = 'N'
+        url.query_params['sa']    = 'N'
 
         return url
       end
@@ -408,7 +392,7 @@ module GScraper
             raise(Blocked,"Google has temporarily blocked our IP Address",caller)
           end
 
-          results = doc.search('//li[@class="g"]')
+          results        = doc.search('//li[@class="g"]')
           results_length = [@results_per_page, results.length].min
 
           rank_offset = result_offset_of(page_index)
@@ -416,11 +400,11 @@ module GScraper
           results_length.times do |index|
             result = results[index]
 
-            rank = rank_offset + (index + 1)
-            link = result.at('.//h3[@class="r"]/a')
-            title = link.inner_text
+            rank     = rank_offset + (index + 1)
+            link     = result.at('.//h3[@class="r"]/a')
+            title    = link.inner_text
             link_url = URI(link.get_attribute('href')).query_params['q']
-            url = URI(link_url)
+            url      = URI(link_url)
             
             summary_text = ''
 
@@ -433,7 +417,7 @@ module GScraper
 
             end
 
-            cached_url = nil
+            cached_url  = nil
             similar_url = nil
 
             if (gl = result.at('.//div[@class="s"]'))
@@ -484,7 +468,7 @@ module GScraper
           # top and side ads
           doc.search('#pa1', 'a[@id^="an"]').each do |link|
             title = link.inner_text
-            url = URI("http://#{search_host}" + link.get_attribute('href'))
+            url   = URI("http://#{search_host}" + link.get_attribute('href'))
 
             links << SponsoredAd.new(title,url)
           end
