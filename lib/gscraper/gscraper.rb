@@ -21,7 +21,6 @@
 require 'uri/http'
 require 'mechanize'
 require 'nokogiri'
-require 'open-uri'
 
 module GScraper
   # Common proxy port.
