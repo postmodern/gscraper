@@ -1,7 +1,21 @@
-### 0.4.0 2011-11-01
+### 0.4.0 / 2012-04-25
 
-* Upgraded to json_pure ~> 1.6.1
-
+* Switched from Bundler to rubygems-tasks ~> 0.1.
+* Switched from json_pure to json ~> 1.6.
+* Require uri-query_params ~> 0.5.
+* Require mechanize ~> 2.0.
+* Added {GScraper::Search::Blocked}.
+* Added {GScraper::Hosts}.
+* Added {GScraper::Languages}.
+* Added {GScraper::Search::Query#define}.
+* Added `:load_balance` option to {GScraper::Search::Query#initialize}, which
+  will randomize {GScraper::Search::Query#search_host}.
+* Allow `:all*` / `:with*` search options to accept a String or Array values.
+* Allow {GScraper::Search::WebQuery} and {GScraper::Search::AJAXQuery} to
+  submit queries to alternate domains via the `:search_host` option.
+* Renamed `#occurrs_within`, `:occurrs_within` to `#occurs_within`,
+  `:occurs_within`, respectively in {GScraper::Search::WebQuery}.
+* Fixed spelling errors.
 
 ### 0.3.0 / 2010-07-01
 
