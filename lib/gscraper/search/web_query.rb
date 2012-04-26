@@ -400,7 +400,7 @@ module GScraper
           results_length.times do |index|
             result   = results[index]
             rank     = rank_offset + (index + 1)
-            link     = result.at('//h3/a')
+            link     = result.at('.//h3/a')
             title    = link.inner_text
             link_url = URI(link.get_attribute('href')).query_params['q']
             url      = URI(link_url)
