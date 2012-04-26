@@ -1,4 +1,4 @@
-### 0.4.0 / 2012-04-25
+### 0.4.0 / 2012-04-26
 
 * Switched from Bundler to rubygems-tasks ~> 0.1.
 * Switched from json_pure to json ~> 1.6.
