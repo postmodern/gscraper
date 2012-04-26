@@ -20,6 +20,9 @@
 
 module GScraper
   module Search
+    #
+    # @since 0.4.0
+    #
     class Blocked < RuntimeError
     end
   end
