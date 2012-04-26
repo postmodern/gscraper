@@ -40,7 +40,7 @@ module GScraper
     #
     def initialize(title,url)
       @title = title
-      @url = url
+      @url   = url
     end
 
     #

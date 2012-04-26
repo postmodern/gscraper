@@ -51,15 +51,13 @@ module GScraper
       #   end
       #
       def results_with_title(title)
-        unless block_given?
-          enum_for(:results_with_title,title)
-        else
-          results_with do |result|
-            if result.title.match(title)
-              yield result
+        return enum_for(:results_with_title,title) unless block_given?
 
-              true
-            end
+        results_with do |result|
+          if result.title.match(title)
+            yield result
+
+            true
           end
         end
       end
@@ -88,15 +86,13 @@ module GScraper
       #   end
       #
       def results_with_url(url)
-        unless block_given?
-          enum_for(:results_with_url,url)
-        else
-          results_with do |result|
-            if result.url.match(url)
-              yield result
+        return enum_for(:results_with_url,url) unless block_given?
 
-              true
-            end
+        results_with do |result|
+          if result.url.match(url)
+            yield result
+
+            true
           end
         end
       end
@@ -125,15 +121,13 @@ module GScraper
       #   end
       #
       def results_with_summary(summary)
-        unless block_given?
-          enum_for(:results_with_summary,summary)
-        else
-          results_with do |result|
-            if result.summary.match(summary)
-              yield result
+        return enum_for(:results_with_summary,summary) unless block_given?
 
-              true
-            end
+        results_with do |result|
+          if result.summary.match(summary)
+            yield result
+
+            true
           end
         end
       end
@@ -155,11 +149,9 @@ module GScraper
       #   each_rank { |rank| puts rank }
       #
       def each_rank
-        unless block_given?
-          enum_for(:each_rank)
-        else
-          each { |result| yield result.rank }
-        end
+        return enum_for(:each_rank) unless block_given?
+
+        each { |result| yield result.rank }
       end
 
       #
@@ -179,11 +171,9 @@ module GScraper
       #   each_title { |title| puts title }
       #
       def each_title
-        unless block_given?
-          enum_for(:each_title)
-        else
-          each { |result| yield result.title }
-        end
+        return enum_for(:each_title) unless block_given?
+
+        each { |result| yield result.title }
       end
 
       #
@@ -203,11 +193,9 @@ module GScraper
       #   each_url { |url| puts url }
       #
       def each_url
-        unless block_given?
-          enum_for(:each_url)
-        else
-          each { |result| yield result.url }
-        end
+        return enum_for(:each_url) unless block_given?
+
+        each { |result| yield result.url }
       end
 
       #
@@ -227,11 +215,9 @@ module GScraper
       #   each_summary { |summary| puts summary }
       #
       def each_summary
-        unless block_given?
-          enum_for(:each_summary)
-        else
-          each { |result| yield result.summary }
-        end
+        return enum_for(:each_summary) unless block_given?
+
+        each { |result| yield result.summary }
       end
 
       #
@@ -251,12 +237,10 @@ module GScraper
       #   each_cached_url { |cached_url| puts cached_url }
       #
       def each_cached_url
-        unless block_given?
-          enum_for(:each_cached_url)
-        else
-          each do |result|
-            yield result.cached_url if result.cached_url
-          end
+        return enum_for(:each_cached_url) unless block_given?
+
+        each do |result|
+          yield result.cached_url if result.cached_url
         end
       end
 
@@ -277,12 +261,10 @@ module GScraper
       #   each_cached_page { |page| puts page.readlines }
       #
       def each_cached_page
-        unless block_given?
-          enum_for(:each_cached_page)
-        else
-          each do |result|
-            yield result.cached_page if result.cached_page
-          end
+        return enum_for(:each_cached_page) unless block_given?
+
+        each do |result|
+          yield result.cached_page if result.cached_page
         end
       end
 
@@ -303,12 +285,10 @@ module GScraper
       #   each_similar_url { |similar_url| puts similar_url }
       #
       def each_similar_url
-        unless block_given?
-          enum_for(:each_similar_url)
-        else
-          each do |result|
-            yield result.similar_url if result.similar_url
-          end
+        return enum_for(:each_similar_url) unless block_given?
+
+        each do |result|
+          yield result.similar_url if result.similar_url
         end
       end
 

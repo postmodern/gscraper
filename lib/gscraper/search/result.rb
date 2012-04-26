@@ -64,11 +64,11 @@ module GScraper
       def initialize(rank,title,url,summary,cached_url=nil,similar_url=nil)
         @agent = GScraper.web_agent
 
-        @rank = rank
-        @title = title
-        @url = url
-        @summary = summary
-        @cached_url = cached_url
+        @rank        = rank
+        @title       = title
+        @url         = url
+        @summary     = summary
+        @cached_url  = cached_url
         @similar_url = similar_url
       end
 
@@ -89,9 +89,7 @@ module GScraper
       #   The Cached Page for the result.
       #
       def cached_page
-        if @cached_url
-          return @agent.get(@cached_url)
-        end
+        @agent.get(@cached_url) if @cached_url
       end
 
       #
