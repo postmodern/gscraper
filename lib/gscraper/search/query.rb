@@ -210,7 +210,7 @@ module GScraper
       # @return [String]
       #   The host to submit queries to.
       #
-      # @since 0.3.1
+      # @since 0.4.0
       #
       def search_host
         if @load_balance

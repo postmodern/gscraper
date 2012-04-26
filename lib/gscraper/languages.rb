@@ -19,6 +19,11 @@
 #
 
 module GScraper
+  #
+  # @api semipublic
+  #
+  # @since 0.3.0
+  #
   module Languages
     # The list of language names
     NAMES = %w[
@@ -79,8 +84,6 @@ module GScraper
     # @return [String]
     #   The language used by the locale.
     #
-    # @since 0.3.1
-    #
     def Languages.find(locale)
       if locale =~ /^zh_CN/
         'zh-CN'
@@ -98,8 +101,6 @@ module GScraper
     #
     # @return [String]
     #   The native language.
-    #
-    # @since 0.3.1
     #
     def Languages.native
       language = ENV['LANG'] || 'en'
