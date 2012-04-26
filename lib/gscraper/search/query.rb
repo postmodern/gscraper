@@ -172,38 +172,34 @@ module GScraper
       #   The new query.
       #
       def initialize(options={})
-        @search_host = (options[:search_host] || DEFAULT_HOST)
+        @search_host = options.fetch(:search_host,DEFAULT_HOST)
 
-        @query = options[:query]
-        @language = (options[:language] || Languages.native)
+        @query    = options[:query]
+        @language = options.fetch(:language,Languages.native)
 
-        @link = options[:link]
-        @related = options[:related]
-        @info = options[:info]
-        @site = options[:site]
+        @link     = options[:link]
+        @related  = options[:related]
+        @info     = options[:info]
+        @site     = options[:site]
         @filetype = options[:filetype]
 
-        @allintitle = options[:allintitle]
-        @intitle = options[:intitle]
-        @allinurl = options[:allinurl]
-        @inurl = options[:inurl]
-        @allintext = options[:allintext]
-        @intext = options[:intext]
+        @allintitle  = options[:allintitle]
+        @intitle     = options[:intitle]
+        @allinurl    = options[:allinurl]
+        @inurl       = options[:inurl]
+        @allintext   = options[:allintext]
+        @intext      = options[:intext]
         @allinanchor = options[:allinanchor]
-        @inanchor = options[:inanchor]
+        @inanchor    = options[:inanchor]
 
-        @exact_phrase = options[:exact_phrase]
-        @with_words = options[:with_words]
+        @exact_phrase  = options[:exact_phrase]
+        @with_words    = options[:with_words]
         @without_words = options[:without_words]
 
         @numeric_range = options[:numeric_range]
-        @define = options[:define]
+        @define        = options[:define]
 
-        @load_balance = false
-
-        if options.has_key?(:load_balance)
-          @load_balance = options[:load_balance]
-        end
+        @load_balance = options.fetch(:load_balance,false)
 
         yield self if block_given?
       end
