@@ -20,8 +20,6 @@
 
 require 'gscraper/sponsored_ad'
 
-require 'enumerator'
-
 module GScraper
   class SponsoredLinks < Array
 
