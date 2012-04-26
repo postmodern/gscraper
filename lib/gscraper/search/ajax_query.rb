@@ -94,9 +94,9 @@ module GScraper
       def initialize(options={},&block)
         @agent = GScraper.web_agent(options)
 
-        @sig = (options[:sig] || DEFAULT_SIG)
-        @key = (options[:key] || DEFAULT_KEY)
-        @version = (options[:version] || DEFAULT_VERSION)
+        @sig     = options.fetch(:sig,DEFAULT_SIG)
+        @key     = options.fetch(:key,DEFAULT_KEY)
+        @version = options.fetch(:version,DEFAULT_VERSION)
 
         super(options,&block)
       end
@@ -125,10 +125,10 @@ module GScraper
         url = URI(url.to_s)
 
         options[:language] = url.query_params['hl']
-        options[:query] = url.query_params['q']
+        options[:query]    = url.query_params['q']
 
-        options[:sig] = url.query_params['sig']
-        options[:key] = url.query_params['key']
+        options[:sig]     = url.query_params['sig']
+        options[:key]     = url.query_params['key']
         options[:version] = url.query_params['v']
 
         return AJAXQuery.new(options,&block)
@@ -154,17 +154,17 @@ module GScraper
       #
       def search_url
         search_url = URI::HTTP.build(
-          :host => search_host,
-          :path => PATH,
+          :host  => search_host,
+          :path  => PATH,
           :query => QUERY
         )
 
-        search_url.query_params['hl'] = @language
+        search_url.query_params['hl']  = @language
         search_url.query_params['gss'] = '.com'
-        search_url.query_params['q'] = expression
+        search_url.query_params['q']   = expression
         search_url.query_params['sig'] = @sig
         search_url.query_params['key'] = @key
-        search_url.query_params['v'] = @version
+        search_url.query_params['v']   = @version
 
         return search_url
       end
@@ -206,15 +206,15 @@ module GScraper
 
           if (hash.kind_of?(Hash) && hash['results'])
             hash['results'].each_with_index do |result,index|
-              rank = rank_offset + (index + 1)
+              rank  = rank_offset + (index + 1)
               title = Nokogiri::HTML(result['title']).inner_text
-              url = URI(URI.escape(result['unescapedUrl']))
+              url   = URI(URI.escape(result['unescapedUrl']))
 
-              unless result['content'].empty?
-                summary = Nokogiri::HTML(result['content']).inner_text
-              else
-                summary = ''
-              end
+              summary = unless result['content'].empty?
+                          Nokogiri::HTML(result['content']).inner_text
+                        else
+                          ''
+                        end
 
               cached_url = URI(result['cacheUrl'])
 
