@@ -32,8 +32,13 @@ module GScraper
   #
   # @return [Hash]
   #
-  def GScraper.proxy
-    @@gscraper_proxy ||= {:host => nil, :port => COMMON_PROXY_PORT, :user => nil, :password => nil}
+  def self.proxy
+    @@gscraper_proxy ||= {
+      :host     => nil,
+      :port     => COMMON_PROXY_PORT,
+      :user     => nil,
+      :password => nil
+    }
   end
 
   #
@@ -54,13 +59,13 @@ module GScraper
   # @option proxy_info [String] :password
   #   The password to login with.
   #
-  def GScraper.proxy_uri(proxy_info=GScraper.proxy)
-    if GScraper.proxy[:host]
+  def self.proxy_uri(proxy=self.proxy)
+    if proxy[:host]
       return URI::HTTP.build(
-        :host => GScraper.proxy[:host],
-        :port => GScraper.proxy[:port],
-        :userinfo => "#{GScraper.proxy[:user]}:#{GScraper.proxy[:password]}",
-        :path => '/'
+        :host     => proxy[:host],
+        :port     => proxy[:port],
+        :userinfo => "#{proxy[:user]}:#{proxy[:password]}",
+        :path     => '/'
       )
     end
   end
@@ -70,7 +75,7 @@ module GScraper
   #
   # @return [Array<String>]
   #
-  def GScraper.user_agent_aliases
+  def self.user_agent_aliases
     Mechanize::AGENT_ALIASES
   end
 
@@ -79,8 +84,8 @@ module GScraper
   #
   # @return [String]
   #
-  def GScraper.user_agent
-    @@gscraper_user_agent ||= GScraper.user_agent_aliases['Windows IE 6']
+  def self.user_agent
+    @@gscraper_user_agent ||= self.user_agent_aliases['Windows IE 6']
   end
 
   #
@@ -92,7 +97,7 @@ module GScraper
   # @return [String]
   #   The new User-Agent string.
   #
-  def GScraper.user_agent=(agent)
+  def self.user_agent=(agent)
     @@gscraper_user_agent = agent
   end
 
@@ -105,8 +110,8 @@ module GScraper
   # @return [String]
   #   The new User-Agent string.
   # 
-  def GScraper.user_agent_alias=(name)
-    @@gscraper_user_agent = GScraper.user_agent_aliases[name.to_s]
+  def self.user_agent_alias=(name)
+    @@gscraper_user_agent = self.user_agent_aliases[name.to_s]
   end
 
   #
@@ -143,18 +148,18 @@ module GScraper
   #   GScraper.web_agent(:user_agent_alias => 'Linux Mozilla')
   #   GScraper.web_agent(:user_agent => 'Google Bot')
   #
-  def GScraper.web_agent(options={})
+  def self.web_agent(options={})
     agent = Mechanize.new
 
     if options[:user_agent_alias]
       agent.user_agent_alias = options[:user_agent_alias]
     elsif options[:user_agent]
       agent.user_agent = options[:user_agent]
-    elsif GScraper.user_agent
-      agent.user_agent = GScraper.user_agent
+    elsif user_agent
+      agent.user_agent = self.user_agent
     end
 
-    proxy = (options[:proxy] || GScraper.proxy)
+    proxy = (options[:proxy] || self.proxy)
     if proxy[:host]
       agent.set_proxy(proxy[:host],proxy[:port],proxy[:user],proxy[:password])
     end
