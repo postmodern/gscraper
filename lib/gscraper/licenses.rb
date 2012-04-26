@@ -19,6 +19,9 @@
 #
 
 module GScraper
+  #
+  # @api semipublic
+  #
   module Licenses
     # Any desired license
     ANY = nil
