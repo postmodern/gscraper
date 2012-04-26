@@ -19,6 +19,11 @@
 #
 
 module GScraper
+  #
+  # @api semipublic
+  #
+  # @since 0.4.0
+  #
   module Hosts
     # List of all google domain-names.
     DOMAINS = %w[
