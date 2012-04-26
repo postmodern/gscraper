@@ -300,10 +300,11 @@ module GScraper
       #   The formatted value.
       #
       def format_modifier(value)
-        if value.kind_of?(Regexp)
-          return value.source
+        case value
+        when Range
+          value.source
         else
-          return value.to_s
+          value.to_s
         end
       end
 
@@ -317,13 +318,7 @@ module GScraper
       #   The formatted value.
       #
       def format_options(value)
-        if value.kind_of?(Array)
-          return value.map { |element|
-            format_modifier(element)
-          }.join(' ')
-        else
-          return format_modifier(value)
-        end
+        Array(value).map(&method(:format_modifier)).join(' ')
       end
 
     end
