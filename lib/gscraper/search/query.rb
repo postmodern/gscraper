@@ -172,11 +172,7 @@ module GScraper
       #   The new query.
       #
       def initialize(options={})
-        if options[:search_host]
-          @search_host = options[:search_host]
-        else
-          @search_host = DEFAULT_HOST
-        end
+        @search_host = (options[:search_host] || DEFAULT_HOST)
 
         @query = options[:query]
         @language = (options[:language] || Languages.native)
